@@ -36,6 +36,12 @@
   <div class="stat"><div class="label">Aircraft used</div><div class="value" id="s-aircraft">0</div><div class="hint">Unique registrations</div></div>
  </div>
  <section class="panel"><h2>Flying status summary</h2><p class="muted small">Weekly periods use calendar days 1–7, 8–14, 15–21 and 22–month end. SE/ME is estimated from the aircraft type text; review aircraft classifications.</p><div class="grid" id="statusStats"></div></section>
+ <section class="panel" id="fdtlPanel">
+  <div class="section-head"><div><h2>FDTL · Flight-time lookback</h2><div class="muted small">Flight time within each period ending on your selected reference date.</div></div><div class="field" style="min-width:170px"><label for="fdtlDate">Calculate as of date</label><input id="fdtlDate" type="date"></div></div>
+  <div class="notice" style="margin-top:12px">Reference limits are copied from your supplied image and are editable in the app code: 8:00 / 35:00 / 65:00 / 100:00 / 125:00 / 300:00 / 1000:00. These are user-provided reference values, not independently verified regulatory advice. Confirm current DGCA/company FDTL rules before operational use.</div>
+  <div id="fdtlTable"></div>
+  <div class="muted small" style="margin-top:10px">Each window includes the reference date and the preceding days (for example, 7 Days includes the selected date plus the previous 6 calendar days). Flight duration is summed from saved entries by flight date.</div>
+ </section>
  <section class="panel"><div class="section-head"><h2>Recent flights</h2><button data-goto="flights">View all flights →</button></div><div id="recent"></div></section>
  <section class="panel"><h2>Monthly flight time</h2><div id="monthlyBars" class="barlist"></div></section>
  <section class="panel"><h2>Quick actions</h2><div class="toolbar"><button class="primary" id="addFlightDash">＋ Add flight</button><button id="quickExport">Export CSV</button><button id="printDash">Print dashboard</button></div></section>
@@ -92,6 +98,17 @@ $$('[data-goto]').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.
 function isME(f){if(f.engineCategory==='ME')return true;if(f.engineCategory==='SE')return false;let t=String(f.aircraftType||'').toLowerCase();return /\b(me|multi|multiengine|multi-engine|twin|da ?42|p2006t)\b/.test(t)}
 function latestDate(arr, predicate=()=>true){return arr.filter(f=>f.date&&predicate(f)).map(f=>f.date).sort().pop()||''}
 function inCurrentMonth(f){let now=new Date(),d=f.date||'';return d.startsWith(`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`)}
+const FDTL_WINDOWS=[{days:1,limit:480,label:'1 Day'},{days:7,limit:2100,label:'7 Days'},{days:14,limit:3900,label:'14 Days'},{days:28,limit:6000,label:'28 Days'},{days:30,limit:7500,label:'30 Days'},{days:90,limit:18000,label:'90 Days'},{days:365,limit:60000,label:'365 Days'}];
+function dateMinusDays(iso,days){let d=new Date(iso+'T12:00:00');d.setDate(d.getDate()-days);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function renderFDTL(){
+ const input=$('#fdtlDate');if(!input)return;
+ if(!input.value)input.value=new Date().toISOString().slice(0,10);
+ const anchor=input.value;if(!anchor){$('#fdtlTable').innerHTML='<p class="muted">Choose a reference date.</p>';return}
+ const totals=FDTL_WINDOWS.map(w=>{let start=dateMinusDays(anchor,w.days-1);let mins=sum('duration',flights.filter(f=>(f.date||'')>=start&&(f.date||'')<=anchor));return {...w,start,mins,remaining:w.limit-mins}});
+ const daily=totals[0];
+ $('#fdtlTable').innerHTML=`<div class="tablewrap"><table style="min-width:550px"><thead><tr><th>Days</th><th>Flight time</th><th>Reference limit</th><th>Remaining</th></tr></thead><tbody>${totals.map(w=>`<tr><td><b>${w.label}</b><br><span class="muted small">${safe(fmtDate(w.start))} – ${safe(fmtDate(anchor))}</span></td><td><b>${timeStr(w.mins)}</b></td><td>${timeStr(w.limit)}</td><td><span class="pill" style="${w.remaining<0?'background:#fde8e7;color:#b42318':'background:#e8f6ee;color:#16794b'}">${w.remaining<0?'Exceeded by '+timeStr(-w.remaining):timeStr(w.remaining)}</span></td></tr>`).join('')}</tbody></table></div><div class="stat" style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;gap:12px"><div><div class="label">Remaining for selected day</div><div class="hint">8:00 reference limit minus flight time on ${safe(fmtDate(anchor))}</div></div><div class="value" style="font-size:24px;color:${daily.remaining<0?'var(--red)':'var(--green)'}">${daily.remaining<0?'−'+timeStr(-daily.remaining):timeStr(daily.remaining)}</div></div>`;
+}
+$('#fdtlDate')?.addEventListener('change',renderFDTL);
 function renderDashboard(){
  $('#s-total').textContent=h('duration');$('#s-dual').textContent=h('dual');$('#s-pic').textContent=h('pic');$('#s-night').textContent=h('night');$('#s-xc').textContent=h('xc');$('#s-inst').textContent=timeStr(sum('instrument')+sum('simulatedInstrument'));$('#s-count').textContent=`${flights.length} flight${flights.length===1?'':'s'} recorded`;
  let sorted=[...flights].sort((a,b)=>(b.date||'').localeCompare(a.date||''));$('#s-last').textContent=sorted[0]?.date?fmtDate(sorted[0].date):'—';$('#s-aircraft').textContent=new Set(flights.map(f=>f.registration).filter(Boolean)).size;
@@ -103,6 +120,7 @@ function renderDashboard(){
  const lastEmergency=latestDate(flights,f=>f.emergencySortie===true||f.emergencySortie==='true'||f.emergencySortie==='yes');
  const statItems=[['Last flown date',latestDate(flights)?fmtDate(latestDate(flights)):'—'],['Last emergencies sortie date',lastEmergency?fmtDate(lastEmergency):'—'],['Hours after last dual sortie',timeStr(afterDual)],['Total hrs (SE + ME)',`${h('duration',se)} + ${h('duration',me)} = ${h('duration')}`],['1st week flying hours',timeStr(weekTotal(1))],['2nd week flying hours',timeStr(weekTotal(2))],['3rd week flying hours',timeStr(weekTotal(3))],['4th week flying hours',timeStr(weekTotal(4))],['Hours in current month',h('duration',monthFlights)],['Hours in last three months',h('duration',threeMonths)],['Total PIC',h('pic')],['Local PIC',h('localPic')],['Total IF (SE + ME)',`${timeStr(sum('instrument',se)+sum('simulatedInstrument',se))} + ${timeStr(sum('instrument',me)+sum('simulatedInstrument',me))} = ${timeStr(sum('instrument')+sum('simulatedInstrument'))}`],['Night PIC',h('nightPic')],['Cross country dual',h('crossCountryDual')],['Cross Country PIC',h('crossCountryPic')],['Day Dual',h('dayDual')],['Night Dual',h('nightDual')]];
  $('#statusStats').innerHTML=statItems.map(([label,value])=>`<div class="stat"><div class="label">${safe(label)}</div><div class="value" style="font-size:${String(value).length>16?'17px':'22px'}">${safe(value)}</div></div>`).join('');
+ renderFDTL();
  let recent=sorted.slice(0,6);$('#recent').innerHTML=recent.length?tableHTML(recent,false):'<div class="empty">No flights yet. Add your first flight to get started.</div>';
  let months={};flights.forEach(f=>{let k=(f.date||'Undated').slice(0,7);months[k]=(months[k]||0)+totalMinutes(f)});let top=Object.entries(months).sort((a,b)=>a[0].localeCompare(b[0])).slice(-6),max=Math.max(1,...top.map(x=>x[1]));
  $('#monthlyBars').innerHTML=top.length?top.map(([m,v])=>`<div class="barrow"><span>${safe(m)}</span><div class="barbg"><div class="barfill" style="width:${v/max*100}%"></div></div><b class="right">${timeStr(v)}</b></div>`).join(''):'<div class="empty">Monthly totals will appear here after flights are added.</div>';
