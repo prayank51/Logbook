@@ -1,0 +1,11 @@
+{
+  "name": "Flight Logbook",
+  "short_name": "Logbook",
+  "description": "Free offline flight logbook for pilots",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#f5f8fc",
+  "icons": []
+}

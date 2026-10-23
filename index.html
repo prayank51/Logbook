@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f8fc">
+<meta name="description" content="Free offline flight logbook for pilots.">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Flight Logbook</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--ink:#17283f;--muted:#64748b;--line:#dce5ef;--blue:#2459a9;--blue2:#eaf2ff;--green:#16794b;--red:#b42318;--shadow:0 5px 22px #243c5a0b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:10px 13px;font-weight:650}button.primary{background:var(--blue);color:#fff;border-color:var(--blue)}button.danger{color:var(--red)}button:disabled{opacity:.5;cursor:not-allowed}.wrap{max-width:1200px;margin:auto;padding:18px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}.brand{display:flex;align-items:center;gap:12px}.logo{height:44px;width:44px;display:grid;place-items:center;background:var(--blue);color:white;border-radius:13px;font-size:22px}.brand h1{font-size:22px;margin:0}.brand p{margin:2px 0 0;color:var(--muted);font-size:13px}.actions{display:flex;gap:8px;flex-wrap:wrap}.tabs{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 16px}.tab{background:transparent}.tab.active{background:var(--blue2);border-color:#c5d9fa;color:var(--blue)}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.stat,.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.stat{padding:16px}.stat .label{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em}.stat .value{font-size:25px;font-weight:800;margin-top:6px;letter-spacing:-.03em}.stat .hint{font-size:12px;color:var(--muted);margin-top:4px}.panel{padding:18px;margin-top:14px}.panel h2{margin:0 0 14px;font-size:17px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.muted{color:var(--muted)}.small{font-size:12px}.hidden{display:none!important}.formgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:5px}.field label{font-size:12px;font-weight:750;color:#52657d}.field input,.field select,.field textarea{width:100%;border:1px solid #cdd8e5;border-radius:9px;padding:10px;background:white;color:var(--ink);min-width:0}.field textarea{min-height:74px;resize:vertical}.span2{grid-column:span 2}.span4{grid-column:span 4}.checks{display:flex;flex-wrap:wrap;gap:14px;padding:10px 0}.checks label{display:flex;align-items:center;gap:6px;font-size:13px}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:12px}table{border-collapse:collapse;width:100%;min-width:900px;background:#fff}th,td{text-align:left;padding:10px 12px;border-bottom:1px solid #e9eef5;white-space:nowrap;font-size:13px}th{background:#f7f9fc;color:#53657c;font-size:11px;text-transform:uppercase;letter-spacing:.04em;position:sticky;top:0}tr:last-child td{border-bottom:0}.right{text-align:right}.pill{display:inline-block;border-radius:999px;padding:3px 8px;background:#eef3f8;color:#43566d;font-size:11px;font-weight:700}.notice{background:#fff8e7;border:1px solid #f3d78e;color:#79551a;border-radius:11px;padding:12px;font-size:13px}.success{color:var(--green)}.error{color:var(--red)}.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.toolbar input{border:1px solid var(--line);border-radius:9px;padding:10px;max-width:250px}.empty{text-align:center;padding:30px;color:var(--muted)}.footer{padding:22px 4px;color:var(--muted);font-size:12px;text-align:center}.barlist{display:grid;gap:10px}.barrow{display:grid;grid-template-columns:90px 1fr 72px;gap:10px;align-items:center;font-size:13px}.barbg{height:10px;background:#eaf0f7;border-radius:20px;overflow:hidden}.barfill{height:100%;background:#4e82d2;border-radius:20px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#14253c;color:white;padding:12px 18px;border-radius:12px;box-shadow:0 8px 30px #0002;z-index:9;max-width:90vw}.modalback{position:fixed;inset:0;background:#12243b66;display:flex;align-items:center;justify-content:center;padding:16px;z-index:8}.modal{width:min(900px,100%);max-height:92vh;overflow:auto;background:var(--bg);border-radius:18px;padding:18px}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.modalhead h2{margin:0}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.formgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.span4{grid-column:span 2}.wrap{padding:12px}.stat .value{font-size:22px}}
+@media(max-width:430px){.brand h1{font-size:19px}.actions button{padding:9px}.barrow{grid-template-columns:72px 1fr 55px}.stat{padding:13px}.stat .value{font-size:20px}}
+@media print{body{background:#fff}.top,.tabs,.actions,.toolbar,.noprint,button{display:none!important}.wrap{max-width:none;padding:0}.panel,.stat{box-shadow:none;break-inside:avoid}.tablewrap{overflow:visible}table{min-width:0}th,td{font-size:9px;padding:5px;white-space:normal}.grid{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+ <div class="brand"><div class="logo">✈</div><div><h1>Flight Logbook</h1><p>Private, local-first flight records · Works offline</p></div></div>
+ <div class="actions"><button id="installBtn" class="hidden">Install app</button><button id="exportBackup">Backup</button><button id="importBackup">Restore backup</button><button id="importExcel" class="primary">Import Excel / CSV</button><input id="fileInput" type="file" accept=".xlsx,.xls,.csv,.json" class="hidden"></div>
+</header>
+<nav class="tabs">
+ <button class="tab active" data-tab="dashboard">Dashboard</button><button class="tab" data-tab="flights">Flight entries</button><button class="tab" data-tab="reports">Reports</button><button class="tab" data-tab="settings">Settings & help</button>
+</nav>
+<main id="dashboard" class="view">
+ <div class="grid">
+  <div class="stat"><div class="label">Total flight time</div><div class="value" id="s-total">00:00</div><div class="hint" id="s-count">0 flights recorded</div></div>
+  <div class="stat"><div class="label">Dual received</div><div class="value" id="s-dual">00:00</div><div class="hint">Training time</div></div>
+  <div class="stat"><div class="label">Pilot in command</div><div class="value" id="s-pic">00:00</div><div class="hint">PIC time</div></div>
+  <div class="stat"><div class="label">Night flight</div><div class="value" id="s-night">00:00</div><div class="hint">Recorded night time</div></div>
+  <div class="stat"><div class="label">Cross-country</div><div class="value" id="s-xc">00:00</div><div class="hint">XC time</div></div>
+  <div class="stat"><div class="label">Instrument</div><div class="value" id="s-inst">00:00</div><div class="hint">Instrument time</div></div>
+  <div class="stat"><div class="label">Last flown</div><div class="value" id="s-last">—</div><div class="hint">Most recent date</div></div>
+  <div class="stat"><div class="label">Aircraft used</div><div class="value" id="s-aircraft">0</div><div class="hint">Unique registrations</div></div>
+ </div>
+ <section class="panel"><h2>Flying status summary</h2><p class="muted small">Weekly periods use calendar days 1–7, 8–14, 15–21 and 22–month end. SE/ME is estimated from the aircraft type text; review aircraft classifications.</p><div class="grid" id="statusStats"></div></section>
+ <section class="panel"><div class="section-head"><h2>Recent flights</h2><button data-goto="flights">View all flights →</button></div><div id="recent"></div></section>
+ <section class="panel"><h2>Monthly flight time</h2><div id="monthlyBars" class="barlist"></div></section>
+ <section class="panel"><h2>Quick actions</h2><div class="toolbar"><button class="primary" id="addFlightDash">＋ Add flight</button><button id="quickExport">Export CSV</button><button id="printDash">Print dashboard</button></div></section>
+</main>
+<main id="flights" class="view hidden">
+ <section class="panel"><div class="section-head"><div><h2>Flight entries</h2><div class="muted small">Select an entry to edit it. Times are stored as minutes to avoid rounding errors.</div></div><button class="primary" id="addFlight">＋ Add flight</button></div>
+ <div class="toolbar" style="margin-top:12px"><input id="searchFlights" placeholder="Search date, aircraft, route…"><select id="yearFilter"><option value="">All years</option></select><button id="clearFilters">Clear filters</button><button id="exportCsv">Export CSV</button></div>
+ <div id="flightTable"></div></section>
+</main>
+<main id="reports" class="view hidden">
+ <section class="panel"><h2>Logbook summary</h2><p class="muted small">Calculated from your saved entries. Category totals can overlap; do not add category totals together.</p><div class="grid" id="reportStats"></div></section>
+ <section class="panel"><h2>Yearly totals</h2><div id="yearlyTable"></div></section>
+ <section class="panel"><h2>Aircraft totals</h2><div id="aircraftTable"></div></section>
+ <section class="panel"><h2>Monthly totals</h2><div id="monthTable"></div></section>
+ <section class="panel"><button onclick="window.print()">Print / Save as PDF</button></section>
+</main>
+<main id="settings" class="view hidden">
+ <section class="panel"><h2>Data & privacy</h2><p>Flight records are saved in this browser on this device. This app does not send records to a server. Use <b>Backup</b> regularly and keep the backup file somewhere safe.</p><div class="toolbar"><button id="exportBackup2">Download JSON backup</button><button id="restore2">Restore JSON backup</button><button class="danger" id="deleteAll">Delete all local flights</button></div></section>
+ <section class="panel"><h2>Excel import format</h2><p>Import an <b>.xlsx</b> workbook or <b>.csv</b> file. The app reads the first worksheet and tries to match common column names. The first row should contain headers. After importing, inspect the entries and totals.</p><p>Recognised headings include: Date, Aircraft / Registration, Type, From / Departure, To / Arrival, Total Time / Duration, Dual, PIC, Local PIC, Night PIC, Cross Country / XC, Cross Country Dual/PIC, Day Dual, Night Dual, Night, Instrument / IF, Emergency Sortie, Instructor, Take-offs, Landings, Remarks.</p><p class="notice">If your existing Excel file uses unusual headings or stores flight time in Excel time format, import a copy first and verify the results. Import adds records; it does not automatically delete existing records.</p></section>
+ <section class="panel"><h2>Time entry guide</h2><p>Enter duration as <b>1:25</b> for 1 hour 25 minutes, or as decimal hours such as <b>1.4</b> only if that is what your source file uses. For flight entries, use hours and minutes (HH:MM). Category times are not automatically assumed to equal total flight time.</p><p class="notice">This is a personal tracking aid, not an official DGCA logbook, endorsement, or substitute for your flying school's records. Check applicable DGCA requirements and your instructor's records before relying on any totals.</p></section>
+ <section class="panel"><h2>Install on Android / laptop</h2><ol><li>Upload the included app files to a static HTTPS host (for example, your own GitHub Pages site) or run from localhost. Opening index.html directly is fine for a quick test, but install/offline caching requires a secure origin.</li><li>Open the hosted app once while online. On Android Chrome, use the browser menu → <b>Install app</b> or <b>Add to Home screen</b>. On desktop Chrome/Edge, use the install icon in the address bar or browser menu.</li><li>After the app has loaded once, reopen it from the installed icon. The app shell works offline; records stay in that browser profile.</li><li>For use on multiple devices, restore a JSON backup separately on each device. Data does not sync automatically.</li></ol></section>
+</main>
+<div class="footer">Flight Logbook · Offline-first · Your data stays on this device</div>
+</div>
+<div id="modalRoot"></div><div id="toast" class="toast hidden" role="status"></div>
+<script>
+const DB_NAME='pilot-flight-logbook', DB_VERSION=1, STORE='flights';
+let db, flights=[], editId=null, deferredPrompt=null;
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const fields=['entryDate','date','arrivalDate','registration','aircraftType','engineCategory','from','to','offBlock','onBlock','duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument','emergencySortie','instructor','takeoffs','landings','remarks'];
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
+function parseTime(v){if(v===null||v===undefined||v==='')return 0;if(typeof v==='number'){if(v>0&&v<1)return Math.round(v*1440); if(v>=1&&v<24&&String(v).includes('.'))return Math.round(v*60);return Math.round(v*60)}let s=String(v).trim();if(!s)return 0;if(/^\d+:\d{1,2}$/.test(s)){let [h,m]=s.split(':').map(Number);return h*60+m}if(/^\d+(\.\d+)?$/.test(s))return Math.round(parseFloat(s)*60);return 0}
+function timeStr(m){m=Math.max(0,Math.round(Number(m)||0));return Math.floor(m/60)+':'+String(m%60).padStart(2,'0')}
+function fmtDate(d){if(!d)return '—';let x=new Date(d+'T12:00:00');return isNaN(x)?d:x.toLocaleDateString(undefined,{day:'2-digit',month:'short',year:'numeric'})}
+function normalDate(v){if(!v)return '';if(typeof v==='number'){// Excel serial date
+ let d=new Date(Date.UTC(1899,11,30)+v*86400000);return d.toISOString().slice(0,10)}
+ let s=String(v).trim();if(/^\d{4}-\d{2}-\d{2}/.test(s))return s.slice(0,10);
+ let m=s.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{2,4})$/);if(m){let a=+m[1],b=+m[2],y=+m[3];if(y<100)y+=2000; // default day/month/year; swap only if first > 12
+ let day=a,month=b;if(a<=12&&b>12){month=a;day=b}return `${y}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`}
+ let d=new Date(s);return isNaN(d)?s:d.toISOString().slice(0,10)}
+function openDB(){return new Promise((resolve,reject)=>{let r=indexedDB.open(DB_NAME,DB_VERSION);r.onupgradeneeded=()=>{let d=r.result;if(!d.objectStoreNames.contains(STORE)){let st=d.createObjectStore(STORE,{keyPath:'id'});st.createIndex('date','date')}};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+function allDB(){return new Promise((res,rej)=>{let r=db.transaction(STORE).objectStore(STORE).getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>rej(r.error)})}
+function saveDB(f){return new Promise((res,rej)=>{let r=db.transaction(STORE,'readwrite').objectStore(STORE).put(f);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+function delDB(id){return new Promise((res,rej)=>{let r=db.transaction(STORE,'readwrite').objectStore(STORE).delete(id);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+function clearDB(){return new Promise((res,rej)=>{let r=db.transaction(STORE,'readwrite').objectStore(STORE).clear();r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+function toast(msg){$('#toast').textContent=msg;$('#toast').classList.remove('hidden');setTimeout(()=>$('#toast').classList.add('hidden'),3000)}
+function sum(key,arr=flights){return arr.reduce((a,f)=>a+(Number(f[key])||0),0)}
+function totalMinutes(f){return Number(f.duration)||0}
+function h(key,arr=flights){return timeStr(sum(key,arr))}
+function safe(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function switchTab(tab){$$('.view').forEach(x=>x.classList.toggle('hidden',x.id!==tab));$$('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab));if(tab==='flights')renderFlights();if(tab==='reports')renderReports();if(tab==='dashboard')renderDashboard();window.scrollTo(0,0)}
+$$('.tab').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+$$('[data-goto]').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.goto)));
+function isME(f){if(f.engineCategory==='ME')return true;if(f.engineCategory==='SE')return false;let t=String(f.aircraftType||'').toLowerCase();return /\b(me|multi|multiengine|multi-engine|twin|da ?42|p2006t)\b/.test(t)}
+function latestDate(arr, predicate=()=>true){return arr.filter(f=>f.date&&predicate(f)).map(f=>f.date).sort().pop()||''}
+function inCurrentMonth(f){let now=new Date(),d=f.date||'';return d.startsWith(`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`)}
+function renderDashboard(){
+ $('#s-total').textContent=h('duration');$('#s-dual').textContent=h('dual');$('#s-pic').textContent=h('pic');$('#s-night').textContent=h('night');$('#s-xc').textContent=h('xc');$('#s-inst').textContent=timeStr(sum('instrument')+sum('simulatedInstrument'));$('#s-count').textContent=`${flights.length} flight${flights.length===1?'':'s'} recorded`;
+ let sorted=[...flights].sort((a,b)=>(b.date||'').localeCompare(a.date||''));$('#s-last').textContent=sorted[0]?.date?fmtDate(sorted[0].date):'—';$('#s-aircraft').textContent=new Set(flights.map(f=>f.registration).filter(Boolean)).size;
+ const now=new Date(),ym=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`,monthFlights=flights.filter(f=>(f.date||'').startsWith(ym));
+ const weekTotal=n=>sum('duration',monthFlights.filter(f=>{let day=Number((f.date||'').slice(8,10));return n===1?day>=1&&day<=7:n===2?day>=8&&day<=14:n===3?day>=15&&day<=21:day>=22}));
+ const last3=new Date(now.getFullYear(),now.getMonth()-2,1),last3key=`${last3.getFullYear()}-${String(last3.getMonth()+1).padStart(2,'0')}`;
+ const threeMonths=flights.filter(f=>(f.date||'')>=last3key+'-01'&&(f.date||'')<=now.toISOString().slice(0,10));
+ const se=flights.filter(f=>!isME(f)),me=flights.filter(isME),lastDual=latestDate(flights,f=>(+f.dual||0)>0),afterDual=lastDual?sum('duration',flights.filter(f=>(f.date||'')>lastDual)):sum('duration');
+ const lastEmergency=latestDate(flights,f=>f.emergencySortie===true||f.emergencySortie==='true'||f.emergencySortie==='yes');
+ const statItems=[['Last flown date',latestDate(flights)?fmtDate(latestDate(flights)):'—'],['Last emergencies sortie date',lastEmergency?fmtDate(lastEmergency):'—'],['Hours after last dual sortie',timeStr(afterDual)],['Total hrs (SE + ME)',`${h('duration',se)} + ${h('duration',me)} = ${h('duration')}`],['1st week flying hours',timeStr(weekTotal(1))],['2nd week flying hours',timeStr(weekTotal(2))],['3rd week flying hours',timeStr(weekTotal(3))],['4th week flying hours',timeStr(weekTotal(4))],['Hours in current month',h('duration',monthFlights)],['Hours in last three months',h('duration',threeMonths)],['Total PIC',h('pic')],['Local PIC',h('localPic')],['Total IF (SE + ME)',`${timeStr(sum('instrument',se)+sum('simulatedInstrument',se))} + ${timeStr(sum('instrument',me)+sum('simulatedInstrument',me))} = ${timeStr(sum('instrument')+sum('simulatedInstrument'))}`],['Night PIC',h('nightPic')],['Cross country dual',h('crossCountryDual')],['Cross Country PIC',h('crossCountryPic')],['Day Dual',h('dayDual')],['Night Dual',h('nightDual')]];
+ $('#statusStats').innerHTML=statItems.map(([label,value])=>`<div class="stat"><div class="label">${safe(label)}</div><div class="value" style="font-size:${String(value).length>16?'17px':'22px'}">${safe(value)}</div></div>`).join('');
+ let recent=sorted.slice(0,6);$('#recent').innerHTML=recent.length?tableHTML(recent,false):'<div class="empty">No flights yet. Add your first flight to get started.</div>';
+ let months={};flights.forEach(f=>{let k=(f.date||'Undated').slice(0,7);months[k]=(months[k]||0)+totalMinutes(f)});let top=Object.entries(months).sort((a,b)=>a[0].localeCompare(b[0])).slice(-6),max=Math.max(1,...top.map(x=>x[1]));
+ $('#monthlyBars').innerHTML=top.length?top.map(([m,v])=>`<div class="barrow"><span>${safe(m)}</span><div class="barbg"><div class="barfill" style="width:${v/max*100}%"></div></div><b class="right">${timeStr(v)}</b></div>`).join(''):'<div class="empty">Monthly totals will appear here after flights are added.</div>';
+}
+function tableHTML(arr,actions=true){return `<div class="tablewrap"><table><thead><tr><th>Date</th><th>Aircraft</th><th>Route</th><th>Duration</th><th>Dual</th><th>PIC</th><th>XC</th><th>Night</th><th>Instrument</th>${actions?'<th>Actions</th>':''}</tr></thead><tbody>${arr.map(f=>`<tr><td>${safe(fmtDate(f.date))}</td><td><b>${safe(f.registration||'—')}</b><br><span class="muted">${safe(f.aircraftType||'')}</span></td><td>${safe(f.from||'—')} → ${safe(f.to||'—')}</td><td><b>${timeStr(f.duration)}</b></td><td>${timeStr(f.dual)}</td><td>${timeStr(f.pic)}</td><td>${timeStr(f.xc)}</td><td>${timeStr(f.night)}</td><td>${timeStr((+f.instrument||0)+(+f.simulatedInstrument||0))}</td>${actions?`<td><button data-edit="${safe(f.id)}">Edit</button> <button class="danger" data-delete="${safe(f.id)}">Delete</button></td>`:''}</tr>`).join('')}</tbody></table></div>`}
+function renderFlights(){
+ let q=$('#searchFlights').value.toLowerCase(),year=$('#yearFilter').value;
+ let years=[...new Set(flights.map(f=>(f.date||'').slice(0,4)).filter(Boolean))].sort().reverse();let select=$('#yearFilter'),old=select.value;select.innerHTML='<option value="">All years</option>'+years.map(y=>`<option>${safe(y)}</option>`).join('');select.value=years.includes(old)?old:'';
+ let arr=[...flights].filter(f=>(!year||(f.date||'').startsWith(year))&&[f.date,f.registration,f.aircraftType,f.from,f.to,f.instructor,f.remarks].join(' ').toLowerCase().includes(q)).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+ $('#flightTable').innerHTML=arr.length?tableHTML(arr,true):'<div class="empty">No matching flights. Add a flight or import your Excel logbook.</div>';
+ $$('[data-edit]').forEach(b=>b.onclick=()=>openFlight(b.dataset.edit));$$('[data-delete]').forEach(b=>b.onclick=()=>deleteFlight(b.dataset.delete));
+}
+$('#searchFlights').addEventListener('input',renderFlights);$('#yearFilter').addEventListener('change',renderFlights);$('#clearFilters').onclick=()=>{$('#searchFlights').value='';$('#yearFilter').value='';renderFlights()};
+function field(label,name,value='',type='text',opts=null,span=''){let input=opts?`<select name="${name}">${opts.map(o=>`<option ${String(value)===String(o[0])?'selected':''} value="${safe(o[0])}">${safe(o[1])}</option>`).join('')}</select>`:`<input name="${name}" type="${type}" value="${safe(value)}" ${type==='number'?'min="0" step="1"':''}>`;return `<div class="field ${span}"><label>${label}</label>${input}</div>`}
+function openFlight(id=null){
+ editId=id;let f=flights.find(x=>x.id===id)||{date:new Date().toISOString().slice(0,10),registration:'',aircraftType:'',engineCategory:'SE',from:'',to:'',offBlock:'',onBlock:'',duration:0,dual:0,pic:0,localPic:0,nightPic:0,xc:0,crossCountryDual:0,dayDual:0,nightDual:0,night:0,instrument:0,simulatedInstrument:0,emergencySortie:false,instructor:'',takeoffs:0,landings:0,remarks:''};
+ let v=k=>k==='duration'||['dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'].includes(k)?timeStr(f[k]):(f[k]??'');
+ $('#modalRoot').innerHTML=`<div class="modalback"><div class="modal"><div class="modalhead"><h2>${id?'Edit flight':'Add flight'}</h2><button id="closeModal">✕ Close</button></div><form id="flightForm"><div class="formgrid">
+ ${field('Date of entry','entryDate',v('entryDate')||v('date'),'date')}
+ ${field('Date of flight *','date',v('date'),'date')}
+ ${field('Arrival date','arrivalDate',v('arrivalDate')||v('date'),'date')}
+ ${field('Aircraft registration','registration',v('registration'))}
+ ${field('Aircraft type','aircraftType',v('aircraftType'))}
+ ${field('Engine category','engineCategory',f.engineCategory||'SE','text',[['SE','Single-engine (SE)'],['ME','Multi-engine (ME)']])}
+ ${field('Instructor / examiner','instructor',v('instructor'))}
+ ${field('Departure aerodrome','from',v('from'))}
+ ${field('Arrival aerodrome','to',v('to'))}
+ ${field('Off-block / take-off time','offBlock',v('offBlock'))}
+ ${field('On-block / landing time','onBlock',v('onBlock'))}
+ ${field('Total flight time (HH:MM) *','duration',v('duration'))}
+ ${field('Dual received (HH:MM)','dual',v('dual'))}
+ ${field('PIC (HH:MM)','pic',v('pic'))}
+ ${field('Local PIC (HH:MM)','localPic',v('localPic'))}
+ ${field('Night PIC (HH:MM)','nightPic',v('nightPic'))}
+ ${field('Cross-country (HH:MM)','xc',v('xc'))}
+ ${field('Cross-country dual (HH:MM)','crossCountryDual',v('crossCountryDual'))}
+ ${field('Cross-country PIC (HH:MM)','crossCountryPic',v('crossCountryPic'))}
+ ${field('Day dual (HH:MM)','dayDual',v('dayDual'))}
+ ${field('Night dual (HH:MM)','nightDual',v('nightDual'))}
+ ${field('Night (HH:MM)','night',v('night'))}
+ ${field('Instrument actual (HH:MM)','instrument',v('instrument'))}
+ ${field('Instrument simulated / hood (HH:MM)','simulatedInstrument',v('simulatedInstrument'))}
+ ${field('Emergency sortie?','emergencySortie',f.emergencySortie?'yes':'no','text',[['no','No'],['yes','Yes']])}
+ ${field('Take-offs','takeoffs',v('takeoffs'),'number')}
+ ${field('Landings','landings',v('landings'),'number')}
+ <div class="field span2"><label>Remarks / route / exercises</label><textarea name="remarks">${safe(v('remarks'))}</textarea></div>
+ </div><p class="muted small">Use HH:MM for all time fields, e.g. 1:25. Leave a category blank or enter 0:00 if it does not apply.</p><div class="toolbar"><button class="primary" type="submit">Save flight</button><button type="button" id="cancelFlight">Cancel</button></div></form></div></div>`;
+ $('#closeModal').onclick=$('#cancelFlight').onclick=()=>$('#modalRoot').innerHTML='';
+ $('#flightForm').onsubmit=async e=>{e.preventDefault();let fd=new FormData(e.target),o={};for(let k of fields)o[k]=fd.get(k)||'';if(!o.date||!String(o.duration).trim()){toast('Enter the date and total flight time.');return}o.id=id||uid();o.date=normalDate(o.date);o.entryDate=normalDate(o.entryDate||o.date);o.arrivalDate=normalDate(o.arrivalDate||o.date);for(let k of ['duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'])o[k]=parseTime(o[k]);o.emergencySortie=o.emergencySortie==='yes';for(let k of ['takeoffs','landings'])o[k]=Number(o[k])||0;o.registration=String(o.registration).trim().toUpperCase();await saveDB(o);$('#modalRoot').innerHTML='';await refresh();toast('Flight saved locally.')};
+}
+async function deleteFlight(id){if(!confirm('Delete this flight entry? This cannot be undone unless you have a backup.'))return;await delDB(id);await refresh();toast('Flight deleted.')}
+$('#addFlight').onclick=$('#addFlightDash').onclick=()=>openFlight();$('#printDash').onclick=()=>window.print();
+async function refresh(){flights=await allDB();renderDashboard();renderFlights();if(!$('#reports').classList.contains('hidden'))renderReports()}
+function statCard(label,value){return `<div class="stat"><div class="label">${label}</div><div class="value">${value}</div></div>`}
+function simpleTable(headers,rows){return `<div class="tablewrap"><table><thead><tr>${headers.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`}
+function renderReports(){
+ $('#reportStats').innerHTML=statCard('Flights',flights.length)+statCard('Total time',h('duration'))+statCard('Dual',h('dual'))+statCard('PIC',h('pic'))+statCard('XC',h('xc'))+statCard('Night',h('night'))+statCard('Instrument',timeStr(sum('instrument')+sum('simulatedInstrument')))+statCard('Landings',sum('landings'));
+ let years={};flights.forEach(f=>{let y=(f.date||'Undated').slice(0,4);if(!years[y])years[y]=[];years[y].push(f)});
+ $('#yearlyTable').innerHTML=simpleTable(['Year','Flights','Total','Dual','PIC','XC','Night','Instrument'],Object.entries(years).sort((a,b)=>b[0].localeCompare(a[0])).map(([y,a])=>[safe(y),a.length,h('duration',a),h('dual',a),h('pic',a),h('xc',a),h('night',a),timeStr(sum('instrument',a)+sum('simulatedInstrument',a))]));
+ let ac={};flights.forEach(f=>{let k=f.registration||'Unspecified';(ac[k]??=[]).push(f)});
+ $('#aircraftTable').innerHTML=simpleTable(['Registration','Aircraft type','Flights','Total time','Dual','PIC'],Object.entries(ac).map(([k,a])=>[safe(k),safe(a[0].aircraftType||'—'),a.length,h('duration',a),h('dual',a),h('pic',a)]));
+ let mo={};flights.forEach(f=>{let k=(f.date||'Undated').slice(0,7);(mo[k]??=[]).push(f)});
+ $('#monthTable').innerHTML=simpleTable(['Month','Flights','Total','Dual','PIC','XC','Night','Instrument'],Object.entries(mo).sort((a,b)=>b[0].localeCompare(a[0])).map(([k,a])=>[safe(k),a.length,h('duration',a),h('dual',a),h('pic',a),h('xc',a),h('night',a),timeStr(sum('instrument',a)+sum('simulatedInstrument',a))]));
+}
+function download(name,content,type){let blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function backup(){download('flight-logbook-backup-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({format:'flight-logbook-backup-v1',exportedAt:new Date().toISOString(),flights},null,2),'application/json')}
+$('#exportBackup').onclick=$('#exportBackup2').onclick=backup;$('#importBackup').onclick=$('#restore2').onclick=()=>{let i=$('#fileInput');i.accept='.json';i.dataset.mode='backup';i.click()};
+$('#importExcel').onclick=()=>{let i=$('#fileInput');i.accept='.xlsx,.xls,.csv,.json';i.dataset.mode='import';i.click()};
+function csvEscape(x){let s=String(x??'');return /[,"\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
+function exportCSV(){let cols=['entryDate','date','arrivalDate','registration','aircraftType','engineCategory','from','to','offBlock','onBlock','duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument','emergencySortie','instructor','takeoffs','landings','remarks'];let names=['Date of Entry','Date of Flight','Arrival Date','Aircraft Registration','Aircraft Type','Engine Category','From','To','Off Block','On Block','Duration','Dual','PIC','Local PIC','Night PIC','Cross Country','Cross Country Dual','Day Dual','Night Dual','Night','Instrument','Simulated Instrument','Emergency Sortie','Instructor','Take-offs','Landings','Remarks'];let rows=[names,...flights.map(f=>cols.map(k=>['duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'].includes(k)?timeStr(f[k]):f[k]??''))];download('flight-logbook.csv','\ufeff'+rows.map(r=>r.map(csvEscape).join(',')).join('\r\n'),'text/csv;charset=utf-8')}
+$('#exportCsv').onclick=$('#quickExport').onclick=exportCSV;
+function parseCSV(text){let rows=[],row=[],s='',q=false;for(let i=0;i<text.length;i++){let c=text[i];if(q){if(c==='"'&&text[i+1]==='"'){s+='"';i++}else if(c==='"')q=false;else s+=c}else{if(c==='"')q=true;else if(c===','){row.push(s);s=''}else if(c==='\n'){row.push(s.replace(/\r$/,''));rows.push(row);row=[];s=''}else s+=c}}if(s.length||row.length){row.push(s.replace(/\r$/,''));rows.push(row)}return rows}
+function keynorm(s){return String(s??'').toLowerCase().replace(/[^a-z0-9]/g,'')}
+function mapRow(obj){
+ let pairs=Object.entries(obj),get=names=>{for(let n of names){let found=pairs.find(([k,v])=>keynorm(k)===keynorm(n));if(found&&found[1]!==''&&found[1]!==null&&found[1]!==undefined)return found[1]}for(let n of names){let nn=keynorm(n),found=pairs.find(([k,v])=>keynorm(k).includes(nn)&&v!==''&&v!==null&&v!==undefined);if(found)return found[1]}return ''};
+ let duration=get(['duration','totaltime','flighttime','totalflighttime','airtime','blocktime','total']);let f={id:uid(),date:normalDate(get(['date','flightdate','day'])),registration:String(get(['registration','aircraftregistration','aircraftreg','reg','aircraft'])).trim().toUpperCase(),aircraftType:String(get(['aircrafttype','type','aircraftmodel'])),engineCategory:/^(me|multi|multi-engine|multiengine)$/i.test(String(get(['enginecategory','engine category','seme','engine'])) )?'ME':(/^(se|single|single-engine|singleengine)$/i.test(String(get(['enginecategory','engine category','seme','engine'])))?'SE':''),from:String(get(['from','departure','departureaerodrome','dep','departureairport'])),to:String(get(['to','arrival','destination','arrivalaerodrome','dest','arrivalairport'])),offBlock:String(get(['offblock','takeofftime','departuretime'])),onBlock:String(get(['onblock','landingtime','arrivaltime'])),duration:parseTime(duration),dual:parseTime(get(['dual','dualreceived','dualflight'])),pic:parseTime(get(['pic','pilotincommand'])),localPic:parseTime(get(['localpic','localpilotincommand'])),nightPic:parseTime(get(['nightpic','nightpilotincommand'])),xc:parseTime(get(['xc','crosscountry','crosscountrytime'])),crossCountryDual:parseTime(get(['crosscountrydual','xcdual'])),crossCountryPic:parseTime(get(['crosscountrypic','xcpic'])),dayDual:parseTime(get(['daydual','daydualreceived'])),nightDual:parseTime(get(['nightdual','nightdualreceived'])),night:parseTime(get(['night','nighttime'])),instrument:parseTime(get(['instrument','instrumenttime','actualinstrument','if'])),simulatedInstrument:parseTime(get(['simulatedinstrument','hood','hoodtime'])),emergencySortie:/^(yes|true|1|y)$/i.test(String(get(['emergenciessortie','emergency sortie','emergency','emergencysortie']))),instructor:String(get(['instructor','examiner'])),takeoffs:Number(get(['takeoffs','takeoff','nooftakeoffs']))||0,landings:Number(get(['landings','landing','nooflandings']))||0,remarks:String(get(['remarks','comments','route','exercise','notes']))};
+ // Avoid accidentally mapping aircraft type to registration when no dedicated registration column exists.
+ if(!f.date&&!f.registration&&!f.duration) return null;
+ return f}
+async function importRows(rows){if(!rows.length)throw Error('No rows found.');let headerIndex=rows.findIndex(r=>r.some(c=>['date','flightdate','aircraft','registration','duration','totaltime','flighttime'].includes(keynorm(c))));if(headerIndex<0)headerIndex=0;let headers=rows[headerIndex].map((x,i)=>String(x||`Column ${i+1}`).trim());let incoming=[];for(let r of rows.slice(headerIndex+1)){if(!r.some(x=>String(x??'').trim()))continue;let o={};headers.forEach((h,i)=>o[h]=r[i]??'');let f=mapRow(o);if(f)incoming.push(f)}if(!incoming.length)throw Error('No flight rows detected. Check that the first row contains column headings.');for(let f of incoming)await saveDB(f);await refresh();return incoming.length}
+async function readXlsx(arrayBuffer){
+ // Small built-in XLSX reader: first worksheet, shared strings, inline strings and numeric cells.
+ const bytes=new Uint8Array(arrayBuffer), view=new DataView(arrayBuffer);
+ function u16(o){return view.getUint16(o,true)}function u32(o){return view.getUint32(o,true)}
+ let eocd=-1;for(let p=bytes.length-22;p>=Math.max(0,bytes.length-65557);p--){if(u32(p)===0x06054b50){eocd=p;break}}if(eocd<0)throw Error('This does not look like an .xlsx file.');
+ let count=u16(eocd+10),pos=u32(eocd+16),files={};
+ async function inflate(data,method){if(method===0)return data;if(method!==8)throw Error('Unsupported compression in workbook.');if(!('DecompressionStream'in window))throw Error('This browser cannot unpack XLSX files. Try CSV import instead.');let ds=new DecompressionStream('deflate-raw');return new Uint8Array(await new Response(new Blob([data]).stream().pipeThrough(ds)).arrayBuffer())}
+ for(let n=0;n<count;n++){if(u32(pos)!==0x02014b50)break;let method=u16(pos+10),csize=u32(pos+20),nlen=u16(pos+28),elen=u16(pos+30),clen=u16(pos+32),lo=u32(pos+42),name=new TextDecoder().decode(bytes.slice(pos+46,pos+46+nlen));let lp=lo,ln=u16(lp+26),le=u16(lp+28),start=lp+30+ln+le;files[name]=await inflate(bytes.slice(start,start+csize),method);pos+=46+nlen+elen+clen}
+ const dec=name=>files[name]?new TextDecoder().decode(files[name]):'';
+ const xml=s=>new DOMParser().parseFromString(s,'application/xml');
+ let shared=[];if(files['xl/sharedStrings.xml']){let d=xml(dec('xl/sharedStrings.xml'));shared=[...d.getElementsByTagName('si')].map(si=>[...si.getElementsByTagName('t')].map(t=>t.textContent).join(''))}
+ let sheetName='xl/worksheets/sheet1.xml';let wb=xml(dec('xl/workbook.xml'));let sheets=wb.getElementsByTagName('sheet');if(sheets.length){let relId=sheets[0].getAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships','id');let rels=xml(dec('xl/_rels/workbook.xml.rels'));let rel=[...rels.getElementsByTagName('Relationship')].find(r=>r.getAttribute('Id')===relId);if(rel){let target=rel.getAttribute('Target').replace(/^\//,'');sheetName=target.startsWith('xl/')?target:'xl/'+target}}
+ let d=xml(dec(sheetName));if(!dec(sheetName))throw Error('Could not read the first worksheet. Save the workbook as .xlsx or CSV and try again.');
+ let rows=[];for(let row of [...d.getElementsByTagName('row')]){let cells=[...row.children].filter(x=>x.localName==='c'),vals=[];for(let c of cells){let ref=c.getAttribute('r')||'',letters=(ref.match(/[A-Z]+/)||['A'])[0],col=0;for(let ch of letters)col=col*26+ch.charCodeAt(0)-64;col--;let v=c.getElementsByTagName('v')[0]?.textContent??'';if(c.getAttribute('t')==='s')v=shared[Number(v)]??'';else if(c.getAttribute('t')==='inlineStr')v=[...c.getElementsByTagName('t')].map(t=>t.textContent).join('');vals[col]=v}rows.push(vals)}
+ return rows
+}
+$('#fileInput').addEventListener('change',async e=>{let file=e.target.files[0];if(!file)return;let mode=e.target.dataset.mode||'import';try{if(mode==='backup'||file.name.toLowerCase().endsWith('.json')){let data=JSON.parse(await file.text());let arr=Array.isArray(data)?data:data.flights;if(!Array.isArray(arr))throw Error('Backup JSON does not contain a flights array.');if(!confirm(`Import/restore ${arr.length} flight records? Existing entries with different IDs will remain. Re-importing the same bundled PDF file will update its matching IDs, but records already entered separately may duplicate.`))return;for(let x of arr){let f={...x,id:x.id||uid()};for(let k of ['duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'])if(typeof f[k]==='string')f[k]=parseTime(f[k]);await saveDB(f)}await refresh();toast(`Restored ${arr.length} entries.`)}else{let rows;if(file.name.toLowerCase().endsWith('.csv'))rows=parseCSV(await file.text());else rows=await readXlsx(await file.arrayBuffer());let n=await importRows(rows);toast(`Imported ${n} flight rows. Please verify totals.`)}}catch(err){alert('Import failed: '+err.message)}finally{e.target.value='';e.target.dataset.mode='import'}});
+$('#deleteAll').onclick=async()=>{if(confirm('Delete ALL flight records saved in this browser? Export a backup first if needed.')&&confirm('Final confirmation: permanently delete all local flight entries?')){await clearDB();await refresh();toast('All local entries deleted.')}};
+if('serviceWorker'in navigator&&location.protocol!=='file:'){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('#installBtn').classList.remove('hidden')});$('#installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('#installBtn').classList.add('hidden')}else toast('Use the browser menu and choose Install app / Add to Home screen.')};
+(async()=>{try{db=await openDB();await refresh()}catch(e){alert('Local database could not be opened. Please use a current Chrome, Edge, Firefox or Safari browser. '+e.message)}})();
+</script>
+</body></html>
