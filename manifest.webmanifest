@@ -1,9 +1,9 @@
 {
-  "id": "./",
+  "id": "./?app=flight-logbook-v2",
   "name": "Flight Logbook",
   "short_name": "Logbook",
   "description": "Offline flight logbook for pilots",
-  "start_url": "./index.html?source=pwa",
+  "start_url": "./index.html?source=pwa-v2",
   "scope": "./",
   "display": "standalone",
   "display_override": [
