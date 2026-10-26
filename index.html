@@ -60,6 +60,14 @@
  <section class="panel"><h2>Monthly totals</h2><div id="monthTable"></div></section>
  <section class="panel"><button onclick="window.print()">Print / Save as PDF</button></section>
 </main>
+<main id="documents" class="view hidden">
+ <section class="panel">
+  <div class="section-head"><div><h2>Documents</h2><div class="muted small">Track licence, medical, ID and other document validity dates.</div></div><button class="primary" id="addDocument" type="button">＋ Add</button></div>
+  <div class="toolbar" style="margin-top:12px"><input id="searchDocuments" placeholder="Search document name or number…"><select id="documentFilter"><option value="all">All documents</option><option value="expired">Expired</option><option value="soon">Expiring within 30 days</option><option value="valid">Valid</option><option value="na">No validity (NA)</option></select></div>
+  <div class="grid" id="documentSummary" style="margin-top:12px"></div>
+  <div id="documentTable" style="margin-top:12px"></div>
+ </section>
+</main>
 <main id="settings" class="view hidden">
  <section class="panel"><h2>Data & privacy</h2><p>Flight and document records are saved in this browser on this device. This app does not send records to a server. Use <b>Backup</b> regularly and keep the backup file somewhere safe.</p><div class="toolbar"><button id="exportBackup2">Download JSON backup</button><button id="restore2">Restore JSON backup</button><button class="danger" id="deleteAll">Delete all local flights</button></div></section>
  <section class="panel"><h2>Excel import format</h2><p>Import an <b>.xlsx</b> workbook or <b>.csv</b> file. The app reads the first worksheet and tries to match common column names. The first row should contain headers. After importing, inspect the entries and totals.</p><p>Recognised headings include: Date, Aircraft / Registration, Type, From / Departure, To / Arrival, Total Time / Duration, Dual, PIC, Local PIC, Night PIC, Cross Country / XC, Cross Country Dual/PIC, Day Dual, Night Dual, Night, Instrument / IF, Emergency Sortie, Instructor, Take-offs, Landings, Remarks.</p><p class="notice">If your existing Excel file uses unusual headings or stores flight time in Excel time format, import a copy first and verify the results. Import adds records; it does not automatically delete existing records.</p></section>
@@ -208,7 +216,7 @@ function openDocument(id=null){
  $('#documentForm').onsubmit=async e=>{e.preventDefault();let fd=new FormData(e.target),name=String(fd.get('name')||'').trim(),noValidity=fd.get('noValidity')==='yes';if(!name){toast('Enter a document name.');return}let doc={id:id||uid(),name,number:String(fd.get('number')||'').trim(),validFrom:noValidity?'NA':String(fd.get('validFrom')||''),validUpto:noValidity?'NA':String(fd.get('validUpto')||''),noValidity,updatedAt:new Date().toISOString()};if(!noValidity&&doc.validFrom&&doc.validUpto&&doc.validFrom>doc.validUpto){toast('Valid Upto must be on or after Validity From.');return}await saveDocumentDB(doc);$('#modalRoot').innerHTML='';await refresh();switchTab('documents');toast('Document saved on this device.')};
 }
 async function deleteDocument(id){let d=documents.find(x=>x.id===id);if(d&&confirm(`Delete document "${d.name}"?`)){await deleteDocumentDB(id);await refresh();toast('Document deleted.')}}
-$('#addDocument').onclick=()=>openDocument();
+if($('#addDocument')) $('#addDocument').onclick=()=>openDocument();
 $('#searchDocuments').addEventListener('input',renderDocuments);$('#documentFilter').addEventListener('change',renderDocuments);
 
 function statCard(label,value){return `<div class="stat"><div class="label">${label}</div><div class="value">${value}</div></div>`}
