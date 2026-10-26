@@ -24,7 +24,7 @@
  <div class="actions"><button id="installBtn" class="hidden">Install app</button><button id="exportBackup">Backup</button><button id="importBackup">Restore backup</button><button id="importExcel" class="primary">Import Excel / CSV</button><input id="fileInput" type="file" accept=".xlsx,.xls,.csv,.json" class="hidden"></div>
 </header>
 <nav class="tabs">
- <button class="tab active" data-tab="dashboard">Dashboard</button><button class="tab" data-tab="flights">Flight entries</button><button class="tab" data-tab="reports">Reports</button><button class="tab" data-tab="settings">Settings & help</button>
+ <button class="tab active" data-tab="dashboard">Dashboard</button><button class="tab" data-tab="flights">Flight entries</button><button class="tab" data-tab="reports">Reports</button><button class="tab" data-tab="documents">Documents</button><button class="tab" data-tab="settings">Settings & help</button>
 </nav>
 <main id="dashboard" class="view">
  <div class="grid">
@@ -61,7 +61,7 @@
  <section class="panel"><button onclick="window.print()">Print / Save as PDF</button></section>
 </main>
 <main id="settings" class="view hidden">
- <section class="panel"><h2>Data & privacy</h2><p>Flight records are saved in this browser on this device. This app does not send records to a server. Use <b>Backup</b> regularly and keep the backup file somewhere safe.</p><div class="toolbar"><button id="exportBackup2">Download JSON backup</button><button id="restore2">Restore JSON backup</button><button class="danger" id="deleteAll">Delete all local flights</button></div></section>
+ <section class="panel"><h2>Data & privacy</h2><p>Flight and document records are saved in this browser on this device. This app does not send records to a server. Use <b>Backup</b> regularly and keep the backup file somewhere safe.</p><div class="toolbar"><button id="exportBackup2">Download JSON backup</button><button id="restore2">Restore JSON backup</button><button class="danger" id="deleteAll">Delete all local flights</button></div></section>
  <section class="panel"><h2>Excel import format</h2><p>Import an <b>.xlsx</b> workbook or <b>.csv</b> file. The app reads the first worksheet and tries to match common column names. The first row should contain headers. After importing, inspect the entries and totals.</p><p>Recognised headings include: Date, Aircraft / Registration, Type, From / Departure, To / Arrival, Total Time / Duration, Dual, PIC, Local PIC, Night PIC, Cross Country / XC, Cross Country Dual/PIC, Day Dual, Night Dual, Night, Instrument / IF, Emergency Sortie, Instructor, Take-offs, Landings, Remarks.</p><p class="notice">If your existing Excel file uses unusual headings or stores flight time in Excel time format, import a copy first and verify the results. Import adds records; it does not automatically delete existing records.</p></section>
  <section class="panel"><h2>Time entry guide</h2><p>Enter duration as <b>1:25</b> for 1 hour 25 minutes, or as decimal hours such as <b>1.4</b> only if that is what your source file uses. For flight entries, use hours and minutes (HH:MM). Category times are not automatically assumed to equal total flight time.</p><p class="notice">This is a personal tracking aid, not an official DGCA logbook, endorsement, or substitute for your flying school's records. Check applicable DGCA requirements and your instructor's records before relying on any totals.</p></section>
  <section class="panel"><h2>Install on Android / laptop</h2><ol><li>Upload the included app files to a static HTTPS host (for example, your own GitHub Pages site) or run from localhost. Opening index.html directly is fine for a quick test, but install/offline caching requires a secure origin.</li><li>Open the hosted app once while online. On Android Chrome, use the browser menu → <b>Install app</b> or <b>Add to Home screen</b>. On desktop Chrome/Edge, use the install icon in the address bar or browser menu.</li><li>After the app has loaded once, reopen it from the installed icon. The app shell works offline; records stay in that browser profile.</li><li>For use on multiple devices, restore a JSON backup separately on each device. Data does not sync automatically.</li></ol></section>
@@ -70,8 +70,8 @@
 </div>
 <div id="modalRoot"></div><div id="toast" class="toast hidden" role="status"></div>
 <script>
-const DB_NAME='pilot-flight-logbook', DB_VERSION=1, STORE='flights';
-let db, flights=[], editId=null, deferredPrompt=null;
+const DB_NAME='pilot-flight-logbook', DB_VERSION=2, STORE='flights', DOC_STORE='documents';
+let db, flights=[], documents=[], editId=null, deferredPrompt=null;
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const fields=['entryDate','date','arrivalDate','registration','aircraftType','engineCategory','from','to','offBlock','onBlock','duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument','emergencySortie','instructor','takeoffs','landings','remarks'];
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
@@ -84,7 +84,12 @@ function normalDate(v){if(!v)return '';if(typeof v==='number'){// Excel serial d
  let m=s.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{2,4})$/);if(m){let a=+m[1],b=+m[2],y=+m[3];if(y<100)y+=2000; // default day/month/year; swap only if first > 12
  let day=a,month=b;if(a<=12&&b>12){month=a;day=b}return `${y}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`}
  let d=new Date(s);return isNaN(d)?s:d.toISOString().slice(0,10)}
-function openDB(){return new Promise((resolve,reject)=>{let r=indexedDB.open(DB_NAME,DB_VERSION);r.onupgradeneeded=()=>{let d=r.result;if(!d.objectStoreNames.contains(STORE)){let st=d.createObjectStore(STORE,{keyPath:'id'});st.createIndex('date','date')}};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+function openDB(){return new Promise((resolve,reject)=>{let r=indexedDB.open(DB_NAME,DB_VERSION);r.onupgradeneeded=()=>{let d=r.result;if(!d.objectStoreNames.contains(STORE)){let st=d.createObjectStore(STORE,{keyPath:'id'});st.createIndex('date','date')}if(!d.objectStoreNames.contains(DOC_STORE)){let ds=d.createObjectStore(DOC_STORE,{keyPath:'id'});ds.createIndex('name','name')}};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+function allDocumentsDB(){return new Promise((res,rej)=>{let r=db.transaction(DOC_STORE).objectStore(DOC_STORE).getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>rej(r.error)})}
+function saveDocumentDB(d){return new Promise((res,rej)=>{let r=db.transaction(DOC_STORE,'readwrite').objectStore(DOC_STORE).put(d);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+function deleteDocumentDB(id){return new Promise((res,rej)=>{let r=db.transaction(DOC_STORE,'readwrite').objectStore(DOC_STORE).delete(id);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+function documentDaysLeft(d){if(d.noValidity||!d.validUpto||String(d.validUpto).toUpperCase()==='NA')return 'NA';let x=new Date(d.validUpto+'T00:00:00');if(isNaN(x))return 'NA';let today=new Date();today.setHours(0,0,0,0);return Math.ceil((x.getTime()-today.getTime())/86400000)}
+function documentStatus(d){let n=documentDaysLeft(d);if(n==='NA')return {label:'NA',kind:'na'};if(n<0)return {label:'Expired',kind:'expired'};if(n<=30)return {label:n===0?'Expires today':`Expires in ${n} day${n===1?'':'s'}`,kind:'soon'};return {label:'Valid',kind:'valid'}}
 function allDB(){return new Promise((res,rej)=>{let r=db.transaction(STORE).objectStore(STORE).getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>rej(r.error)})}
 function saveDB(f){return new Promise((res,rej)=>{let r=db.transaction(STORE,'readwrite').objectStore(STORE).put(f);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
 function delDB(id){return new Promise((res,rej)=>{let r=db.transaction(STORE,'readwrite').objectStore(STORE).delete(id);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
@@ -94,7 +99,7 @@ function sum(key,arr=flights){return arr.reduce((a,f)=>a+(Number(f[key])||0),0)}
 function totalMinutes(f){return Number(f.duration)||0}
 function h(key,arr=flights){return timeStr(sum(key,arr))}
 function safe(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function switchTab(tab){$$('.view').forEach(x=>x.classList.toggle('hidden',x.id!==tab));$$('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab));if(tab==='flights')renderFlights();if(tab==='reports')renderReports();if(tab==='dashboard')renderDashboard();window.scrollTo(0,0)}
+function switchTab(tab){$$('.view').forEach(x=>x.classList.toggle('hidden',x.id!==tab));$$('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab));if(tab==='flights')renderFlights();if(tab==='reports')renderReports();if(tab==='documents')renderDocuments();if(tab==='dashboard')renderDashboard();window.scrollTo(0,0)}
 $$('.tab').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
 $$('[data-goto]').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.goto)));
 function isME(f){if(f.engineCategory==='ME')return true;if(f.engineCategory==='SE')return false;let t=String(f.aircraftType||'').toLowerCase();return /\b(me|multi|multiengine|multi-engine|twin|da ?42|p2006t)\b/.test(t)}
@@ -175,7 +180,37 @@ function openFlight(id=null){
 }
 async function deleteFlight(id){if(!confirm('Delete this flight entry? This cannot be undone unless you have a backup.'))return;await delDB(id);await refresh();toast('Flight deleted.')}
 $('#addFlight').onclick=$('#addFlightDash').onclick=()=>openFlight();$('#printDash').onclick=()=>window.print();
-async function refresh(){flights=await allDB();renderDashboard();renderFlights();if(!$('#reports').classList.contains('hidden'))renderReports()}
+async function refresh(){flights=await allDB();documents=await allDocumentsDB();renderDashboard();renderFlights();if(!$('#reports').classList.contains('hidden'))renderReports();if(!$('#documents').classList.contains('hidden'))renderDocuments()}
+function renderDocuments(){
+ const q=($('#searchDocuments').value||'').toLowerCase().trim(),filter=$('#documentFilter').value;
+ let arr=documents.filter(d=>`${d.name||''} ${d.number||''}`.toLowerCase().includes(q));
+ arr=arr.filter(d=>{let s=documentStatus(d);return filter==='all'||(filter==='na'&&s.kind==='na')||(filter==='expired'&&s.kind==='expired')||(filter==='soon'&&s.kind==='soon')||(filter==='valid'&&s.kind==='valid')});
+ arr.sort((a,b)=>{let x=documentDaysLeft(a),y=documentDaysLeft(b);if(x==='NA')return y==='NA'?String(a.name).localeCompare(String(b.name)):1;if(y==='NA')return -1;return x-y});
+ $('#documentTable').innerHTML=arr.length?`<div class="tablewrap"><table style="min-width:760px"><thead><tr><th>Document name</th><th>Number</th><th>Validity from</th><th>Valid upto</th><th>Days left</th><th>Status</th><th>Actions</th></tr></thead><tbody>${arr.map(d=>{let n=documentDaysLeft(d),s=documentStatus(d),day=n==='NA'?'NA':n<0?`Expired ${Math.abs(n)} day${Math.abs(n)===1?'':'s'} ago`:String(n),style=s.kind==='expired'?'background:#fde8e7;color:#b42318':s.kind==='soon'?'background:#fff1d6;color:#8a5700':s.kind==='valid'?'background:#e8f6ee;color:#16794b':'';return `<tr><td><b>${safe(d.name||'—')}</b></td><td>${safe(d.number||'—')}</td><td>${safe(d.validFrom&&d.validFrom!=='NA'?fmtDate(d.validFrom):'—')}</td><td>${safe(d.validUpto&&d.validUpto!=='NA'?fmtDate(d.validUpto):'—')}</td><td><b>${safe(day)}</b></td><td><span class="pill" style="${style}">${safe(s.label)}</span></td><td><button data-doc-edit="${safe(d.id)}">Edit</button> <button class="danger" data-doc-delete="${safe(d.id)}">Delete</button></td></tr>`}).join('')}</tbody></table></div>`:'<div class="empty">No documents found. Press ＋ Add to add your first document.</div>';
+ $$('[data-doc-edit]').forEach(b=>b.onclick=()=>openDocument(b.dataset.docEdit));
+ $$('[data-doc-delete]').forEach(b=>b.onclick=()=>deleteDocument(b.dataset.docDelete));
+ const count=k=>documents.filter(d=>documentStatus(d).kind===k).length;
+ $('#documentSummary').innerHTML=statCard('Total documents',documents.length)+statCard('Expired',count('expired'))+statCard('Expiring within 30 days',count('soon'))+statCard('Valid',count('valid'))+statCard('No validity / NA',count('na'));
+}
+function openDocument(id=null){
+ const d=documents.find(x=>x.id===id)||{name:'',number:'',validFrom:'',validUpto:'',noValidity:false};
+ $('#modalRoot').innerHTML=`<div class="modalback"><div class="modal" style="max-width:650px"><div class="modalhead"><h2>${id?'Edit document':'Add document'}</h2><button id="closeDocModal" type="button">✕ Close</button></div><form id="documentForm"><div class="formgrid">
+ ${field('Document Name *','name',d.name||'')}${field('Number','number',d.number||'')}
+ ${field('Validity From','validFrom',d.validFrom&&d.validFrom!=='NA'?d.validFrom:'','date')}
+ ${field('Valid Upto','validUpto',d.validUpto&&d.validUpto!=='NA'?d.validUpto:'','date')}
+ <div class="field span2"><label>Days Left</label><input id="docDaysLeft" value="${safe(documentDaysLeft(d))}" readonly><div class="muted small">Calculated automatically. If validity does not apply, select NA.</div></div>
+ <div class="field span2"><label>Validity option</label><select name="noValidity" id="docNoValidity"><option value="no" ${!d.noValidity?'selected':''}>Has validity dates</option><option value="yes" ${d.noValidity||d.validUpto==='NA'?'selected':''}>No validity (NA)</option></select></div>
+ </div><div class="toolbar" style="margin-top:14px"><button class="primary" type="submit">Save document</button><button type="button" id="cancelDoc">Cancel</button></div></form></div></div>`;
+ const from=$('#documentForm [name="validFrom"]'),upto=$('#documentForm [name="validUpto"]'),na=$('#docNoValidity');
+ function updateDays(){if(na.value==='yes'){from.disabled=upto.disabled=true;from.value=upto.value='';$('#docDaysLeft').value='NA'}else{from.disabled=upto.disabled=false;$('#docDaysLeft').value=upto.value?documentDaysLeft({validUpto:upto.value}):'NA'}}
+ na.onchange=updateDays;upto.onchange=updateDays;updateDays();
+ $('#closeDocModal').onclick=$('#cancelDoc').onclick=()=>$('#modalRoot').innerHTML='';
+ $('#documentForm').onsubmit=async e=>{e.preventDefault();let fd=new FormData(e.target),name=String(fd.get('name')||'').trim(),noValidity=fd.get('noValidity')==='yes';if(!name){toast('Enter a document name.');return}let doc={id:id||uid(),name,number:String(fd.get('number')||'').trim(),validFrom:noValidity?'NA':String(fd.get('validFrom')||''),validUpto:noValidity?'NA':String(fd.get('validUpto')||''),noValidity,updatedAt:new Date().toISOString()};if(!noValidity&&doc.validFrom&&doc.validUpto&&doc.validFrom>doc.validUpto){toast('Valid Upto must be on or after Validity From.');return}await saveDocumentDB(doc);$('#modalRoot').innerHTML='';await refresh();switchTab('documents');toast('Document saved on this device.')};
+}
+async function deleteDocument(id){let d=documents.find(x=>x.id===id);if(d&&confirm(`Delete document "${d.name}"?`)){await deleteDocumentDB(id);await refresh();toast('Document deleted.')}}
+$('#addDocument').onclick=()=>openDocument();
+$('#searchDocuments').addEventListener('input',renderDocuments);$('#documentFilter').addEventListener('change',renderDocuments);
+
 function statCard(label,value){return `<div class="stat"><div class="label">${label}</div><div class="value">${value}</div></div>`}
 function simpleTable(headers,rows){return `<div class="tablewrap"><table><thead><tr>${headers.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`}
 function renderReports(){
@@ -188,7 +223,7 @@ function renderReports(){
  $('#monthTable').innerHTML=simpleTable(['Month','Flights','Total','Dual','PIC','XC','Night','Instrument'],Object.entries(mo).sort((a,b)=>b[0].localeCompare(a[0])).map(([k,a])=>[safe(k),a.length,h('duration',a),h('dual',a),h('pic',a),h('xc',a),h('night',a),timeStr(sum('instrument',a)+sum('simulatedInstrument',a))]));
 }
 function download(name,content,type){let blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-function backup(){download('flight-logbook-backup-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({format:'flight-logbook-backup-v1',exportedAt:new Date().toISOString(),flights},null,2),'application/json')}
+async function backup(){documents=await allDocumentsDB();download('flight-logbook-backup-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({format:'flight-logbook-backup-v2',exportedAt:new Date().toISOString(),flights,documents},null,2),'application/json')}
 $('#exportBackup').onclick=$('#exportBackup2').onclick=backup;$('#importBackup').onclick=$('#restore2').onclick=()=>{let i=$('#fileInput');i.accept='.json';i.dataset.mode='backup';i.click()};
 $('#importExcel').onclick=()=>{let i=$('#fileInput');i.accept='.xlsx,.xls,.csv,.json';i.dataset.mode='import';i.click()};
 function csvEscape(x){let s=String(x??'');return /[,"\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
@@ -219,7 +254,7 @@ async function readXlsx(arrayBuffer){
  let rows=[];for(let row of [...d.getElementsByTagName('row')]){let cells=[...row.children].filter(x=>x.localName==='c'),vals=[];for(let c of cells){let ref=c.getAttribute('r')||'',letters=(ref.match(/[A-Z]+/)||['A'])[0],col=0;for(let ch of letters)col=col*26+ch.charCodeAt(0)-64;col--;let v=c.getElementsByTagName('v')[0]?.textContent??'';if(c.getAttribute('t')==='s')v=shared[Number(v)]??'';else if(c.getAttribute('t')==='inlineStr')v=[...c.getElementsByTagName('t')].map(t=>t.textContent).join('');vals[col]=v}rows.push(vals)}
  return rows
 }
-$('#fileInput').addEventListener('change',async e=>{let file=e.target.files[0];if(!file)return;let mode=e.target.dataset.mode||'import';try{if(mode==='backup'||file.name.toLowerCase().endsWith('.json')){let data=JSON.parse(await file.text());let arr=Array.isArray(data)?data:data.flights;if(!Array.isArray(arr))throw Error('Backup JSON does not contain a flights array.');if(!confirm(`Import/restore ${arr.length} flight records? Existing entries with different IDs will remain. Re-importing the same bundled PDF file will update its matching IDs, but records already entered separately may duplicate.`))return;for(let x of arr){let f={...x,id:x.id||uid()};for(let k of ['duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'])if(typeof f[k]==='string')f[k]=parseTime(f[k]);await saveDB(f)}await refresh();toast(`Restored ${arr.length} entries.`)}else{let rows;if(file.name.toLowerCase().endsWith('.csv'))rows=parseCSV(await file.text());else rows=await readXlsx(await file.arrayBuffer());let n=await importRows(rows);toast(`Imported ${n} flight rows. Please verify totals.`)}}catch(err){alert('Import failed: '+err.message)}finally{e.target.value='';e.target.dataset.mode='import'}});
+$('#fileInput').addEventListener('change',async e=>{let file=e.target.files[0];if(!file)return;let mode=e.target.dataset.mode||'import';try{if(mode==='backup'||file.name.toLowerCase().endsWith('.json')){let data=JSON.parse(await file.text());let arr=Array.isArray(data)?data:data.flights;if(!Array.isArray(arr))throw Error('Backup JSON does not contain a flights array.');let docs=Array.isArray(data.documents)?data.documents:[];if(!confirm(`Import/restore ${arr.length} flight records and ${docs.length} documents? Existing entries with different IDs will remain.`))return;for(let x of arr){let f={...x,id:x.id||uid()};for(let k of ['duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'])if(typeof f[k]==='string')f[k]=parseTime(f[k]);await saveDB(f)}for(let x of docs)await saveDocumentDB({...x,id:x.id||uid()});await refresh();toast(`Restored ${arr.length} flights and ${docs.length} documents.`)}else{let rows;if(file.name.toLowerCase().endsWith('.csv'))rows=parseCSV(await file.text());else rows=await readXlsx(await file.arrayBuffer());let n=await importRows(rows);toast(`Imported ${n} flight rows. Please verify totals.`)}}catch(err){alert('Import failed: '+err.message)}finally{e.target.value='';e.target.dataset.mode='import'}});
 $('#deleteAll').onclick=async()=>{if(confirm('Delete ALL flight records saved in this browser? Export a backup first if needed.')&&confirm('Final confirmation: permanently delete all local flight entries?')){await clearDB();await refresh();toast('All local entries deleted.')}};
 if('serviceWorker'in navigator&&location.protocol!=='file:'){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('#installBtn').classList.remove('hidden')});$('#installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('#installBtn').classList.add('hidden')}else toast('Use the browser menu and choose Install app / Add to Home screen.')};
