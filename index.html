@@ -153,7 +153,7 @@ function renderFDTL(){
 }
 $('#fdtlDate')?.addEventListener('change',renderFDTL);
 function renderDashboard(){
- $('#s-total').textContent=h('duration');$('#s-dual').textContent=h('dual');$('#s-pic').textContent=h('pic');$('#s-night').textContent=h('night');$('#s-xc').textContent=h('xc');$('#s-inst').textContent=timeStr(sum('instrument')+sum('simulatedInstrument'));$('#s-count').textContent=`${flights.length} flight${flights.length===1?'':'s'} recorded`;
+ $('#s-total').textContent=h('duration');$('#s-dual').textContent=h('dual');$('#s-pic').textContent=h('pic');$('#s-night').textContent=h('night');$('#s-xc').textContent=h('xc');$('#s-inst').textContent=timeStr(sum('instrument')+sum('simulatedInstrument'));
  let sorted=[...flights].sort((a,b)=>(b.date||'').localeCompare(a.date||''));$('#s-last').textContent=sorted[0]?.date?fmtDate(sorted[0].date):'—';$('#s-aircraft').textContent=new Set(flights.map(f=>f.registration).filter(Boolean)).size;
  const lastDualDate=latestDate(flights,f=>(+f.dual||0)>0);
  const lastPicDate=latestDate(flights,f=>(+f.pic||0)>0);
