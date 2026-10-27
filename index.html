@@ -28,14 +28,18 @@
 </nav>
 <main id="dashboard" class="view">
  <div class="grid">
-  <div class="stat"><div class="label">Total flight time</div><div class="value" id="s-total">00:00</div><div class="hint" id="s-count">0 flights recorded</div></div>
-  <div class="stat"><div class="label">Dual received</div><div class="value" id="s-dual">00:00</div><div class="hint">Training time</div></div>
-  <div class="stat"><div class="label">Pilot in command</div><div class="value" id="s-pic">00:00</div><div class="hint">PIC time</div></div>
-  <div class="stat"><div class="label">Night flight</div><div class="value" id="s-night">00:00</div><div class="hint">Recorded night time</div></div>
-  <div class="stat"><div class="label">Cross-country</div><div class="value" id="s-xc">00:00</div><div class="hint">XC time</div></div>
-  <div class="stat"><div class="label">Instrument</div><div class="value" id="s-inst">00:00</div><div class="hint">Instrument time</div></div>
-  <div class="stat"><div class="label">Last flown</div><div class="value" id="s-last">—</div><div class="hint">Most recent date</div></div>
-  <div class="stat"><div class="label">Aircraft used</div><div class="value" id="s-aircraft">0</div><div class="hint">Unique registrations</div></div>
+  <div class="stat"><div class="label">Total flight time</div><div class="value" id="s-total">00:00</div></div>
+  <div class="stat"><div class="label">Dual received</div><div class="value" id="s-dual">00:00</div></div>
+  <div class="stat"><div class="label">Pilot in command</div><div class="value" id="s-pic">00:00</div></div>
+  <div class="stat"><div class="label">Night flight</div><div class="value" id="s-night">00:00</div></div>
+  <div class="stat"><div class="label">Cross-country</div><div class="value" id="s-xc">00:00</div></div>
+  <div class="stat"><div class="label">Instrument</div><div class="value" id="s-inst">00:00</div></div>
+  <div class="stat"><div class="label">Last flown</div><div class="value" id="s-last">—</div></div>
+  <div class="stat"><div class="label">Aircraft used</div><div class="value" id="s-aircraft">0</div></div>
+  <div class="stat"><div class="label">Days since last dual</div><div class="value" id="s-days-dual">—</div></div>
+  <div class="stat"><div class="label">Days since last PIC</div><div class="value" id="s-days-pic">—</div></div>
+  <div class="stat"><div class="label">Last flown dual</div><div class="value" id="s-last-dual">—</div></div>
+  <div class="stat"><div class="label">Last flown PIC</div><div class="value" id="s-last-pic">—</div></div>
  </div>
  <section class="panel"><h2>Flying status summary</h2><p class="muted small">Weekly periods use calendar days 1–7, 8–14, 15–21 and 22–month end. SE/ME is estimated from the aircraft type text; review aircraft classifications.</p><div class="grid" id="statusStats"></div></section>
  <section class="panel" id="fdtlPanel">
@@ -121,12 +125,19 @@ function renderFDTL(){
  const anchor=input.value;if(!anchor){$('#fdtlTable').innerHTML='<p class="muted">Choose a reference date.</p>';return}
  const totals=FDTL_WINDOWS.map(w=>{let start=dateMinusDays(anchor,w.days-1);let mins=sum('duration',flights.filter(f=>(f.date||'')>=start&&(f.date||'')<=anchor));return {...w,start,mins,remaining:w.limit-mins}});
  const daily=totals[0];
- $('#fdtlTable').innerHTML=`<div class="tablewrap"><table style="min-width:550px"><thead><tr><th>Days</th><th>Flight time</th><th>Reference limit</th><th>Remaining</th></tr></thead><tbody>${totals.map(w=>`<tr><td><b>${w.label}</b><br><span class="muted small">${safe(fmtDate(w.start))} – ${safe(fmtDate(anchor))}</span></td><td><b>${timeStr(w.mins)}</b></td><td>${timeStr(w.limit)}</td><td><span class="pill" style="${w.remaining<0?'background:#fde8e7;color:#b42318':'background:#e8f6ee;color:#16794b'}">${w.remaining<0?'Exceeded by '+timeStr(-w.remaining):timeStr(w.remaining)}</span></td></tr>`).join('')}</tbody></table></div><div class="stat" style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;gap:12px"><div><div class="label">Remaining for selected day</div><div class="hint">8:00 reference limit minus flight time on ${safe(fmtDate(anchor))}</div></div><div class="value" style="font-size:24px;color:${daily.remaining<0?'var(--red)':'var(--green)'}">${daily.remaining<0?'−'+timeStr(-daily.remaining):timeStr(daily.remaining)}</div></div>`;
+ $('#fdtlTable').innerHTML=`<div class="tablewrap"><table style="min-width:550px"><thead><tr><th>Days</th><th>Flight time</th><th>Reference limit</th><th>Remaining</th></tr></thead><tbody>${totals.map(w=>`<tr><td><b>${w.label}</b><br><span class="muted small">${safe(fmtDate(w.start))} – ${safe(fmtDate(anchor))}</span></td><td><b>${timeStr(w.mins)}</b></td><td>${timeStr(w.limit)}</td><td><span class="pill" style="${w.remaining<0?'background:#fde8e7;color:#b42318':'background:#e8f6ee;color:#16794b'}">${w.remaining<0?'Exceeded by '+timeStr(-w.remaining):timeStr(w.remaining)}</span></td></tr>`).join('')}</tbody></table></div><div class="stat" style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;gap:12px"><div><div class="label">Remaining for selected day</div></div><div class="value" style="font-size:24px;color:${daily.remaining<0?'var(--red)':'var(--green)'}">${daily.remaining<0?'−'+timeStr(-daily.remaining):timeStr(daily.remaining)}</div></div>`;
 }
 $('#fdtlDate')?.addEventListener('change',renderFDTL);
 function renderDashboard(){
  $('#s-total').textContent=h('duration');$('#s-dual').textContent=h('dual');$('#s-pic').textContent=h('pic');$('#s-night').textContent=h('night');$('#s-xc').textContent=h('xc');$('#s-inst').textContent=timeStr(sum('instrument')+sum('simulatedInstrument'));$('#s-count').textContent=`${flights.length} flight${flights.length===1?'':'s'} recorded`;
  let sorted=[...flights].sort((a,b)=>(b.date||'').localeCompare(a.date||''));$('#s-last').textContent=sorted[0]?.date?fmtDate(sorted[0].date):'—';$('#s-aircraft').textContent=new Set(flights.map(f=>f.registration).filter(Boolean)).size;
+ const lastDualDate=latestDate(flights,f=>(+f.dual||0)>0);
+ const lastPicDate=latestDate(flights,f=>(+f.pic||0)>0);
+ const daysSince=date=>{if(!date)return '—';const [y,m,d]=date.split('-').map(Number);const flightDay=new Date(y,m-1,d);const today=new Date();today.setHours(0,0,0,0);return String(Math.max(0,Math.floor((today-flightDay)/86400000)));};
+ $('#s-days-dual').textContent=daysSince(lastDualDate);
+ $('#s-days-pic').textContent=daysSince(lastPicDate);
+ $('#s-last-dual').textContent=lastDualDate?fmtDate(lastDualDate):'—';
+ $('#s-last-pic').textContent=lastPicDate?fmtDate(lastPicDate):'—';
  const now=new Date(),ym=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`,monthFlights=flights.filter(f=>(f.date||'').startsWith(ym));
  const weekTotal=n=>sum('duration',monthFlights.filter(f=>{let day=Number((f.date||'').slice(8,10));return n===1?day>=1&&day<=7:n===2?day>=8&&day<=14:n===3?day>=15&&day<=21:day>=22}));
  const last3=new Date(now.getFullYear(),now.getMonth()-2,1),last3key=`${last3.getFullYear()}-${String(last3.getMonth()+1).padStart(2,'0')}`;
