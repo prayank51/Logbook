@@ -82,7 +82,7 @@
 </div>
 <div id="modalRoot"></div><div id="toast" class="toast hidden" role="status"></div>
 <script>
-const DB_NAME='pilot-flight-logbook', DB_VERSION=2, STORE='flights', DOC_STORE='documents';
+const DB_NAME='pilot-flight-logbook', DB_VERSION=3, STORE='flights', DOC_STORE='documents';
 let db, flights=[], documents=[], editId=null, deferredPrompt=null;
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const fields=['entryDate','date','arrivalDate','registration','aircraftType','engineCategory','from','to','offBlock','onBlock','duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument','emergencySortie','instructor','takeoffs','landings','remarks'];
@@ -96,7 +96,31 @@ function normalDate(v){if(!v)return '';if(typeof v==='number'){// Excel serial d
  let m=s.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{2,4})$/);if(m){let a=+m[1],b=+m[2],y=+m[3];if(y<100)y+=2000; // default day/month/year; swap only if first > 12
  let day=a,month=b;if(a<=12&&b>12){month=a;day=b}return `${y}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`}
  let d=new Date(s);return isNaN(d)?s:d.toISOString().slice(0,10)}
-function openDB(){return new Promise((resolve,reject)=>{let r=indexedDB.open(DB_NAME,DB_VERSION);r.onupgradeneeded=()=>{let d=r.result;if(!d.objectStoreNames.contains(STORE)){let st=d.createObjectStore(STORE,{keyPath:'id'});st.createIndex('date','date')}if(!d.objectStoreNames.contains(DOC_STORE)){let ds=d.createObjectStore(DOC_STORE,{keyPath:'id'});ds.createIndex('name','name')}};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+function openDB(){return new Promise((resolve,reject)=>{
+ if(!('indexedDB' in window)){reject(new Error('IndexedDB is not available in this browser context.'));return}
+ let r;
+ try{r=indexedDB.open(DB_NAME,DB_VERSION)}catch(e){reject(e);return}
+ r.onupgradeneeded=()=>{
+  const d=r.result;
+  if(!d.objectStoreNames.contains(STORE)){
+   const st=d.createObjectStore(STORE,{keyPath:'id'});
+   st.createIndex('date','date');
+  }else{
+   const st=r.transaction.objectStore(STORE);
+   if(!st.indexNames.contains('date'))st.createIndex('date','date');
+  }
+  if(!d.objectStoreNames.contains(DOC_STORE)){
+   const ds=d.createObjectStore(DOC_STORE,{keyPath:'id'});
+   ds.createIndex('name','name');
+  }else{
+   const ds=r.transaction.objectStore(DOC_STORE);
+   if(!ds.indexNames.contains('name'))ds.createIndex('name','name');
+  }
+ };
+ r.onsuccess=()=>{const d=r.result;d.onversionchange=()=>d.close();resolve(d)};
+ r.onerror=()=>reject(r.error||new Error('Unknown IndexedDB open error'));
+ r.onblocked=()=>reject(new Error('Database upgrade is blocked by another open Flight Logbook tab. Close other tabs or the installed app and retry.'));
+})}
 function allDocumentsDB(){return new Promise((res,rej)=>{let r=db.transaction(DOC_STORE).objectStore(DOC_STORE).getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>rej(r.error)})}
 function saveDocumentDB(d){return new Promise((res,rej)=>{let r=db.transaction(DOC_STORE,'readwrite').objectStore(DOC_STORE).put(d);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
 function deleteDocumentDB(id){return new Promise((res,rej)=>{let r=db.transaction(DOC_STORE,'readwrite').objectStore(DOC_STORE).delete(id);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
@@ -277,6 +301,6 @@ $('#fileInput').addEventListener('change',async e=>{let file=e.target.files[0];i
 $('#deleteAll').onclick=async()=>{if(confirm('Delete ALL flight records saved in this browser? Export a backup first if needed.')&&confirm('Final confirmation: permanently delete all local flight entries?')){await clearDB();await refresh();toast('All local entries deleted.')}};
 if('serviceWorker'in navigator&&location.protocol!=='file:'){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('#installBtn').classList.remove('hidden')});$('#installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('#installBtn').classList.add('hidden')}else toast('Use the browser menu and choose Install app / Add to Home screen.')};
-(async()=>{try{db=await openDB();await refresh()}catch(e){alert('Local database could not be opened. Please use a current Chrome, Edge, Firefox or Safari browser. '+e.message)}})();
+(async()=>{try{db=await openDB();await refresh()}catch(e){console.error('Flight Logbook database startup failed:',e);alert('Flight Logbook could not load its local database or records. Your saved data has not been intentionally deleted. Close other Flight Logbook tabs/apps, reopen this page, and if the problem continues send this error: '+(e&&e.message?e.message:String(e)))}})();
 </script>
 </body></html>
