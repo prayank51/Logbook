@@ -243,6 +243,37 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:1
  .tab{font-size:14px!important;line-height:1.18;font-weight:700;padding:10px 3px;min-height:52px;letter-spacing:-.15px;}
 }
 @media(max-width:360px){.tab{font-size:12px!important;padding-left:1px;padding-right:1px;}}
+
+/* Mobile logbook readability: keep the page vertical, but allow the wide data tables to scroll internally. */
+@media (max-width: 760px) {
+  #recent .tablewrap, #flightTable .tablewrap, .logbook-wrap, #fdtlTable .tablewrap {
+    display:block !important;
+    width:100% !important;
+    max-width:100% !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain;
+  }
+  #recent table, #flightTable table, .logbook-table {
+    width:max-content !important;
+    min-width:1050px !important;
+    table-layout:auto !important;
+  }
+  #recent th, #recent td, #flightTable th, #flightTable td, .logbook-table th, .logbook-table td {
+    white-space:normal !important;
+    overflow-wrap:normal !important;
+    word-break:normal !important;
+    min-width:58px;
+    font-size:12px !important;
+    line-height:1.35;
+    padding:9px 8px !important;
+  }
+  #recent th, #flightTable th, .logbook-table th { min-width:66px; }
+  #fdtlTable .tablewrap { overflow-x:auto !important; }
+  #fdtlTable table { width:max-content !important; min-width:680px !important; table-layout:auto !important; }
+  #fdtlTable th, #fdtlTable td { white-space:normal !important; overflow-wrap:normal !important; word-break:normal !important; min-width:110px; font-size:12px !important; padding:10px 12px !important; }
+}
 </style>
 </head>
 <body>
@@ -424,7 +455,7 @@ function renderDashboard(){
  const se=flights.filter(f=>!isME(f)),me=flights.filter(isME),lastDual=latestDate(flights,f=>(+f.dual||0)>0),afterDual=lastDual?sum('duration',flights.filter(f=>(f.date||'')>lastDual)):sum('duration');
  const lastEmergency=latestDate(flights,f=>f.emergencySortie===true||f.emergencySortie==='true'||f.emergencySortie==='yes');
  const statItems=[['Last flown date',latestDate(flights)?fmtDate(latestDate(flights)):'—'],['Last emergencies sortie date',lastEmergency?fmtDate(lastEmergency):'—'],['Hours after last dual sortie',timeStr(afterDual)],['Total hrs (SE + ME)',`${h('duration',se)} + ${h('duration',me)} = ${h('duration')}`],['1st week flying hours',timeStr(weekTotal(1))],['2nd week flying hours',timeStr(weekTotal(2))],['3rd week flying hours',timeStr(weekTotal(3))],['4th week flying hours',timeStr(weekTotal(4))],['Hours in current month',h('duration',monthFlights)],['Hours in last three months',h('duration',threeMonths)],['Total PIC',h('pic')],['Local PIC',h('localPic')],['Total IF (SE + ME)',`${timeStr(sum('instrument',se)+sum('simulatedInstrument',se))} + ${timeStr(sum('instrument',me)+sum('simulatedInstrument',me))} = ${timeStr(sum('instrument')+sum('simulatedInstrument'))}`],['Night PIC',h('nightPic')],['Cross country dual',h('crossCountryDual')],['Cross Country PIC',h('crossCountryPic')],['Day Dual',h('dayDual')],['Night Dual',h('nightDual')]];
- $('#statusStats').innerHTML=statItems.map(([label,value])=>`<div class="stat"><div class="label">${safe(label)}</div><div class="value" style="font-size:${String(value).length>16?'17px':'22px'}">${safe(value)}</div>${label==='Last emergencies sortie date'&&lastEmergency?`<div class="rf-badge" style="display:inline-block;margin-top:8px">${safe(daysSince(lastEmergency))} days ago</div>`:''}</div>`).join('');
+ $('#statusStats').innerHTML=statItems.map(([label,value])=>`<div class="stat"><div class="label">${safe(label)}</div><div class="value" style="font-size:${String(value).length>16?'17px':'22px'}">${safe(value)}</div>${label==='Last emergencies sortie date'&&lastEmergency?`<div class="rf-badge" style="display:inline-block;margin-top:8px">${safe(daysSince(lastEmergency))} days ago</div>`:label==='Last flown date'&&latestDate(flights)?`<div class="rf-badge" style="display:inline-block;margin-top:8px">${safe(daysSince(latestDate(flights)))} days ago</div>`:''}</div>`).join('');
  const dualDays=daysSince(lastDualDate),picDays=daysSince(lastPicDate);
  $('#currentMonthLabel').textContent=`Current Month (${now.toLocaleString('en',{month:'short'})})`;$('#currentMonthValue').textContent=h('duration',monthFlights);
  $('#last3Label').textContent=`Last 3 Months (${last3Start.toLocaleString('en',{month:'short'})}–${last3End.toLocaleString('en',{month:'short'})})`;$('#last3Value').textContent=h('duration',threeMonths);$('#last12Value').textContent=h('duration',twelveMonths);
@@ -440,7 +471,7 @@ function tableHTML(arr,actions=true){
  return `<div class="tablewrap logbook-wrap"><table class="logbook-table"><thead>
  <tr class="group-head"><th rowspan="2">S. No.</th><th rowspan="2">Date of flight</th><th colspan="2">Aircraft</th><th colspan="2">Flight details</th><th rowspan="2">Total time</th><th colspan="4">Flight time</th><th colspan="2">Instrument</th><th colspan="2">Take-offs / landings</th><th colspan="3">Crew & exercise</th>${actions?'<th rowspan="2">Actions</th>':''}</tr>
  <tr><th>Registration</th><th>Type / SE-ME</th><th>Departure</th><th>Arrival</th><th>Dual</th><th>PIC</th><th>Cross-country</th><th>Night</th><th>Actual</th><th>Simulated</th><th>Take-offs</th><th>Landings</th><th>Pilot in Command</th><th>Co-Pilot / Student</th><th>Instructional Exercise</th></tr>
- </thead><tbody>${arr.map((f,i)=>`<tr><td>${val(f.sourceEntryNo??f.serialNumber??(i+1))}</td><td>${val(fmtDate(f.date))}<div class="subcell">${f.arrivalDate&&f.arrivalDate!==f.date?'Arr. '+val(fmtDate(f.arrivalDate)):''}</div></td><td><strong>${val(f.registration)}</strong></td><td>${val(f.aircraftType)}<div class="subcell">${val(f.engineCategory||'SE')}</div></td><td>${val(f.from)}<div class="subcell">Off: ${val(f.offBlock)}</div></td><td>${val(f.to)}<div class="subcell">On: ${val(f.onBlock)}</div></td><td class="time-cell"><strong>${tm(f.duration)}</strong></td><td class="time-cell">${dual(f)}</td><td class="time-cell">${pic(f)}</td><td class="time-cell">${tm(f.xc)}</td><td class="time-cell">${tm(f.night)}</td><td class="time-cell">${tm(f.actualInstrument??f.instrument)}</td><td class="time-cell">${tm(f.simulatedInstrument)}</td><td class="num-cell">${val(f.takeoffs??0)}</td><td class="num-cell">${val(f.landings??0)}</td><td>${val(f.pilotInCommand||f.instructor)}</td><td>${val(f.coPilotStudent||f.copilotStudent)}</td><td class="exercise-cell">${val(f.instructionalExercises||f.remarks)}</td>${actions?`<td class="action-cell"><button data-edit="${safe(f.id)}">Edit</button><button class="danger" data-delete="${safe(f.id)}">Delete</button></td>`:''}</tr>`).join('')}</tbody></table></div>`
+ </thead><tbody>${arr.map((f,i)=>`<tr><td>${val(f.sourceEntryNo??f.serialNumber??(i+1))}</td><td>${val(fmtDate(f.date))}<div class="subcell">${f.arrivalDate&&f.arrivalDate!==f.date?'Arr. '+val(fmtDate(f.arrivalDate)):''}</div></td><td><strong>${val(f.registration)}</strong></td><td>${val(f.aircraftType)}<div class="subcell">${val(f.engineCategory||'SE')}</div></td><td>${val(f.from)}<div class="subcell">Off: ${val(f.offBlock)}</div></td><td>${val(f.to)}<div class="subcell">On: ${val(f.onBlock)}</div></td><td class="time-cell"><strong>${tm(f.duration)}</strong></td><td class="time-cell">${dual(f)}</td><td class="time-cell">${pic(f)}</td><td class="time-cell">${tm(f.xc)}</td><td class="time-cell">${tm(f.night)}</td><td class="time-cell">${tm(f.actualInstrument??f.instrument)}</td><td class="time-cell">${tm(f.simulatedInstrument)}</td><td class="num-cell">${val(f.takeoffs??0)}</td><td class="num-cell">${val(f.landings??0)}</td><td>${val(f.pilotInCommand||f.instructor)}</td><td>${val(f.coPilotStudent||f.copilotStudent||f.studentPilot||f.studentName)}</td><td class="exercise-cell">${val(f.instructionalExercises||f.remarks)}</td>${actions?`<td class="action-cell"><button data-edit="${safe(f.id)}">Edit</button><button class="danger" data-delete="${safe(f.id)}">Delete</button></td>`:''}</tr>`).join('')}</tbody></table></div>`
 }
 function renderFlights(){
  let q=$('#searchFlights').value.toLowerCase(),year=$('#yearFilter').value;
