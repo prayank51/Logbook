@@ -15,6 +15,96 @@
 @media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.formgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.span4{grid-column:span 2}.wrap{padding:12px}.stat .value{font-size:22px}}
 @media(max-width:430px){.brand h1{font-size:19px}.actions button{padding:9px}.barrow{grid-template-columns:72px 1fr 55px}.stat{padding:13px}.stat .value{font-size:20px}}
 @media print{body{background:#fff}.top,.tabs,.actions,.toolbar,.noprint,button{display:none!important}.wrap{max-width:none;padding:0}.panel,.stat{box-shadow:none;break-inside:avoid}.tablewrap{overflow:visible}table{min-width:0}th,td{font-size:9px;padding:5px;white-space:normal}.grid{grid-template-columns:repeat(4,1fr)}}
+
+/* App-like aviation dashboard redesign */
+:root{--bg:#eaf1ff;--card:#ffffff;--ink:#101f46;--muted:#687994;--line:#dce6f5;--blue:#1769d2;--blue2:#e2edff;--green:#168653;--shadow:0 8px 24px rgba(30,64,120,.09)}
+body{background:radial-gradient(ellipse at 10% 0%,#d8e7ff 0,transparent 40%),linear-gradient(180deg,#edf3ff 0%,#f5f8ff 60%,#e9f0ff 100%);font-size:14px;min-height:100vh}
+.wrap{max-width:1180px;padding:20px 22px 34px}
+.top{padding:14px 16px;background:rgba(255,255,255,.88);border:1px solid #dce6f5;border-radius:24px;box-shadow:0 8px 30px rgba(40,74,130,.08);margin-bottom:14px}
+.logo{width:52px;height:52px;border-radius:17px;background:linear-gradient(145deg,#3186f3,#1455b4);box-shadow:0 8px 20px #1769d226;font-size:25px}
+.brand h1{font-size:22px;letter-spacing:-.04em;font-weight:850}.brand p{font-size:13px}
+.actions{gap:8px}.actions button{border-radius:14px;padding:10px 13px}
+.tabs{gap:7px;padding:5px;background:rgba(255,255,255,.48);border-radius:18px;margin-bottom:18px}
+.tab{border:1px solid transparent;border-radius:13px;padding:11px 15px;color:#50617e;font-weight:750}
+.tab.active{background:#e3eeff;border-color:#c8dcff;color:#175bb4;box-shadow:0 3px 10px #175bb40c}
+.panel{padding:20px;border-radius:24px;border-color:#dce6f5;box-shadow:0 8px 28px rgba(33,62,115,.07);background:rgba(255,255,255,.91);margin-top:16px}
+.panel h2{font-size:18px;font-weight:850;letter-spacing:-.025em;color:#101f46;margin-bottom:12px}
+.stat{border-radius:22px;border-color:#d9e4f3;box-shadow:0 5px 18px rgba(30,64,120,.045);padding:16px 17px;position:relative;overflow:hidden}
+.stat .label{font-size:11px;letter-spacing:.065em;color:#71809a}.stat .value{font-size:27px;color:#10234d;font-weight:850}.stat:before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:0 5px 5px 0;background:linear-gradient(180deg,#1c70db,#80b7ff)}
+/* Dashboard sections */
+#dashboard{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.95fr);gap:16px;align-items:start}
+#dashboard>.career-panel{grid-column:1/-1;margin-top:0;padding:24px;background:linear-gradient(125deg,rgba(255,255,255,.98),rgba(237,245,255,.95));}
+.career-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px}
+.eyebrow{font-size:11px;font-weight:850;letter-spacing:.14em;color:#3775bf;text-transform:uppercase}
+.career-title{font-size:29px;font-weight:900;letter-spacing:-.055em;margin:4px 0 3px;color:#10234d}
+.career-subtitle{color:#6e7e98;font-size:14px}
+.hero-icon{width:64px;height:64px;border:1px solid #d3e3fa;border-radius:22px;background:linear-gradient(145deg,#f8fbff,#e8f1ff);display:grid;place-items:center;font-size:30px;color:#2469bd;flex-shrink:0}
+#careerStats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+#dashboard .section-card{margin:0;min-width:0}
+.section-title-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.section-title-row h2{margin:0;font-size:19px}
+.section-icon{height:42px;width:42px;display:grid;place-items:center;border-radius:15px;background:#e8f1ff;color:#2367ba;font-size:21px;flex-shrink:0}
+.recent-flight-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;background:#f7faff;border:1px solid #e6edf8;border-radius:17px;overflow:hidden}
+.recent-flight{padding:15px}.recent-flight+.recent-flight{border-left:1px solid #dfe8f5}
+.recent-flight .rf-label{font-size:12px;color:#5d6e89}.recent-flight .rf-date{font-size:19px;font-weight:850;color:#142653;margin-top:3px}.rf-badge{display:inline-block;margin-top:5px;padding:3px 8px;border-radius:99px;background:#e2f5e9;color:#197747;font-size:11px;font-weight:750}
+#hoursSummary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+#hoursSummary .stat{padding:12px 13px;border-radius:17px;min-height:80px;background:linear-gradient(145deg,#fff,#f7faff)}
+#hoursSummary .stat .label{font-size:10px;letter-spacing:.02em;text-transform:none;color:#546580}
+#hoursSummary .stat .value{font-size:22px;margin-top:2px}
+#hoursSummary .stat:before{display:none}
+#hoursSummary .stat:nth-child(4n+1) .label:before{content:'◷ ';color:#2885df}
+#hoursSummary .stat:nth-child(4n+2) .label:before{content:'☾ ';color:#9760df}
+#hoursSummary .stat:nth-child(4n+3) .label:before{content:'↔ ';color:#e59a39}
+#hoursSummary .stat:nth-child(4n) .label:before{content:'◉ ';color:#2095a4}
+#recencyCards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+#recencyCards .stat{padding:13px 10px;background:linear-gradient(145deg,#fff,#f0f6ff);text-align:center}
+#recencyCards .stat .label{text-transform:none;letter-spacing:0;font-size:11px;line-height:1.35}
+#recencyCards .stat .value{font-size:23px}
+#monthlyBars{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;align-items:end;min-height:170px;padding:12px 4px 0}
+.month-col{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px;min-width:0;height:150px}
+.month-col .month-value{font-size:10px;font-weight:800;color:#285d9e;white-space:nowrap}
+.month-col .month-track{height:100px;width:100%;display:flex;align-items:flex-end;justify-content:center;background:linear-gradient(180deg,#f2f7ff,#eaf2ff);border-radius:10px 10px 5px 5px;overflow:hidden}
+.month-col .month-bar{width:min(28px,60%);min-height:3px;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,#3da9ff,#176bd4);box-shadow:0 3px 8px #176bd425}
+.month-col .month-label{font-size:11px;color:#657692;font-weight:700}
+.activity-foot{display:flex;justify-content:space-between;gap:12px;margin-top:14px;padding-top:12px;border-top:1px solid #e7edf7;color:#647590;font-size:12px}.activity-foot strong{display:block;color:#1d5ca8;font-size:17px}
+#fdtlPanel{grid-column:1/-1;background:linear-gradient(135deg,#fff,#f2f7ff)}
+#fdtlPanel .section-head h2{font-size:20px}
+#fdtlPanel .notice{background:#f1f6ff;border-color:#dce8fa;color:#49617e}
+#fdtlTable .tablewrap{border:0;overflow:visible}#fdtlTable table{min-width:0;background:transparent}#fdtlTable th{background:#eef4ff}#fdtlTable td,#fdtlTable th{padding:11px 10px}
+#dashboard .status-panel{grid-column:1/-1}
+#statusStats{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+#statusStats .stat{padding:13px 14px;border-radius:17px}.footer{padding-bottom:28px}
+/* bottom app navigation on phones */
+@media(max-width:800px){
+ .wrap{padding:10px 12px 100px}.top{padding:13px;border-radius:23px;align-items:flex-start}.brand h1{font-size:20px}.brand p{font-size:12px}.logo{height:48px;width:48px}.actions{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:5px}.actions button{padding:10px 7px;font-size:12px;white-space:normal;min-height:48px}
+ .tabs{position:fixed;z-index:20;bottom:0;left:0;right:0;margin:0;padding:8px max(8px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom));border-radius:18px 18px 0 0;background:rgba(255,255,255,.96);backdrop-filter:blur(18px);box-shadow:0 -5px 24px rgba(31,56,100,.12);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;border-top:1px solid #dbe5f4}
+ .tab{font-size:10px;line-height:1.15;padding:10px 3px;border-radius:13px;min-width:0;overflow-wrap:anywhere}.panel{padding:16px;border-radius:22px}.stat{padding:14px;border-radius:19px}
+ #dashboard{grid-template-columns:1fr;gap:13px}#dashboard>.career-panel,#fdtlPanel,#dashboard .status-panel{grid-column:1}
+ #careerStats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.career-title{font-size:25px}.career-panel .career-subtitle{font-size:13px}.hero-icon{width:54px;height:54px;border-radius:18px}
+ #hoursSummary{gap:8px}#hoursSummary .stat .value{font-size:21px}#recencyCards{gap:7px}#recencyCards .stat{padding:12px 7px}#recencyCards .stat .value{font-size:20px}
+ #statusStats{grid-template-columns:repeat(2,minmax(0,1fr))}#monthlyBars{min-height:155px;gap:5px}.month-col{height:140px}.month-col .month-track{height:90px}.month-col .month-value{font-size:9px}.month-col .month-label{font-size:10px}
+ #fdtlPanel .section-head{align-items:flex-start}#fdtlPanel .field{width:100%}#fdtlTable .tablewrap{overflow:auto}#fdtlTable table{min-width:560px}
+}
+@media(max-width:380px){#careerStats{grid-template-columns:repeat(2,minmax(0,1fr))}.career-title{font-size:23px}.recent-flight .rf-date{font-size:16px}#recencyCards .stat .label{font-size:10px}#recencyCards .stat .value{font-size:18px}}
+@media(min-width:801px){#dashboard>.recent-panel{grid-column:1/-1}#dashboard>.activity-panel{grid-column:1}#dashboard>.summary-panel{grid-column:2}#dashboard>.recency-panel{grid-column:1/-1}}
+
+
+/* Logbook-style Flight Entries: grouped headings, ruled rows, and horizontal scrolling on narrow screens. */
+.logbook-wrap{margin-top:16px;border:1px solid #c7d4e3;border-radius:10px;background:#fff;overflow:auto;max-width:100%;}
+.logbook-table{width:max-content;min-width:1600px;table-layout:auto;border-collapse:separate;border-spacing:0;font-size:12px;background:#fff;}
+.logbook-table th,.logbook-table td{border-right:1px solid #d9e2ec;border-bottom:1px solid #d9e2ec;padding:9px 10px;vertical-align:middle;white-space:nowrap;}
+.logbook-table thead th{text-align:center;background:#edf3fa;color:#243c59;text-transform:none;letter-spacing:0;font-size:11px;font-weight:800;}
+.logbook-table thead .group-head th{background:#dce8f5;border-bottom:1px solid #aebfd2;font-size:11px;}
+.logbook-table tbody tr:nth-child(even){background:#f8fbff;}
+.logbook-table tbody tr:hover{background:#eef6ff;}
+.logbook-table .time-cell,.logbook-table .num-cell{text-align:center;font-variant-numeric:tabular-nums;}
+.logbook-table .subcell{font-size:10px;color:#64758b;margin-top:3px;}
+.logbook-table .exercise-cell{white-space:normal;min-width:220px;max-width:300px;}
+.logbook-table .action-cell{display:flex;gap:5px;}
+.logbook-table .action-cell button{padding:6px 8px;font-size:11px;}
+.logbook-wrap::-webkit-scrollbar{height:10px}.logbook-wrap::-webkit-scrollbar-thumb{background:#a8bbd0;border-radius:10px}
+@media print{.logbook-wrap{overflow:visible}.logbook-table{min-width:0;width:100%;font-size:7px}.logbook-table th,.logbook-table td{padding:3px;white-space:normal}.logbook-table .action-cell{display:none}}
+
 </style>
 </head>
 <body>
@@ -27,34 +117,61 @@
  <button class="tab active" data-tab="dashboard">Dashboard</button><button class="tab" data-tab="flights">Flight entries</button><button class="tab" data-tab="reports">Reports</button><button class="tab" data-tab="documents">Documents</button><button class="tab" data-tab="settings">Settings & help</button>
 </nav>
 <main id="dashboard" class="view">
- <div class="grid">
-  <div class="stat"><div class="label">Total flight time</div><div class="value" id="s-total">00:00</div></div>
-  <div class="stat"><div class="label">Dual received</div><div class="value" id="s-dual">00:00</div></div>
-  <div class="stat"><div class="label">Pilot in command</div><div class="value" id="s-pic">00:00</div></div>
-  <div class="stat"><div class="label">Night flight</div><div class="value" id="s-night">00:00</div></div>
-  <div class="stat"><div class="label">Cross-country</div><div class="value" id="s-xc">00:00</div></div>
-  <div class="stat"><div class="label">Instrument</div><div class="value" id="s-inst">00:00</div></div>
-  <div class="stat"><div class="label">Last flown</div><div class="value" id="s-last">—</div></div>
-  <div class="stat"><div class="label">Aircraft used</div><div class="value" id="s-aircraft">0</div></div>
-  <div class="stat"><div class="label">Days since last dual</div><div class="value" id="s-days-dual">—</div></div>
-  <div class="stat"><div class="label">Days since last PIC</div><div class="value" id="s-days-pic">—</div></div>
-  <div class="stat"><div class="label">Last flown dual</div><div class="value" id="s-last-dual">—</div></div>
-  <div class="stat"><div class="label">Last flown PIC</div><div class="value" id="s-last-pic">—</div></div>
- </div>
- <section class="panel"><h2>Flying status summary</h2><p class="muted small">Weekly periods use calendar days 1–7, 8–14, 15–21 and 22–month end. SE/ME is estimated from the aircraft type text; review aircraft classifications.</p><div class="grid" id="statusStats"></div></section>
+ <section class="panel career-panel">
+  <div class="career-head"><div><div class="eyebrow">Flight Logbook · Dashboard</div><h2 class="career-title">Career overview</h2></div><div class="hero-icon" aria-hidden="true">✈</div></div>
+  <div id="careerStats">
+   <div class="stat"><div class="label">Total flight time</div><div class="value" id="s-total">00:00</div></div>
+   <div class="stat"><div class="label">Pilot in command</div><div class="value" id="s-pic">00:00</div></div>
+
+  </div>
+ </section>
+ <section class="panel section-card recent-panel">
+  <div class="section-title-row"><h2>Recent flying</h2><span class="section-icon" aria-hidden="true">▦</span></div>
+  <div class="recent-flight-grid"><div class="recent-flight"><div class="rf-label">Last Dual Flight</div><div class="rf-date" id="s-last-dual">—</div><div class="rf-badge" id="s-days-dual">—</div></div><div class="recent-flight"><div class="rf-label">Last PIC Flight</div><div class="rf-date" id="s-last-pic">—</div><div class="rf-badge" id="s-days-pic">—</div></div></div>
+  
+ </section>
+ <section class="panel section-card summary-panel">
+  <div class="section-title-row"><h2>Flying hours summary</h2><span class="section-icon" aria-hidden="true">▥</span></div>
+  <div id="hoursSummary">
+   <div class="stat"><div class="label">Dual received</div><div class="value" id="s-dual">00:00</div></div>
+   <div class="stat"><div class="label">Night flight</div><div class="value" id="s-night">00:00</div></div>
+   <div class="stat"><div class="label">Cross-country</div><div class="value" id="s-xc">00:00</div></div>
+   <div class="stat"><div class="label">Instrument</div><div class="value" id="s-inst">00:00</div></div>
+   <div class="stat"><div class="label">Aircraft used</div><div class="value" id="s-aircraft">0</div></div>
+   <div class="stat"><div class="label">Last flown</div><div class="value" id="s-last">—</div></div>
+   <div class="stat"><div class="label">Days since last dual</div><div class="value" id="s-days-dual-summary">—</div></div>
+   <div class="stat"><div class="label">Days since last PIC</div><div class="value" id="s-days-pic-summary">—</div></div>
+   <div class="stat"><div class="label">Last flown dual</div><div class="value" id="s-last-dual-summary">—</div></div>
+   <div class="stat"><div class="label">Last flown PIC</div><div class="value" id="s-last-pic-summary">—</div></div>
+  </div>
+ </section>
+ <section class="panel section-card activity-panel">
+  <div class="section-title-row"><div><h2>Flying activity</h2><div class="muted small">Monthly flight time based on your saved entries.</div></div><span class="section-icon" aria-hidden="true">▥</span></div>
+  <div id="monthlyBars" aria-label="Monthly flight time chart"></div><div class="activity-foot"><div>Monthly average<strong id="monthlyAverage">0:00</strong></div><div style="text-align:right">Period total<strong id="periodTotal">0:00</strong></div></div>
+ </section>
+ <section class="panel section-card recency-panel">
+  <div class="section-title-row"><h2>Recency</h2><span class="section-icon" aria-hidden="true">◷</span></div>
+  <div id="recencyCards">
+   <div class="stat"><div class="label" id="currentMonthLabel">Current Month</div><div class="value" id="currentMonthValue">0:00</div></div>
+   <div class="stat"><div class="label" id="last3Label">Last 3 Months</div><div class="value" id="last3Value">0:00</div></div>
+   <div class="stat"><div class="label">12 Months</div><div class="value" id="last12Value">0:00</div></div>
+  </div>
+ </section>
+ <section class="panel status-panel">
+  <div class="section-title-row"><h2>Flying status summary</h2><span class="section-icon" aria-hidden="true">◴</span></div><p class="muted small">Weekly periods use calendar days 1–7, 8–14, 15–21 and 22–month end. SE/ME is estimated from the aircraft type text; review aircraft classifications.</p><div class="grid" id="statusStats"></div>
+ </section>
  <section class="panel" id="fdtlPanel">
-  <div class="section-head"><div><h2>FDTL · Flight-time lookback</h2><div class="muted small">Flight time within each period ending on your selected reference date.</div></div><div class="field" style="min-width:170px"><label for="fdtlDate">Calculate as of date</label><input id="fdtlDate" type="date"></div></div>
+  <div class="section-head"><div><h2>FDTL - Flight Duty Time Limit</h2><div class="muted small">Flight time within each period ending on your selected reference date.</div></div><div class="field" style="min-width:170px"><label for="fdtlDate">Calculate as of date</label><input id="fdtlDate" type="date"></div></div>
   <div class="notice" style="margin-top:12px">Reference limits are copied from your supplied image and are editable in the app code: 8:00 / 35:00 / 65:00 / 100:00 / 125:00 / 300:00 / 1000:00. These are user-provided reference values, not independently verified regulatory advice. Confirm current DGCA/company FDTL rules before operational use.</div>
   <div id="fdtlTable"></div>
   <div class="muted small" style="margin-top:10px">Each window includes the reference date and the preceding days (for example, 7 Days includes the selected date plus the previous 6 calendar days). Flight duration is summed from saved entries by flight date.</div>
  </section>
  <section class="panel"><div class="section-head"><h2>Recent flights</h2><button data-goto="flights">View all flights →</button></div><div id="recent"></div></section>
- <section class="panel"><h2>Monthly flight time</h2><div id="monthlyBars" class="barlist"></div></section>
- <section class="panel"><h2>Quick actions</h2><div class="toolbar"><button class="primary" id="addFlightDash">＋ Add flight</button><button id="quickExport">Export CSV</button><button id="printDash">Print dashboard</button></div></section>
+ <section class="panel"><div class="section-head"><h2>Quick actions</h2><span class="section-icon" aria-hidden="true">＋</span></div><div class="toolbar"><button class="primary" id="addFlightDash">＋ Add flight</button><button id="quickExport">Export CSV</button><button id="printDash">Print dashboard</button></div></section>
 </main>
 <main id="flights" class="view hidden">
  <section class="panel"><div class="section-head"><div><h2>Flight entries</h2><div class="muted small">Select an entry to edit it. Times are stored as minutes to avoid rounding errors.</div></div><button class="primary" id="addFlight">＋ Add flight</button></div>
- <div class="toolbar" style="margin-top:12px"><input id="searchFlights" placeholder="Search date, aircraft, route…"><select id="yearFilter"><option value="">All years</option></select><button id="clearFilters">Clear filters</button><button id="exportCsv">Export CSV</button></div>
+ <div class="toolbar" style="margin-top:12px"><input id="searchFlights" placeholder="Search date, aircraft, route…"><select id="yearFilter"><option value="">All years</option></select><select id="dateSort" aria-label="Sort flight dates"><option value="newest">Newest to oldest</option><option value="oldest">Oldest to newest</option></select><button id="clearFilters">Clear filters</button><button id="exportCsv">Export CSV</button></div>
  <div id="flightTable"></div></section>
 </main>
 <main id="reports" class="view hidden">
@@ -74,7 +191,7 @@
 </main>
 <main id="settings" class="view hidden">
  <section class="panel"><h2>Data & privacy</h2><p>Flight and document records are saved in this browser on this device. This app does not send records to a server. Use <b>Backup</b> regularly and keep the backup file somewhere safe.</p><div class="toolbar"><button id="exportBackup2">Download JSON backup</button><button id="restore2">Restore JSON backup</button><button class="danger" id="deleteAll">Delete all local flights</button></div></section>
- <section class="panel"><h2>Excel import format</h2><p>Import an <b>.xlsx</b> workbook or <b>.csv</b> file. The app reads the first worksheet and tries to match common column names. The first row should contain headers. After importing, inspect the entries and totals.</p><p>Recognised headings include: Date, Aircraft / Registration, Type, From / Departure, To / Arrival, Total Time / Duration, Dual, PIC, Local PIC, Night PIC, Cross Country / XC, Cross Country Dual/PIC, Day Dual, Night Dual, Night, Instrument / IF, Emergency Sortie, Instructor, Take-offs, Landings, Remarks.</p><p class="notice">If your existing Excel file uses unusual headings or stores flight time in Excel time format, import a copy first and verify the results. Import adds records; it does not automatically delete existing records.</p></section>
+ <section class="panel"><h2>Excel import format</h2><p>Import an <b>.xlsx</b> workbook or <b>.csv</b> file. The app reads the first worksheet and tries to match common column names. The first row should contain headers. After importing, inspect the entries and totals.</p><p>Recognised headings include: Date, Aircraft / Registration, Type, From / Departure, To / Arrival, Total Time / Duration, Dual, PIC, Local PIC, Night PIC, Cross Country / XC, Cross Country Dual/PIC, Day Dual, Night Dual, Night, Instrument / IF, Emergency Sortie, Pilot in Command, Co-Pilot or Student, Take-offs, Landings, Instructional Exercise.</p><p class="notice">If your existing Excel file uses unusual headings or stores flight time in Excel time format, import a copy first and verify the results. Import adds records; it does not automatically delete existing records.</p></section>
  <section class="panel"><h2>Time entry guide</h2><p>Enter duration as <b>1:25</b> for 1 hour 25 minutes, or as decimal hours such as <b>1.4</b> only if that is what your source file uses. For flight entries, use hours and minutes (HH:MM). Category times are not automatically assumed to equal total flight time.</p><p class="notice">This is a personal tracking aid, not an official DGCA logbook, endorsement, or substitute for your flying school's records. Check applicable DGCA requirements and your instructor's records before relying on any totals.</p></section>
  <section class="panel"><h2>Install on Android / laptop</h2><ol><li>Upload the included app files to a static HTTPS host (for example, your own GitHub Pages site) or run from localhost. Opening index.html directly is fine for a quick test, but install/offline caching requires a secure origin.</li><li>Open the hosted app once while online. On Android Chrome, use the browser menu → <b>Install app</b> or <b>Add to Home screen</b>. On desktop Chrome/Edge, use the install icon in the address bar or browser menu.</li><li>After the app has loaded once, reopen it from the installed icon. The app shell works offline; records stay in that browser profile.</li><li>For use on multiple devices, restore a JSON backup separately on each device. Data does not sync automatically.</li></ol></section>
 </main>
@@ -85,7 +202,7 @@
 const DB_NAME='pilot-flight-logbook', DB_VERSION=3, STORE='flights', DOC_STORE='documents';
 let db, flights=[], documents=[], editId=null, deferredPrompt=null;
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const fields=['entryDate','date','arrivalDate','registration','aircraftType','engineCategory','from','to','offBlock','onBlock','duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument','emergencySortie','instructor','takeoffs','landings','remarks'];
+const fields=['date','arrivalDate','registration','aircraftType','engineCategory','from','to','offBlock','onBlock','duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument','emergencySortie','instructor','pilotInCommand','coPilotStudent','takeoffs','landings','remarks'];
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
 function parseTime(v){if(v===null||v===undefined||v==='')return 0;if(typeof v==='number'){if(v>0&&v<1)return Math.round(v*1440); if(v>=1&&v<24&&String(v).includes('.'))return Math.round(v*60);return Math.round(v*60)}let s=String(v).trim();if(!s)return 0;if(/^\d+:\d{1,2}$/.test(s)){let [h,m]=s.split(':').map(Number);return h*60+m}if(/^\d+(\.\d+)?$/.test(s))return Math.round(parseFloat(s)*60);return 0}
 function timeStr(m){m=Math.max(0,Math.round(Number(m)||0));return Math.floor(m/60)+':'+String(m%60).padStart(2,'0')}
@@ -158,51 +275,69 @@ function renderDashboard(){
  const lastDualDate=latestDate(flights,f=>(+f.dual||0)>0);
  const lastPicDate=latestDate(flights,f=>(+f.pic||0)>0);
  const daysSince=date=>{if(!date)return '—';const [y,m,d]=date.split('-').map(Number);const flightDay=new Date(y,m-1,d);const today=new Date();today.setHours(0,0,0,0);return String(Math.max(0,Math.floor((today-flightDay)/86400000)));};
- $('#s-days-dual').textContent=daysSince(lastDualDate);
- $('#s-days-pic').textContent=daysSince(lastPicDate);
+ $('#s-days-dual').textContent=lastDualDate?`${daysSince(lastDualDate)} days ago`:'No dual flight yet';
+ $('#s-days-pic').textContent=lastPicDate?`${daysSince(lastPicDate)} days ago`:'No PIC flight yet';
  $('#s-last-dual').textContent=lastDualDate?fmtDate(lastDualDate):'—';
  $('#s-last-pic').textContent=lastPicDate?fmtDate(lastPicDate):'—';
  const now=new Date(),ym=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`,monthFlights=flights.filter(f=>(f.date||'').startsWith(ym));
  const weekTotal=n=>sum('duration',monthFlights.filter(f=>{let day=Number((f.date||'').slice(8,10));return n===1?day>=1&&day<=7:n===2?day>=8&&day<=14:n===3?day>=15&&day<=21:day>=22}));
- const last3=new Date(now.getFullYear(),now.getMonth()-2,1),last3key=`${last3.getFullYear()}-${String(last3.getMonth()+1).padStart(2,'0')}`;
- const threeMonths=flights.filter(f=>(f.date||'')>=last3key+'-01'&&(f.date||'')<=now.toISOString().slice(0,10));
+ const last3Start=new Date(now.getFullYear(),now.getMonth()-3,1),last3End=new Date(now.getFullYear(),now.getMonth(),0);
+ const isoLocal=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+ const last3StartKey=isoLocal(last3Start),last3EndKey=isoLocal(last3End);
+ const threeMonths=flights.filter(f=>(f.date||'')>=last3StartKey&&(f.date||'')<=last3EndKey);
+ const last12StartKey=isoLocal(new Date(now.getFullYear(),now.getMonth()-12,1));
+ const twelveMonths=flights.filter(f=>(f.date||'')>=last12StartKey&&(f.date||'')<=isoLocal(now));
  const se=flights.filter(f=>!isME(f)),me=flights.filter(isME),lastDual=latestDate(flights,f=>(+f.dual||0)>0),afterDual=lastDual?sum('duration',flights.filter(f=>(f.date||'')>lastDual)):sum('duration');
  const lastEmergency=latestDate(flights,f=>f.emergencySortie===true||f.emergencySortie==='true'||f.emergencySortie==='yes');
  const statItems=[['Last flown date',latestDate(flights)?fmtDate(latestDate(flights)):'—'],['Last emergencies sortie date',lastEmergency?fmtDate(lastEmergency):'—'],['Hours after last dual sortie',timeStr(afterDual)],['Total hrs (SE + ME)',`${h('duration',se)} + ${h('duration',me)} = ${h('duration')}`],['1st week flying hours',timeStr(weekTotal(1))],['2nd week flying hours',timeStr(weekTotal(2))],['3rd week flying hours',timeStr(weekTotal(3))],['4th week flying hours',timeStr(weekTotal(4))],['Hours in current month',h('duration',monthFlights)],['Hours in last three months',h('duration',threeMonths)],['Total PIC',h('pic')],['Local PIC',h('localPic')],['Total IF (SE + ME)',`${timeStr(sum('instrument',se)+sum('simulatedInstrument',se))} + ${timeStr(sum('instrument',me)+sum('simulatedInstrument',me))} = ${timeStr(sum('instrument')+sum('simulatedInstrument'))}`],['Night PIC',h('nightPic')],['Cross country dual',h('crossCountryDual')],['Cross Country PIC',h('crossCountryPic')],['Day Dual',h('dayDual')],['Night Dual',h('nightDual')]];
  $('#statusStats').innerHTML=statItems.map(([label,value])=>`<div class="stat"><div class="label">${safe(label)}</div><div class="value" style="font-size:${String(value).length>16?'17px':'22px'}">${safe(value)}</div></div>`).join('');
+ const dualDays=daysSince(lastDualDate),picDays=daysSince(lastPicDate);
+ $('#s-days-dual-summary').textContent=dualDays;$('#s-days-pic-summary').textContent=picDays;$('#s-last-dual-summary').textContent=lastDualDate?fmtDate(lastDualDate):'—';$('#s-last-pic-summary').textContent=lastPicDate?fmtDate(lastPicDate):'—';
+ $('#currentMonthLabel').textContent=`Current Month (${now.toLocaleString('en',{month:'short'})})`;$('#currentMonthValue').textContent=h('duration',monthFlights);
+ $('#last3Label').textContent=`Last 3 Months (${last3Start.toLocaleString('en',{month:'short'})}–${last3End.toLocaleString('en',{month:'short'})})`;$('#last3Value').textContent=h('duration',threeMonths);$('#last12Value').textContent=h('duration',twelveMonths);
  renderFDTL();
  let recent=sorted.slice(0,6);$('#recent').innerHTML=recent.length?tableHTML(recent,false):'<div class="empty">No flights yet. Add your first flight to get started.</div>';
- let months={};flights.forEach(f=>{let k=(f.date||'Undated').slice(0,7);months[k]=(months[k]||0)+totalMinutes(f)});let top=Object.entries(months).sort((a,b)=>a[0].localeCompare(b[0])).slice(-6),max=Math.max(1,...top.map(x=>x[1]));
- $('#monthlyBars').innerHTML=top.length?top.map(([m,v])=>`<div class="barrow"><span>${safe(m)}</span><div class="barbg"><div class="barfill" style="width:${v/max*100}%"></div></div><b class="right">${timeStr(v)}</b></div>`).join(''):'<div class="empty">Monthly totals will appear here after flights are added.</div>';
+ let months={};flights.forEach(f=>{let k=(f.date||'').slice(0,7);if(k)months[k]=(months[k]||0)+totalMinutes(f)});let top=Object.entries(months).sort((a,b)=>a[0].localeCompare(b[0])).slice(-6),max=Math.max(1,...top.map(x=>x[1]));
+ $('#monthlyBars').innerHTML=top.length?top.map(([m,v])=>{let [yy,mm]=m.split('-').map(Number),label=new Date(yy,mm-1,1).toLocaleString('en',{month:'short'});return `<div class="month-col"><div class="month-value">${timeStr(v)}</div><div class="month-track"><div class="month-bar" style="height:${Math.max(3,v/max*100)}%"></div></div><div class="month-label">${safe(label)}</div></div>`}).join(''):'<div class="empty">Monthly totals will appear here after flights are added.</div>';
+ const avg=top.length?Math.round(top.reduce((a,x)=>a+x[1],0)/top.length):0;$('#monthlyAverage').textContent=timeStr(avg);$('#periodTotal').textContent=timeStr(top.reduce((a,x)=>a+x[1],0));
 }
-function tableHTML(arr,actions=true){return `<div class="tablewrap"><table><thead><tr><th>Date</th><th>Aircraft</th><th>Route</th><th>Duration</th><th>Dual</th><th>PIC</th><th>XC</th><th>Night</th><th>Instrument</th>${actions?'<th>Actions</th>':''}</tr></thead><tbody>${arr.map(f=>`<tr><td>${safe(fmtDate(f.date))}</td><td><b>${safe(f.registration||'—')}</b><br><span class="muted">${safe(f.aircraftType||'')}</span></td><td>${safe(f.from||'—')} → ${safe(f.to||'—')}</td><td><b>${timeStr(f.duration)}</b></td><td>${timeStr(f.dual)}</td><td>${timeStr(f.pic)}</td><td>${timeStr(f.xc)}</td><td>${timeStr(f.night)}</td><td>${timeStr((+f.instrument||0)+(+f.simulatedInstrument||0))}</td>${actions?`<td><button data-edit="${safe(f.id)}">Edit</button> <button class="danger" data-delete="${safe(f.id)}">Delete</button></td>`:''}</tr>`).join('')}</tbody></table></div>`}
+function tableHTML(arr,actions=true){
+ const val=x=>safe(x===undefined||x===null||x===''?'—':String(x));
+ const tm=k=>timeStr(+k||0), dual= f=>tm(f.dual), pic= f=>tm(f.pic);
+ return `<div class="tablewrap logbook-wrap"><table class="logbook-table"><thead>
+ <tr class="group-head"><th rowspan="2">S. No.</th><th rowspan="2">Date of flight</th><th colspan="2">Aircraft</th><th colspan="2">Flight details</th><th rowspan="2">Total time</th><th colspan="4">Flight time</th><th colspan="2">Instrument</th><th colspan="2">Take-offs / landings</th><th colspan="3">Crew & exercise</th>${actions?'<th rowspan="2">Actions</th>':''}</tr>
+ <tr><th>Registration</th><th>Type / SE-ME</th><th>Departure</th><th>Arrival</th><th>Dual</th><th>PIC</th><th>Cross-country</th><th>Night</th><th>Actual</th><th>Simulated</th><th>Take-offs</th><th>Landings</th><th>Pilot in Command</th><th>Co-Pilot / Student</th><th>Instructional Exercise</th></tr>
+ </thead><tbody>${arr.map((f,i)=>`<tr><td>${val(f.sourceEntryNo??f.serialNumber??(i+1))}</td><td>${val(fmtDate(f.date))}<div class="subcell">${f.arrivalDate&&f.arrivalDate!==f.date?'Arr. '+val(fmtDate(f.arrivalDate)):''}</div></td><td><strong>${val(f.registration)}</strong></td><td>${val(f.aircraftType)}<div class="subcell">${val(f.engineCategory||'SE')}</div></td><td>${val(f.from)}<div class="subcell">Off: ${val(f.offBlock)}</div></td><td>${val(f.to)}<div class="subcell">On: ${val(f.onBlock)}</div></td><td class="time-cell"><strong>${tm(f.duration)}</strong></td><td class="time-cell">${dual(f)}</td><td class="time-cell">${pic(f)}</td><td class="time-cell">${tm(f.xc)}</td><td class="time-cell">${tm(f.night)}</td><td class="time-cell">${tm(f.actualInstrument??f.instrument)}</td><td class="time-cell">${tm(f.simulatedInstrument)}</td><td class="num-cell">${val(f.takeoffs??0)}</td><td class="num-cell">${val(f.landings??0)}</td><td>${val(f.pilotInCommand||f.instructor)}</td><td>${val(f.coPilotStudent||f.copilotStudent)}</td><td class="exercise-cell">${val(f.instructionalExercises||f.remarks)}</td>${actions?`<td class="action-cell"><button data-edit="${safe(f.id)}">Edit</button><button class="danger" data-delete="${safe(f.id)}">Delete</button></td>`:''}</tr>`).join('')}</tbody></table></div>`
+}
 function renderFlights(){
  let q=$('#searchFlights').value.toLowerCase(),year=$('#yearFilter').value;
  let years=[...new Set(flights.map(f=>(f.date||'').slice(0,4)).filter(Boolean))].sort().reverse();let select=$('#yearFilter'),old=select.value;select.innerHTML='<option value="">All years</option>'+years.map(y=>`<option>${safe(y)}</option>`).join('');select.value=years.includes(old)?old:'';
- let arr=[...flights].filter(f=>(!year||(f.date||'').startsWith(year))&&[f.date,f.registration,f.aircraftType,f.from,f.to,f.instructor,f.remarks].join(' ').toLowerCase().includes(q)).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+ let arr=[...flights].filter(f=>(!year||(f.date||'').startsWith(year))&&[f.date,f.registration,f.aircraftType,f.from,f.to,f.instructor,f.pilotInCommand,f.coPilotStudent,f.copilotStudent,f.instructionalExercises,f.remarks].join(' ').toLowerCase().includes(q)).sort((a,b)=>$('#dateSort').value==='oldest'?(a.date||'').localeCompare(b.date||''):(b.date||'').localeCompare(a.date||''));
  $('#flightTable').innerHTML=arr.length?tableHTML(arr,true):'<div class="empty">No matching flights. Add a flight or import your Excel logbook.</div>';
  $$('[data-edit]').forEach(b=>b.onclick=()=>openFlight(b.dataset.edit));$$('[data-delete]').forEach(b=>b.onclick=()=>deleteFlight(b.dataset.delete));
 }
-$('#searchFlights').addEventListener('input',renderFlights);$('#yearFilter').addEventListener('change',renderFlights);$('#clearFilters').onclick=()=>{$('#searchFlights').value='';$('#yearFilter').value='';renderFlights()};
+$('#searchFlights').addEventListener('input',renderFlights);$('#yearFilter').addEventListener('change',renderFlights);$('#dateSort').addEventListener('change',renderFlights);$('#clearFilters').onclick=()=>{$('#searchFlights').value='';$('#yearFilter').value='';$('#dateSort').value='newest';renderFlights()};
 function field(label,name,value='',type='text',opts=null,span=''){let input=opts?`<select name="${name}">${opts.map(o=>`<option ${String(value)===String(o[0])?'selected':''} value="${safe(o[0])}">${safe(o[1])}</option>`).join('')}</select>`:`<input name="${name}" type="${type}" value="${safe(value)}" ${type==='number'?'min="0" step="1"':''}>`;return `<div class="field ${span}"><label>${label}</label>${input}</div>`}
 function openFlight(id=null){
- editId=id;let f=flights.find(x=>x.id===id)||{date:new Date().toISOString().slice(0,10),registration:'',aircraftType:'',engineCategory:'SE',from:'',to:'',offBlock:'',onBlock:'',duration:0,dual:0,pic:0,localPic:0,nightPic:0,xc:0,crossCountryDual:0,dayDual:0,nightDual:0,night:0,instrument:0,simulatedInstrument:0,emergencySortie:false,instructor:'',takeoffs:0,landings:0,remarks:''};
+ editId=id;let f=flights.find(x=>x.id===id)||{date:new Date().toISOString().slice(0,10),arrivalDate:'',registration:'',aircraftType:'',engineCategory:'SE',from:'',to:'',offBlock:'',onBlock:'',duration:0,dual:0,pic:0,localPic:0,nightPic:0,xc:0,crossCountryDual:0,crossCountryPic:0,dayDual:0,nightDual:0,night:0,instrument:0,simulatedInstrument:0,emergencySortie:false,instructor:'',pilotInCommand:'',coPilotStudent:'',takeoffs:0,landings:0,remarks:''};
  let v=k=>k==='duration'||['dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'].includes(k)?timeStr(f[k]):(f[k]??'');
- $('#modalRoot').innerHTML=`<div class="modalback"><div class="modal"><div class="modalhead"><h2>${id?'Edit flight':'Add flight'}</h2><button id="closeModal">✕ Close</button></div><form id="flightForm"><div class="formgrid">
- ${field('Date of entry','entryDate',v('entryDate')||v('date'),'date')}
+ const legacyPIC=f.pilotInCommand||f.instructor||'';
+ $('#modalRoot').innerHTML=`<div class="modalback"><div class="modal"><div class="modalhead"><h2>${id?'Edit flight':'Add flight'}</h2><button id="closeModal" type="button">✕ Close</button></div><form id="flightForm"><div class="formgrid">
+ <div class="field"><label>Serial number</label><input value="${id?safe(String(f.serialNumber||flights.findIndex(x=>x.id===id)+1)):'Auto-assigned on save'}" disabled></div>
  ${field('Date of flight *','date',v('date'),'date')}
  ${field('Arrival date','arrivalDate',v('arrivalDate')||v('date'),'date')}
  ${field('Aircraft registration','registration',v('registration'))}
  ${field('Aircraft type','aircraftType',v('aircraftType'))}
- ${field('Engine category','engineCategory',f.engineCategory||'SE','text',[['SE','Single-engine (SE)'],['ME','Multi-engine (ME)']])}
- ${field('Instructor / examiner','instructor',v('instructor'))}
+ ${field('Engine category','engineCategory',f.engineCategory||'SE','text',[['SE','Single Engine (SE)'],['ME','Multi Engine (ME)']])}
+ ${field('Pilot in Command','pilotInCommand',legacyPIC)}
+ ${field('Co-Pilot or Student','coPilotStudent',v('coPilotStudent'))}
  ${field('Departure aerodrome','from',v('from'))}
  ${field('Arrival aerodrome','to',v('to'))}
  ${field('Off-block / take-off time','offBlock',v('offBlock'))}
  ${field('On-block / landing time','onBlock',v('onBlock'))}
  ${field('Total flight time (HH:MM) *','duration',v('duration'))}
  ${field('Dual received (HH:MM)','dual',v('dual'))}
- ${field('PIC (HH:MM)','pic',v('pic'))}
+ ${field('PIC time (HH:MM)','pic',v('pic'))}
  ${field('Local PIC (HH:MM)','localPic',v('localPic'))}
  ${field('Night PIC (HH:MM)','nightPic',v('nightPic'))}
  ${field('Cross-country (HH:MM)','xc',v('xc'))}
@@ -210,16 +345,16 @@ function openFlight(id=null){
  ${field('Cross-country PIC (HH:MM)','crossCountryPic',v('crossCountryPic'))}
  ${field('Day dual (HH:MM)','dayDual',v('dayDual'))}
  ${field('Night dual (HH:MM)','nightDual',v('nightDual'))}
- ${field('Night (HH:MM)','night',v('night'))}
+ ${field('Night flight (HH:MM)','night',v('night'))}
  ${field('Instrument actual (HH:MM)','instrument',v('instrument'))}
  ${field('Instrument simulated / hood (HH:MM)','simulatedInstrument',v('simulatedInstrument'))}
  ${field('Emergency sortie?','emergencySortie',f.emergencySortie?'yes':'no','text',[['no','No'],['yes','Yes']])}
  ${field('Take-offs','takeoffs',v('takeoffs'),'number')}
  ${field('Landings','landings',v('landings'),'number')}
- <div class="field span2"><label>Remarks / route / exercises</label><textarea name="remarks">${safe(v('remarks'))}</textarea></div>
+ <div class="field span2"><label>Instructional Exercise</label><textarea name="remarks">${safe(v('remarks'))}</textarea></div>
  </div><p class="muted small">Use HH:MM for all time fields, e.g. 1:25. Leave a category blank or enter 0:00 if it does not apply.</p><div class="toolbar"><button class="primary" type="submit">Save flight</button><button type="button" id="cancelFlight">Cancel</button></div></form></div></div>`;
  $('#closeModal').onclick=$('#cancelFlight').onclick=()=>$('#modalRoot').innerHTML='';
- $('#flightForm').onsubmit=async e=>{e.preventDefault();let fd=new FormData(e.target),o={};for(let k of fields)o[k]=fd.get(k)||'';if(!o.date||!String(o.duration).trim()){toast('Enter the date and total flight time.');return}o.id=id||uid();o.date=normalDate(o.date);o.entryDate=normalDate(o.entryDate||o.date);o.arrivalDate=normalDate(o.arrivalDate||o.date);for(let k of ['duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'])o[k]=parseTime(o[k]);o.emergencySortie=o.emergencySortie==='yes';for(let k of ['takeoffs','landings'])o[k]=Number(o[k])||0;o.registration=String(o.registration).trim().toUpperCase();await saveDB(o);$('#modalRoot').innerHTML='';await refresh();toast('Flight saved locally.')};
+ $('#flightForm').onsubmit=async e=>{e.preventDefault();let fd=new FormData(e.target),o={};for(let k of fields)o[k]=fd.get(k)||'';if(!o.date||!String(o.duration).trim()){toast('Enter the date and total flight time.');return}o.id=id||uid();o.date=normalDate(o.date);if(f.entryDate!==undefined)o.entryDate=f.entryDate;o.arrivalDate=normalDate(o.arrivalDate||o.date);o.instructor=String(o.pilotInCommand||legacyPIC||'');for(let k of ['duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'])o[k]=parseTime(o[k]);o.emergencySortie=o.emergencySortie==='yes';for(let k of ['takeoffs','landings'])o[k]=Number(o[k])||0;o.registration=String(o.registration).trim().toUpperCase();o.serialNumber=f.serialNumber||String(Math.max(0,...flights.map(x=>Number(x.serialNumber)||0))+1);await saveDB(o);$('#modalRoot').innerHTML='';await refresh();toast('Flight saved locally.')};
 }
 async function deleteFlight(id){if(!confirm('Delete this flight entry? This cannot be undone unless you have a backup.'))return;await delDB(id);await refresh();toast('Flight deleted.')}
 $('#addFlight').onclick=$('#addFlightDash').onclick=()=>openFlight();$('#printDash').onclick=()=>window.print();
@@ -270,7 +405,7 @@ async function backup(){documents=await allDocumentsDB();download('flight-logboo
 $('#exportBackup').onclick=$('#exportBackup2').onclick=backup;$('#importBackup').onclick=$('#restore2').onclick=()=>{let i=$('#fileInput');i.accept='.json';i.dataset.mode='backup';i.click()};
 $('#importExcel').onclick=()=>{let i=$('#fileInput');i.accept='.xlsx,.xls,.csv,.json';i.dataset.mode='import';i.click()};
 function csvEscape(x){let s=String(x??'');return /[,"\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
-function exportCSV(){let cols=['entryDate','date','arrivalDate','registration','aircraftType','engineCategory','from','to','offBlock','onBlock','duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument','emergencySortie','instructor','takeoffs','landings','remarks'];let names=['Date of Entry','Date of Flight','Arrival Date','Aircraft Registration','Aircraft Type','Engine Category','From','To','Off Block','On Block','Duration','Dual','PIC','Local PIC','Night PIC','Cross Country','Cross Country Dual','Day Dual','Night Dual','Night','Instrument','Simulated Instrument','Emergency Sortie','Instructor','Take-offs','Landings','Remarks'];let rows=[names,...flights.map(f=>cols.map(k=>['duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'].includes(k)?timeStr(f[k]):f[k]??''))];download('flight-logbook.csv','\ufeff'+rows.map(r=>r.map(csvEscape).join(',')).join('\r\n'),'text/csv;charset=utf-8')}
+function exportCSV(){let cols=['date','arrivalDate','registration','aircraftType','engineCategory','from','to','offBlock','onBlock','duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument','emergencySortie','instructor','takeoffs','landings','remarks'];let names=['Date of Flight','Arrival Date','Aircraft Registration','Aircraft Type','Engine Category','From','To','Off Block','On Block','Duration','Dual','PIC','Local PIC','Night PIC','Cross Country','Cross Country Dual','Day Dual','Night Dual','Night','Instrument','Simulated Instrument','Emergency Sortie','Instructor','Take-offs','Landings','Remarks'];let rows=[names,...flights.map(f=>cols.map(k=>['duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'].includes(k)?timeStr(f[k]):f[k]??''))];download('flight-logbook.csv','\ufeff'+rows.map(r=>r.map(csvEscape).join(',')).join('\r\n'),'text/csv;charset=utf-8')}
 $('#exportCsv').onclick=$('#quickExport').onclick=exportCSV;
 function parseCSV(text){let rows=[],row=[],s='',q=false;for(let i=0;i<text.length;i++){let c=text[i];if(q){if(c==='"'&&text[i+1]==='"'){s+='"';i++}else if(c==='"')q=false;else s+=c}else{if(c==='"')q=true;else if(c===','){row.push(s);s=''}else if(c==='\n'){row.push(s.replace(/\r$/,''));rows.push(row);row=[];s=''}else s+=c}}if(s.length||row.length){row.push(s.replace(/\r$/,''));rows.push(row)}return rows}
 function keynorm(s){return String(s??'').toLowerCase().replace(/[^a-z0-9]/g,'')}
