@@ -105,16 +105,154 @@ body{background:radial-gradient(ellipse at 10% 0%,#d8e7ff 0,transparent 40%),lin
 .logbook-wrap::-webkit-scrollbar{height:10px}.logbook-wrap::-webkit-scrollbar-thumb{background:#a8bbd0;border-radius:10px}
 @media print{.logbook-wrap{overflow:visible}.logbook-table{min-width:0;width:100%;font-size:7px}.logbook-table th,.logbook-table td{padding:3px;white-space:normal}.logbook-table .action-cell{display:none}}
 
+
+/* Mobile readability and dashboard cleanup. */
+@media(max-width:800px){
+ body{font-size:16px;line-height:1.5}
+ .wrap{padding:12px 12px calc(108px + env(safe-area-inset-bottom))}
+ .brand h1{font-size:22px}.brand p{font-size:13px}
+ .panel{padding:18px 16px;margin-top:15px}
+ .panel h2,.section-title-row h2{font-size:20px;line-height:1.3}
+ .eyebrow{font-size:12px}.career-title{font-size:28px}
+ .career-subtitle{font-size:15px}
+ .stat{padding:16px 14px}
+ .stat .label{font-size:13px;line-height:1.4;letter-spacing:.02em}
+ .stat .value{font-size:26px;line-height:1.25}
+ #hoursSummary .stat{min-height:88px;padding:14px 13px}
+ #hoursSummary .stat .label{font-size:13px;line-height:1.4}
+ #hoursSummary .stat .value{font-size:25px}
+ #recencyCards .stat .label{font-size:13px}#recencyCards .stat .value{font-size:24px}
+ .recent-flight{padding:16px 13px}.recent-flight .rf-label{font-size:13px}.recent-flight .rf-date{font-size:20px}.rf-badge{font-size:12px}
+ #monthlyBars{min-height:165px}.month-col .month-value{font-size:11px}.month-col .month-label{font-size:12px}
+ #statusStats .stat{padding:15px 13px}#statusStats .stat .label{font-size:12px}#statusStats .stat .value{font-size:23px}
+ #fdtlPanel .section-head h2{font-size:21px}#fdtlPanel .notice{font-size:13px;line-height:1.5}
+ #fdtlTable th,#fdtlTable td{font-size:13px;padding:12px 10px}
+ .tab{font-size:11px;min-height:54px;padding:11px 3px}
+ button,input,select,textarea{font-size:16px}
+ .footer{font-size:13px}
+}
+@media(max-width:380px){
+ .career-title{font-size:26px}#careerStats .stat .label{font-size:11px}#careerStats .stat .value{font-size:23px}
+ #hoursSummary{grid-template-columns:1fr}
+ #statusStats{grid-template-columns:1fr}
+ .tab{font-size:10px}
+}
+
+
+/* Final phone-fit pass: normal viewport scale, no page-level horizontal scrolling. */
+html,body{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+.wrap{width:100%;max-width:1200px;margin-inline:auto;min-width:0;}
+#dashboard,.panel,.stat,.top,.career-panel,#careerStats,#hoursSummary,#statusStats,#recencyCards{min-width:0;max-width:100%;}
+@media(max-width:800px){
+ body{font-size:14px;line-height:1.45;}
+ .wrap{padding:10px 10px calc(78px + env(safe-area-inset-bottom));}
+ .top{padding:12px;border-radius:18px;gap:10px;}
+ .brand{min-width:0;gap:9px}.brand h1{font-size:19px;line-height:1.2}.brand p{font-size:12px;line-height:1.35}
+ .logo{width:42px;height:42px;border-radius:13px;font-size:21px;flex:0 0 42px}
+ .actions{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+ .actions button{font-size:11px;line-height:1.25;padding:9px 5px;min-width:0;min-height:42px;overflow-wrap:anywhere}
+ .tabs{gap:3px;padding:6px 5px calc(6px + env(safe-area-inset-bottom));}
+ .tab{font-size:10px;padding:9px 2px;line-height:1.15;min-width:0;white-space:normal;}
+ .panel{padding:14px 12px;margin-top:12px;border-radius:18px;}
+ .panel h2,.section-title-row h2{font-size:17px;line-height:1.25;margin-bottom:10px}
+ #dashboard{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;width:100%;}
+ #dashboard>.career-panel{padding:16px 13px;}
+ .career-head{margin-bottom:12px;gap:8px}.eyebrow{font-size:10px;letter-spacing:.1em}.career-title{font-size:23px;line-height:1.2}.career-subtitle{font-size:12px}.hero-icon{width:44px;height:44px;font-size:23px;border-radius:14px}
+ #careerStats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .stat{padding:12px 11px;border-radius:15px;overflow-wrap:anywhere}
+ .stat .label{font-size:10px;line-height:1.3;letter-spacing:.015em;overflow-wrap:anywhere}
+ .stat .value{font-size:22px;line-height:1.2;margin-top:4px;overflow-wrap:anywhere}
+ .stat .hint{font-size:10px}
+ .recent-flight-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+ .recent-flight{padding:12px 9px;min-width:0}.recent-flight .rf-label{font-size:11px}.recent-flight .rf-date{font-size:16px;line-height:1.25;overflow-wrap:anywhere}.rf-badge{font-size:10px}
+ #hoursSummary{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ #hoursSummary .stat{padding:10px 9px;min-height:70px;border-radius:13px}
+ #hoursSummary .stat .label{font-size:10px;line-height:1.3}
+ #hoursSummary .stat .value{font-size:19px;line-height:1.2}
+ #recencyCards{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+ #recencyCards .stat{padding:10px 5px;border-radius:13px;min-width:0}
+ #recencyCards .stat .label{font-size:9px;line-height:1.25;overflow-wrap:anywhere}
+ #recencyCards .stat .value{font-size:17px;line-height:1.2}
+ #statusStats{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ #statusStats .stat{padding:10px 9px;border-radius:13px}
+ #statusStats .stat .label{font-size:10px;line-height:1.3}
+ #statusStats .stat .value{font-size:19px}
+ #monthlyBars{grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;padding-inline:0;min-height:130px}
+ .month-col{height:120px;gap:5px}.month-col .month-track{height:75px}.month-col .month-value{font-size:9px}.month-col .month-label{font-size:9px}
+ #fdtlPanel .section-head{gap:8px}#fdtlPanel .section-head h2{font-size:17px}
+ #fdtlPanel .notice{font-size:11px;padding:9px}
+ /* Fit FDTL to the phone width; wrap text instead of widening the page. */
+ #fdtlTable .tablewrap{overflow:visible;max-width:100%}#fdtlTable table{width:100%;min-width:0;table-layout:fixed}
+ #fdtlTable th,#fdtlTable td{white-space:normal;overflow-wrap:anywhere;padding:8px 5px;font-size:10px}
+ /* Flight entries stay within the viewport. Let cells wrap on mobile rather than causing page-wide sideways scrolling. */
+ .logbook-wrap{width:100%;max-width:100%;overflow:hidden}
+ .logbook-table{width:100%;min-width:0;table-layout:fixed;font-size:9px}
+ .logbook-table th,.logbook-table td{padding:6px 4px;white-space:normal;overflow-wrap:anywhere;font-size:9px;word-break:normal}
+ .logbook-table thead .group-head th{font-size:9px}
+ .logbook-table .exercise-cell{min-width:0;max-width:none}
+ .logbook-table .action-cell{display:flex;flex-wrap:wrap;gap:3px}.logbook-table .action-cell button{font-size:9px;padding:4px}
+ .toolbar{gap:6px}.toolbar input{max-width:100%;width:100%;font-size:14px}
+ .formgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.field label{font-size:11px}.field input,.field select,.field textarea{padding:9px;font-size:14px;min-width:0}.span4{grid-column:span 2}
+ .modalback{padding:8px}.modal{padding:13px;max-height:94dvh;width:100%;min-width:0}
+}
+@media(max-width:360px){
+ .wrap{padding-inline:7px}.panel{padding:12px 9px}.career-title{font-size:21px}
+ #careerStats{gap:6px}.stat .value{font-size:20px}
+ #hoursSummary .stat .value{font-size:17px}#recencyCards .stat .value{font-size:15px}
+ .tab{font-size:9px}
+}
+
+
+/* Requested dashboard cleanup: remove duplicate recency panel and duplicate day-count cards. */
+#hoursSummary>.stat:nth-child(7),#hoursSummary>.stat:nth-child(8){display:none!important}
+#dashboard>.recency-panel{display:none!important}
+@media(max-width:800px){
+ .panel h2,.section-title-row h2{font-size:21px}
+ .stat .label{font-size:13px}
+ .stat .value{font-size:26px}
+ #hoursSummary .stat .label{font-size:13px}
+ #hoursSummary .stat .value{font-size:24px}
+ .recent-flight .rf-label{font-size:14px}
+ .recent-flight .rf-date{font-size:21px}
+ .rf-badge{font-size:13px}
+}
+
+/* Final mobile navigation and form-fit adjustments */
+@media(max-width:800px){
+ .actions{grid-template-columns:repeat(2,minmax(0,1fr));}
+ .actions #openSettingsTop{background:#fff;color:var(--blue);border-color:#cbdcf3;}
+ .tabs{grid-template-columns:repeat(4,minmax(0,1fr));}
+ .tab{font-size:12px;line-height:1.2;min-height:48px;padding:9px 4px;overflow-wrap:normal;word-break:normal;}
+ body{font-size:15px;line-height:1.45}
+ .panel h2,.section-title-row h2{font-size:19px}
+ .career-title{font-size:25px}
+ .stat .label,#hoursSummary .stat .label{font-size:12px}
+ .stat .value{font-size:23px}#hoursSummary .stat .value{font-size:22px}
+ .recent-flight .rf-label{font-size:13px}.recent-flight .rf-date{font-size:19px}.rf-badge{font-size:12px}
+ .modalback{align-items:flex-start;overflow-y:auto;padding:10px 10px calc(100px + env(safe-area-inset-bottom));}
+ .modal{width:100%;max-height:none;min-height:0;overflow:visible;padding:14px 14px 28px;margin:0 0 20px;}
+ .modalhead{position:sticky;top:0;background:var(--bg);z-index:2;padding:4px 0 10px}
+ #flightForm>.toolbar{padding-bottom:calc(28px + env(safe-area-inset-bottom));}
+ #flightForm>.toolbar button{min-height:46px;}
+}
+
+
+/* Navigation labels: larger and easier to read on phones */
+@media(max-width:800px){
+ .tabs{gap:5px;padding-left:max(6px,env(safe-area-inset-left));padding-right:max(6px,env(safe-area-inset-right));}
+ .tab{font-size:14px!important;line-height:1.18;font-weight:700;padding:10px 3px;min-height:52px;letter-spacing:-.15px;}
+}
+@media(max-width:360px){.tab{font-size:12px!important;padding-left:1px;padding-right:1px;}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header class="top">
  <div class="brand"><div class="logo">✈</div><div><h1>Flight Logbook</h1><p>Private, local-first flight records · Works offline</p></div></div>
- <div class="actions"><button id="installBtn" class="hidden">Install app</button><button id="exportBackup">Backup</button><button id="importBackup">Restore backup</button><button id="importExcel" class="primary">Import Excel / CSV</button><input id="fileInput" type="file" accept=".xlsx,.xls,.csv,.json" class="hidden"></div>
+ <div class="actions"><button id="installBtn" class="hidden">Install app</button><button id="importExcel" class="primary">Import Excel / CSV</button><button id="openSettingsTop" type="button">Settings &amp; help</button><input id="fileInput" type="file" accept=".xlsx,.xls,.csv,.json" class="hidden"></div>
 </header>
 <nav class="tabs">
- <button class="tab active" data-tab="dashboard">Dashboard</button><button class="tab" data-tab="flights">Flight entries</button><button class="tab" data-tab="reports">Reports</button><button class="tab" data-tab="documents">Documents</button><button class="tab" data-tab="settings">Settings & help</button>
+ <button class="tab active" data-tab="dashboard">Dashboard</button><button class="tab" data-tab="flights">Flight entries</button><button class="tab" data-tab="reports">Reports</button><button class="tab" data-tab="documents">Documents</button>
 </nav>
 <main id="dashboard" class="view">
  <section class="panel career-panel">
@@ -139,10 +277,6 @@ body{background:radial-gradient(ellipse at 10% 0%,#d8e7ff 0,transparent 40%),lin
    <div class="stat"><div class="label">Instrument</div><div class="value" id="s-inst">00:00</div></div>
    <div class="stat"><div class="label">Aircraft used</div><div class="value" id="s-aircraft">0</div></div>
    <div class="stat"><div class="label">Last flown</div><div class="value" id="s-last">—</div></div>
-   <div class="stat"><div class="label">Days since last dual</div><div class="value" id="s-days-dual-summary">—</div></div>
-   <div class="stat"><div class="label">Days since last PIC</div><div class="value" id="s-days-pic-summary">—</div></div>
-   <div class="stat"><div class="label">Last flown dual</div><div class="value" id="s-last-dual-summary">—</div></div>
-   <div class="stat"><div class="label">Last flown PIC</div><div class="value" id="s-last-pic-summary">—</div></div>
   </div>
  </section>
  <section class="panel section-card activity-panel">
@@ -290,9 +424,8 @@ function renderDashboard(){
  const se=flights.filter(f=>!isME(f)),me=flights.filter(isME),lastDual=latestDate(flights,f=>(+f.dual||0)>0),afterDual=lastDual?sum('duration',flights.filter(f=>(f.date||'')>lastDual)):sum('duration');
  const lastEmergency=latestDate(flights,f=>f.emergencySortie===true||f.emergencySortie==='true'||f.emergencySortie==='yes');
  const statItems=[['Last flown date',latestDate(flights)?fmtDate(latestDate(flights)):'—'],['Last emergencies sortie date',lastEmergency?fmtDate(lastEmergency):'—'],['Hours after last dual sortie',timeStr(afterDual)],['Total hrs (SE + ME)',`${h('duration',se)} + ${h('duration',me)} = ${h('duration')}`],['1st week flying hours',timeStr(weekTotal(1))],['2nd week flying hours',timeStr(weekTotal(2))],['3rd week flying hours',timeStr(weekTotal(3))],['4th week flying hours',timeStr(weekTotal(4))],['Hours in current month',h('duration',monthFlights)],['Hours in last three months',h('duration',threeMonths)],['Total PIC',h('pic')],['Local PIC',h('localPic')],['Total IF (SE + ME)',`${timeStr(sum('instrument',se)+sum('simulatedInstrument',se))} + ${timeStr(sum('instrument',me)+sum('simulatedInstrument',me))} = ${timeStr(sum('instrument')+sum('simulatedInstrument'))}`],['Night PIC',h('nightPic')],['Cross country dual',h('crossCountryDual')],['Cross Country PIC',h('crossCountryPic')],['Day Dual',h('dayDual')],['Night Dual',h('nightDual')]];
- $('#statusStats').innerHTML=statItems.map(([label,value])=>`<div class="stat"><div class="label">${safe(label)}</div><div class="value" style="font-size:${String(value).length>16?'17px':'22px'}">${safe(value)}</div></div>`).join('');
+ $('#statusStats').innerHTML=statItems.map(([label,value])=>`<div class="stat"><div class="label">${safe(label)}</div><div class="value" style="font-size:${String(value).length>16?'17px':'22px'}">${safe(value)}</div>${label==='Last emergencies sortie date'&&lastEmergency?`<div class="rf-badge" style="display:inline-block;margin-top:8px">${safe(daysSince(lastEmergency))} days ago</div>`:''}</div>`).join('');
  const dualDays=daysSince(lastDualDate),picDays=daysSince(lastPicDate);
- $('#s-days-dual-summary').textContent=dualDays;$('#s-days-pic-summary').textContent=picDays;$('#s-last-dual-summary').textContent=lastDualDate?fmtDate(lastDualDate):'—';$('#s-last-pic-summary').textContent=lastPicDate?fmtDate(lastPicDate):'—';
  $('#currentMonthLabel').textContent=`Current Month (${now.toLocaleString('en',{month:'short'})})`;$('#currentMonthValue').textContent=h('duration',monthFlights);
  $('#last3Label').textContent=`Last 3 Months (${last3Start.toLocaleString('en',{month:'short'})}–${last3End.toLocaleString('en',{month:'short'})})`;$('#last3Value').textContent=h('duration',threeMonths);$('#last12Value').textContent=h('duration',twelveMonths);
  renderFDTL();
@@ -402,7 +535,7 @@ function renderReports(){
 }
 function download(name,content,type){let blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 async function backup(){documents=await allDocumentsDB();download('flight-logbook-backup-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({format:'flight-logbook-backup-v2',exportedAt:new Date().toISOString(),flights,documents},null,2),'application/json')}
-$('#exportBackup').onclick=$('#exportBackup2').onclick=backup;$('#importBackup').onclick=$('#restore2').onclick=()=>{let i=$('#fileInput');i.accept='.json';i.dataset.mode='backup';i.click()};
+$('#exportBackup2').onclick=backup;$('#restore2').onclick=()=>{let i=$('#fileInput');i.accept='.json';i.dataset.mode='backup';i.click()};$('#openSettingsTop').onclick=()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));$('#settings').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});};
 $('#importExcel').onclick=()=>{let i=$('#fileInput');i.accept='.xlsx,.xls,.csv,.json';i.dataset.mode='import';i.click()};
 function csvEscape(x){let s=String(x??'');return /[,"\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
 function exportCSV(){let cols=['date','arrivalDate','registration','aircraftType','engineCategory','from','to','offBlock','onBlock','duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument','emergencySortie','instructor','takeoffs','landings','remarks'];let names=['Date of Flight','Arrival Date','Aircraft Registration','Aircraft Type','Engine Category','From','To','Off Block','On Block','Duration','Dual','PIC','Local PIC','Night PIC','Cross Country','Cross Country Dual','Day Dual','Night Dual','Night','Instrument','Simulated Instrument','Emergency Sortie','Instructor','Take-offs','Landings','Remarks'];let rows=[names,...flights.map(f=>cols.map(k=>['duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'].includes(k)?timeStr(f[k]):f[k]??''))];download('flight-logbook.csv','\ufeff'+rows.map(r=>r.map(csvEscape).join(',')).join('\r\n'),'text/csv;charset=utf-8')}
