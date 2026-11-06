@@ -276,6 +276,26 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:1
   .logbook-table td.action-cell { display:table-cell !important; min-width:112px !important; width:112px !important; white-space:nowrap !important; }
   .logbook-table td.action-cell button { display:inline-block !important; margin:2px !important; white-space:nowrap !important; }
 }
+
+/* Reports: compact year selector and classic monthly totals table */
+.report-stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+.report-stat-grid .stat{min-width:0}
+#yearlyReportYear,#monthlyReportYear{border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:#fff;color:var(--ink);font-weight:650;max-width:150px}
+#monthTable{margin-top:12px;overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+#monthTable table{width:100%;border-collapse:collapse;min-width:360px}
+#monthTable th,#monthTable td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--line)}
+/* Keep Month left-aligned; centre every numeric/category column under its heading. */
+#monthTable th:nth-child(n+2),#monthTable td:nth-child(n+2){text-align:center}
+#monthTable th{background:#f4f7fc;color:var(--muted);font-size:13px;font-weight:750;text-transform:uppercase;letter-spacing:.03em}
+#monthTable tr:last-child td{border-bottom:0}
+@media(max-width:600px){
+  .report-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .report-stat-grid .stat{min-width:0}
+  #monthTable th,#monthTable td{padding:13px 14px;font-size:14px}
+  #monthTable .tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  #monthTable table{min-width:900px;width:900px}
+}
+
 </style>
 </head>
 <body>
@@ -343,9 +363,9 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:1
 </main>
 <main id="reports" class="view hidden">
  <section class="panel"><h2>Logbook summary</h2><p class="muted small">Calculated from your saved entries. Category totals can overlap; do not add category totals together.</p><div class="grid" id="reportStats"></div></section>
- <section class="panel"><h2>Yearly totals</h2><div id="yearlyTable"></div></section>
+ <section class="panel"><div class="section-head"><h2>Yearly totals</h2><select id="yearlyReportYear" aria-label="Select year for yearly totals"></select></div><div id="yearlyTable" class="report-stat-grid"></div></section>
  <section class="panel"><h2>Aircraft totals</h2><div id="aircraftTable"></div></section>
- <section class="panel"><h2>Monthly totals</h2><div id="monthTable"></div></section>
+ <section class="panel"><div class="section-head"><h2>Monthly totals</h2><select id="monthlyReportYear" aria-label="Select year for monthly totals"></select></div><div id="monthTable"></div></section>
  <section class="panel"><button onclick="window.print()">Print / Save as PDF</button></section>
 </main>
 <main id="documents" class="view hidden">
@@ -559,15 +579,48 @@ $('#searchDocuments').addEventListener('input',renderDocuments);$('#documentFilt
 
 function statCard(label,value){return `<div class="stat"><div class="label">${label}</div><div class="value">${value}</div></div>`}
 function simpleTable(headers,rows){return `<div class="tablewrap"><table><thead><tr>${headers.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`}
+function reportYearOptions(select, years, preferred){
+ const old=select.value;
+ select.innerHTML=years.map(y=>`<option value="${safe(y)}">${safe(y)}</option>`).join('') || `<option value="">No flight records</option>`;
+ if(years.includes(old)) select.value=old;
+ else if(years.includes(String(preferred))) select.value=String(preferred);
+ else if(years.length) select.value=years[0];
+}
 function renderReports(){
  $('#reportStats').innerHTML=statCard('Flights',flights.length)+statCard('Total time',h('duration'))+statCard('Dual',h('dual'))+statCard('PIC',h('pic'))+statCard('XC',h('xc'))+statCard('Night',h('night'))+statCard('Instrument',timeStr(sum('instrument')+sum('simulatedInstrument')))+statCard('Landings',sum('landings'));
- let years={};flights.forEach(f=>{let y=(f.date||'Undated').slice(0,4);if(!years[y])years[y]=[];years[y].push(f)});
- $('#yearlyTable').innerHTML=simpleTable(['Year','Flights','Total','Dual','PIC','XC','Night','Instrument'],Object.entries(years).sort((a,b)=>b[0].localeCompare(a[0])).map(([y,a])=>[safe(y),a.length,h('duration',a),h('dual',a),h('pic',a),h('xc',a),h('night',a),timeStr(sum('instrument',a)+sum('simulatedInstrument',a))]));
+ const yearSet=[...new Set(flights.map(f=>(f.date||'').slice(0,4)).filter(y=>/^\d{4}$/.test(y)))].sort((a,b)=>b.localeCompare(a));
+ const currentYear=String(new Date().getFullYear());
+ const yearSel=$('#yearlyReportYear'), monthSel=$('#monthlyReportYear');
+ reportYearOptions(yearSel,yearSet,currentYear); reportYearOptions(monthSel,yearSet,currentYear);
+ const yearlyFlights=flights.filter(f=>(f.date||'').slice(0,4)===yearSel.value);
+ const yearlyMetrics=[['Year',yearSel.value||'—'],['Flights',yearlyFlights.length],['Total',h('duration',yearlyFlights)],['Dual',h('dual',yearlyFlights)],['PIC',h('pic',yearlyFlights)],['Cross Country',h('xc',yearlyFlights)],['Night',h('night',yearlyFlights)],['Instrument',timeStr(sum('instrument',yearlyFlights)+sum('simulatedInstrument',yearlyFlights))]];
+ $('#yearlyTable').innerHTML=yearlyMetrics.map(([label,value])=>statCard(label,value)).join('');
  let ac={};flights.forEach(f=>{let k=f.registration||'Unspecified';(ac[k]??=[]).push(f)});
  $('#aircraftTable').innerHTML=simpleTable(['Registration','Aircraft type','Flights','Total time','Dual','PIC'],Object.entries(ac).map(([k,a])=>[safe(k),safe(a[0].aircraftType||'—'),a.length,h('duration',a),h('dual',a),h('pic',a)]));
- let mo={};flights.forEach(f=>{let k=(f.date||'Undated').slice(0,7);(mo[k]??=[]).push(f)});
- $('#monthTable').innerHTML=simpleTable(['Month','Flights','Total','Dual','PIC','XC','Night','Instrument'],Object.entries(mo).sort((a,b)=>b[0].localeCompare(a[0])).map(([k,a])=>[safe(k),a.length,h('duration',a),h('dual',a),h('pic',a),h('xc',a),h('night',a),timeStr(sum('instrument',a)+sum('simulatedInstrument',a))]));
+ const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
+ const monthlyFlights=flights.filter(f=>(f.date||'').slice(0,4)===monthSel.value);
+ const monthlyRows=monthNames.map((name,index)=>{
+   const key=`${monthSel.value}-${String(index+1).padStart(2,'0')}`;
+   const rows=monthlyFlights.filter(f=>(f.date||'').slice(0,7)===key);
+   return [
+     name,
+     rows.length,
+     h('duration',rows),
+     h('dual',rows),
+     h('pic',rows),
+     h('xc',rows),
+     h('night',rows),
+     timeStr(sum('instrument',rows)+sum('simulatedInstrument',rows))
+   ];
+ });
+ $('#monthTable').innerHTML=simpleTable(
+   ['Month','Flights','Total','Dual','PIC','Cross Country','Night','Instrument'],
+   monthlyRows
+ );
 }
+$('#yearlyReportYear').addEventListener('change',renderReports);
+$('#monthlyReportYear').addEventListener('change',renderReports);
+
 function download(name,content,type){let blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 async function backup(){documents=await allDocumentsDB();download('flight-logbook-backup-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({format:'flight-logbook-backup-v2',exportedAt:new Date().toISOString(),flights,documents},null,2),'application/json')}
 $('#exportBackup2').onclick=backup;$('#restore2').onclick=()=>{let i=$('#fileInput');i.accept='.json';i.dataset.mode='backup';i.click()};$('#openSettingsTop').onclick=()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));$('#settings').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});};
