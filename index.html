@@ -296,6 +296,142 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:1
   #monthTable table{min-width:900px;width:900px}
 }
 
+
+.flight-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:min(100%,520px)}
+.flight-actions button{width:100%;min-height:52px}
+#flightCategoryFilter{min-width:145px}
+.flight-total-row td{background:#1769d2!important;color:#fff!important;border-color:#0f59b8!important;font-weight:800!important;white-space:nowrap}
+.flight-total-row td strong{font-size:14px}
+.flight-total-row .total-count{display:block;font-size:11px;font-weight:600;opacity:.9;margin-top:3px}
+.calc-backdrop{position:fixed;inset:0;z-index:10000;background:rgba(13,30,58,.42);display:flex;align-items:center;justify-content:center;padding:14px}
+.calc-backdrop.hidden{display:none}
+.calc-modal{width:min(100%,560px);max-height:calc(100dvh - 28px);overflow:auto;background:#fff;border:1px solid #cbdcf5;border-radius:24px;box-shadow:0 22px 70px rgba(20,55,105,.28);padding:18px;color:#14294d}
+.calc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.calc-head h2{margin:0;font-size:22px}
+.calc-head button{border:0;background:#edf4ff;color:#315a91;border-radius:12px;width:42px;height:42px;font-size:22px}
+.calc-display{border:1px solid #c7dcff;border-radius:18px;background:#f4f8ff;min-height:112px;padding:18px;margin-bottom:14px;text-align:right;display:flex;flex-direction:column;justify-content:center;gap:5px;overflow-wrap:anywhere}
+.calc-main{font-size:32px;font-weight:750;color:#132d57;min-height:40px}
+.calc-secondary{font-size:21px;font-weight:650;color:#1769d2;min-height:28px}
+.calc-error{font-size:13px;color:#b42318;min-height:17px}
+.calc-keypad{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.calc-keypad button{min-width:0;min-height:56px;border:1px solid #cbdcf5;border-radius:15px;background:#f7faff;color:#1769d2;font-size:19px;font-weight:700;padding:8px 4px;box-shadow:0 2px 5px rgba(31,75,130,.06)}
+.calc-keypad button:active{background:#e3efff}
+.calc-keypad button[data-key]{font-size:23px;color:#172f58}
+.calc-keypad button[data-unit].selected,.calc-keypad .calc-equals{background:#1769d2;color:#fff;border-color:#1769d2}
+.calc-keypad button[data-calc="convert"]{font-size:15px}
+.calc-conversion{margin-top:12px;padding:12px 14px;border:1px solid #cbdcf5;border-radius:14px;background:#f4f8ff}
+.calc-conversion.hidden{display:none}
+.calc-conversion .conversion-row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid #dce7f7}
+.calc-conversion .conversion-row:last-child{border-bottom:0}
+@media(max-width:600px){
+ .flight-actions{width:100%;gap:8px}
+ .flight-actions button{font-size:15px;padding:12px 8px}
+ #flightCategoryFilter{min-width:135px}
+ .calc-backdrop{padding:8px;align-items:flex-end}
+ .calc-modal{width:100%;max-height:88dvh;border-radius:22px 22px 16px 16px;padding:14px}
+ .calc-head h2{font-size:20px}
+ .calc-display{min-height:94px;padding:14px}
+ .calc-main{font-size:29px}
+ .calc-keypad{gap:7px}
+ .calc-keypad button{min-height:52px;font-size:17px;border-radius:13px}
+ .calc-keypad button[data-key]{font-size:21px}
+ .calc-keypad button[data-calc="convert"]{font-size:13px}
+}
+
+
+/* Refined raised filter controls */
+#yearFilter,#dateSort,#flightCategoryFilter{
+ appearance:none;-webkit-appearance:none;
+ min-height:48px;padding:10px 42px 10px 16px;
+ border:1px solid #c5d7ef;border-radius:14px;
+ color:#17345f;font-weight:700;font-size:15px;
+ background-color:#f8fbff;
+ background-image:linear-gradient(180deg,#ffffff 0%,#edf4ff 100%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%233c659b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+ background-repeat:no-repeat,no-repeat;background-position:center, right 14px center;
+ box-shadow:0 3px 0 #d8e5f5,0 5px 12px rgba(30,75,130,.08),inset 0 1px 0 #fff;
+}
+#yearFilter:focus,#dateSort:focus,#flightCategoryFilter:focus{outline:2px solid #8bb9f2;outline-offset:2px}
+#yearFilter:active,#dateSort:active,#flightCategoryFilter:active{box-shadow:0 1px 0 #d8e5f5,inset 0 2px 4px rgba(30,75,130,.08);transform:translateY(1px)}
+@media(max-width:600px){
+ #yearFilter,#dateSort,#flightCategoryFilter{min-height:46px;font-size:14px;padding-left:12px;padding-right:34px;border-radius:13px;background-position:center,right 10px center}
+}
+
+
+/* Clean, icon-led raised filter controls inspired by the supplied reference */
+.flight-toolbar{display:grid;gap:12px}
+.flight-search{width:100%;max-width:none!important;min-height:50px;padding:12px 16px!important;border:1px solid #cbdcf1!important;border-radius:14px!important;background:linear-gradient(180deg,#fff,#f7faff)!important;box-shadow:0 2px 0 #e0eaf7,0 4px 10px rgba(31,76,135,.06)!important;font-size:15px}
+.flight-filter-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.filter-control{position:relative;display:flex;align-items:center;min-width:0;min-height:48px;padding:0 34px 0 12px;border:1px solid #c4d7ef;border-radius:14px;background:linear-gradient(180deg,#fff 0%,#edf4ff 100%);box-shadow:0 3px 0 #d9e6f6,0 5px 12px rgba(30,75,130,.08),inset 0 1px 0 #fff;color:#1d5fae}
+.filter-control:active{transform:translateY(1px);box-shadow:0 1px 0 #d9e6f6,inset 0 2px 4px rgba(30,75,130,.08)}
+.filter-icon{flex:0 0 auto;font-size:18px;line-height:1;font-weight:800;margin-right:7px;color:#2871c5}
+.filter-control select{appearance:none;-webkit-appearance:none;min-width:0;width:100%;height:46px;padding:0!important;border:0!important;outline:0!important;background:transparent!important;box-shadow:none!important;color:#18365f;font-size:13px;font-weight:750;white-space:nowrap;text-overflow:ellipsis}
+.filter-chevron{position:absolute;right:11px;top:50%;transform:translateY(-58%);font-size:19px;font-weight:800;color:#52769f;pointer-events:none}
+.flight-toolbar-actions{display:flex;gap:10px;flex-wrap:wrap}
+.raised-action{min-height:46px;padding:10px 16px!important;border:1px solid #c4d7ef!important;border-radius:14px!important;background:linear-gradient(180deg,#fff 0%,#edf4ff 100%)!important;box-shadow:0 3px 0 #d9e6f6,0 5px 12px rgba(30,75,130,.08),inset 0 1px 0 #fff!important;color:#1d5fae!important;font-weight:750!important}
+.raised-action span{display:inline-block;margin-right:7px;color:#2871c5;font-size:18px;font-weight:900}
+.raised-action:active{transform:translateY(1px);box-shadow:0 1px 0 #d9e6f6!important}
+@media(max-width:600px){
+ .flight-filter-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .filter-control:last-child{grid-column:1/-1}
+ .filter-control{min-height:46px;padding-left:10px}
+ .filter-control select{font-size:13px}
+ .flight-toolbar-actions{display:grid;grid-template-columns:1fr 1fr}
+ .raised-action{width:100%;padding:10px 8px!important;font-size:14px}
+}
+
+
+/* Full-surface dropdown hit area: tapping icon, label, or chevron opens the native menu */
+.filter-control{cursor:pointer;overflow:hidden}
+.filter-control .filter-icon,.filter-control .filter-chevron{pointer-events:none;z-index:1}
+.filter-control select{position:absolute;inset:0;z-index:2;width:100%;height:100%;padding:0 34px 0 42px!important;cursor:pointer;color:#18365f;background:transparent!important}
+@media(max-width:600px){.filter-control select{padding-left:38px!important;padding-right:30px!important}}
+/* Emphasized final calculator answer */
+@keyframes calcResultPop{
+  0%{transform:translateY(34px);opacity:0}
+  70%{transform:translateY(-3px);opacity:1}
+  100%{transform:translateY(0);opacity:1}
+}
+.calc-result-pop{transform-origin:center;animation:calcResultPop 1s cubic-bezier(.22,.61,.36,1) both}
+
+
+/* Raised 3D treatment for the primary flight actions */
+.flight-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:min(100%,620px)}
+.flight-actions .flight-action-3d{
+ display:flex;align-items:center;justify-content:center;gap:10px;
+ width:100%;min-height:58px;padding:13px 16px!important;
+ border-radius:15px!important;font-size:16px;font-weight:800;
+ letter-spacing:.1px;transition:transform .12s ease,box-shadow .12s ease;
+ box-shadow:0 4px 0 #d4e2f4,0 7px 14px rgba(28,76,139,.12),inset 0 1px 0 rgba(255,255,255,.8)!important;
+}
+.flight-actions .flight-action-3d.primary{
+ color:#fff!important;border:1px solid #1764c5!important;
+ background:linear-gradient(180deg,#2580e8 0%,#1262c8 100%)!important;
+ box-shadow:0 4px 0 #0e4fa8,0 7px 14px rgba(28,76,139,.18),inset 0 1px 0 rgba(255,255,255,.28)!important;
+}
+.flight-actions .calculator-action-3d{
+ color:#1d5fae!important;border:1px solid #c4d7ef!important;
+ background:linear-gradient(180deg,#fff 0%,#edf4ff 100%)!important;
+}
+.flight-actions .action-icon{width:23px;height:23px;flex:0 0 23px}
+.flight-actions .calculator-icon{width:22px;height:22px}
+.flight-actions .flight-action-3d:active{
+ transform:translateY(2px);
+ box-shadow:0 1px 0 #d4e2f4,0 2px 5px rgba(28,76,139,.1),inset 0 2px 4px rgba(30,75,130,.08)!important;
+}
+@media(max-width:600px){
+ .flight-actions{width:100%;gap:10px}
+ .flight-actions .flight-action-3d{min-height:54px;padding:11px 8px!important;font-size:15px;gap:8px}
+ .flight-actions .action-icon{width:21px;height:21px;flex-basis:21px}
+}
+
+
+/* Crisp SVG icons for filter controls and calculator history */
+.filter-icon{display:flex;align-items:center;justify-content:center}
+.filter-icon svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.calc-keypad button[data-calc="history"]{display:flex;align-items:center;justify-content:center}
+.calc-keypad button[data-calc="history"] svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.calc-keypad button[data-calc="history"].history-active{background:#e3efff;border-color:#8eb7ec}
+
 </style>
 </head>
 <body>
@@ -357,8 +493,28 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:1
  <section class="panel"><div class="section-head"><h2>Quick actions</h2><span class="section-icon" aria-hidden="true">＋</span></div><div class="toolbar"><button class="primary" id="addFlightDash">＋ Add flight</button><button id="quickExport">Export CSV</button><button id="printDash">Print dashboard</button></div></section>
 </main>
 <main id="flights" class="view hidden">
- <section class="panel"><div class="section-head"><div><h2>Flight entries</h2><div class="muted small">Select an entry to edit it. Times are stored as minutes to avoid rounding errors.</div></div><button class="primary" id="addFlight">＋ Add flight</button></div>
- <div class="toolbar" style="margin-top:12px"><input id="searchFlights" placeholder="Search date, aircraft, route…"><select id="yearFilter"><option value="">All years</option></select><select id="dateSort" aria-label="Sort flight dates"><option value="newest">Newest to oldest</option><option value="oldest">Oldest to newest</option></select><button id="clearFilters">Clear filters</button><button id="exportCsv">Export CSV</button></div>
+ <section class="panel"><div class="section-head"><div><h2>Flight entries</h2><div class="muted small">Select an entry to edit it. Times are stored as minutes to avoid rounding errors.</div></div><div class="flight-actions">
+ <button class="primary flight-action-3d" id="addFlight" type="button">
+  <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+  <span>Add flight</span>
+ </button>
+ <button class="flight-action-3d calculator-action-3d" id="openCalculator" type="button">
+  <svg class="action-icon calculator-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2.8" width="14" height="18.4" rx="2" fill="none" stroke="currentColor" stroke-width="1.9"/><rect x="8" y="5.5" width="8" height="3.2" rx=".6" fill="none" stroke="currentColor" stroke-width="1.5"/><g fill="currentColor"><circle cx="8.5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="15.5" cy="12" r="1"/><circle cx="8.5" cy="15.5" r="1"/><circle cx="12" cy="15.5" r="1"/><circle cx="15.5" cy="15.5" r="1"/><circle cx="8.5" cy="19" r="1"/><circle cx="12" cy="19" r="1"/><circle cx="15.5" cy="19" r="1"/></g></svg>
+  <span>Calculator</span>
+ </button>
+</div></div>
+ <div class="flight-toolbar" style="margin-top:12px">
+  <input id="searchFlights" class="flight-search" placeholder="⌕  Search date, aircraft, route…">
+  <div class="flight-filter-row">
+   <label class="filter-control"><span class="filter-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7.5 3v4M16.5 3v4M4 9.5h16"/></svg></span><select id="yearFilter" aria-label="Filter by year"><option value="">All years</option></select><span class="filter-chevron">⌄</span></label>
+   <label class="filter-control"><span class="filter-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 20V4m-3.5 3.5L7 4l3.5 3.5M17 4v16m-3.5-3.5L17 20l3.5-3.5"/></svg></span><select id="dateSort" aria-label="Sort flight dates"><option value="newest">Newest to oldest</option><option value="oldest">Oldest to newest</option></select><span class="filter-chevron">⌄</span></label>
+   <label class="filter-control"><span class="filter-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 5h18l-7 8v5l-4 2v-7z"/></svg></span><select id="flightCategoryFilter" aria-label="Filter flight time category"><option value="">All (No filter)</option><option value="pic">PIC</option><option value="dual">Dual</option><option value="xc">Cross Country</option><option value="night">Night</option><option value="actual">Actual</option><option value="simulated">Simulated</option></select><span class="filter-chevron">⌄</span></label>
+  </div>
+  <div class="flight-toolbar-actions">
+   <button id="clearFilters" class="raised-action" type="button"><span aria-hidden="true">↻</span> Clear filters</button>
+   <button id="exportCsv" class="raised-action" type="button"><span aria-hidden="true">⇩</span> Export CSV</button>
+  </div>
+ </div>
  <div id="flightTable"></div></section>
 </main>
 <main id="reports" class="view hidden">
@@ -383,6 +539,21 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:1
  <section class="panel"><h2>Install on Android / laptop</h2><ol><li>Upload the included app files to a static HTTPS host (for example, your own GitHub Pages site) or run from localhost. Opening index.html directly is fine for a quick test, but install/offline caching requires a secure origin.</li><li>Open the hosted app once while online. On Android Chrome, use the browser menu → <b>Install app</b> or <b>Add to Home screen</b>. On desktop Chrome/Edge, use the install icon in the address bar or browser menu.</li><li>After the app has loaded once, reopen it from the installed icon. The app shell works offline; records stay in that browser profile.</li><li>For use on multiple devices, restore a JSON backup separately on each device. Data does not sync automatically.</li></ol></section>
 </main>
 <div class="footer">Flight Logbook · Offline-first · Your data stays on this device</div>
+</div>
+
+<div id="calculatorRoot" class="calc-backdrop hidden" aria-hidden="true">
+ <section class="calc-modal" role="dialog" aria-modal="true" aria-labelledby="calcTitle">
+  <header class="calc-head"><h2 id="calcTitle">▦ Calculator</h2><button type="button" id="closeCalculator" aria-label="Close calculator">✕</button></header>
+  <div class="calc-display"><div id="calcMain" class="calc-main">0</div><div id="calcSecondary" class="calc-secondary"></div><div id="calcError" class="calc-error" aria-live="polite"></div></div>
+  <div class="calc-keypad">
+   <button type="button" data-calc="clear">C</button><button type="button" data-calc="percent">%</button><button type="button" data-calc="convert">⇄ Convert</button><button type="button" data-calc="history" aria-label="Calculation history" title="Calculation history"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></button>
+   <button type="button" data-unit="hour">Hour</button><button type="button" data-unit="min">Min</button><button type="button" data-unit="sec">Sec</button><button type="button" data-calc="back" aria-label="Backspace" title="Backspace">⌫</button>
+   <button type="button" data-key="7">7</button><button type="button" data-key="8">8</button><button type="button" data-key="9">9</button><button type="button" data-key="/">÷</button>
+   <button type="button" data-key="4">4</button><button type="button" data-key="5">5</button><button type="button" data-key="6">6</button><button type="button" data-key="*">×</button>
+   <button type="button" data-key="1">1</button><button type="button" data-key="2">2</button><button type="button" data-key="3">3</button><button type="button" data-key="-">−</button>
+   <button type="button" data-key="0">0</button><button type="button" data-key=".">.</button><button type="button" data-calc="equals" class="calc-equals">=</button><button type="button" data-key="+">+</button>
+  </div><div id="calcConversion" class="calc-conversion hidden"></div>
+ </section>
 </div>
 <div id="modalRoot"></div><div id="toast" class="toast hidden" role="status"></div>
 <script>
@@ -489,22 +660,40 @@ function renderDashboard(){
 }
 function tableHTML(arr,actions=true){
  const val=x=>safe(x===undefined||x===null||x===''?'—':String(x));
- const tm=k=>timeStr(+k||0), dual= f=>tm(f.dual), pic= f=>tm(f.pic);
+ const tm=k=>timeStr(+k||0);
  const chronological=[...flights].sort((a,b)=>(a.date||'').localeCompare(b.date||'') || ((Number(a.serialNumber)||0)-(Number(b.serialNumber)||0)) || String(a.id).localeCompare(String(b.id)));
  const serialById=new Map(chronological.map((f,i)=>[f.id,i+1]));
+ const total=k=>timeStr(arr.reduce((n,f)=>n+(Number(f[k])||0),0));
+ const actual=f=>Number(f.actualInstrument??f.instrument)||0;
+ const simulated=f=>Number(f.simulatedInstrument)||0;
+ const rows=arr.map(f=>`<tr>${actions?`<td class="num-cell">${serialById.get(f.id)||'—'}</td>`:''}<td>${val(fmtDate(f.date))}<div class="subcell">${f.arrivalDate&&f.arrivalDate!==f.date?'Arr. '+val(fmtDate(f.arrivalDate)):''}</div></td><td><strong>${val(f.registration)}</strong></td><td>${val(f.aircraftType)}<div class="subcell">${val(f.engineCategory||'SE')}</div></td><td>${val(f.from)}<div class="subcell">Off: ${val(f.offBlock)}</div></td><td>${val(f.to)}<div class="subcell">On: ${val(f.onBlock)}</div></td><td class="time-cell"><strong>${tm(f.duration)}</strong></td><td class="time-cell">${tm(f.dual)}</td><td class="time-cell">${tm(f.pic)}</td><td class="time-cell">${tm(f.xc)}</td><td class="time-cell">${tm(f.night)}</td><td class="time-cell">${tm(actual(f))}</td><td class="time-cell">${tm(simulated(f))}</td><td class="num-cell">${val(f.takeoffs??0)}</td><td class="num-cell">${val(f.landings??0)}</td><td>${val(f.pilotInCommand||f.instructor)}</td><td>${val(f.coPilotStudent||f.copilotStudent||f.studentPilot||f.studentName)}</td><td class="exercise-cell">${val(f.instructionalExercises||f.remarks)}</td>${actions?`<td class="action-cell"><button data-edit="${safe(f.id)}">Edit</button><button class="danger" data-delete="${safe(f.id)}">Delete</button></td>`:''}</tr>`).join('');
+ let totals='';
+ if(actions){
+   totals=`<tr class="flight-total-row"><td colspan="6"><strong>${$('#flightCategoryFilter')?.value ? 'FILTERED TOTAL' : 'COLUMN TOTALS'}</strong><span class="total-count">${arr.length} flights</span></td><td class="time-cell">${total('duration')}</td><td class="time-cell">${total('dual')}</td><td class="time-cell">${total('pic')}</td><td class="time-cell">${total('xc')}</td><td class="time-cell">${total('night')}</td><td class="time-cell">${timeStr(arr.reduce((n,f)=>n+actual(f),0))}</td><td class="time-cell">${timeStr(arr.reduce((n,f)=>n+simulated(f),0))}</td><td class="num-cell">${arr.reduce((n,f)=>n+(Number(f.takeoffs)||0),0)}</td><td class="num-cell">${arr.reduce((n,f)=>n+(Number(f.landings)||0),0)}</td><td colspan="3">${$('#flightCategoryFilter')?.value ? safe($('#flightCategoryFilter').selectedOptions[0]?.textContent||'Filtered') : 'All entries'}</td><td></td></tr>`;
+ }
  return `<div class="tablewrap logbook-wrap"><table class="logbook-table"><thead>
  <tr class="group-head">${actions?'<th rowspan="2">S. No.</th>':''}<th rowspan="2">Date of flight</th><th colspan="2">Aircraft</th><th colspan="2">Flight details</th><th rowspan="2">Total time</th><th colspan="4">Flight time</th><th colspan="2">Instrument</th><th colspan="2">Take-offs / landings</th><th colspan="3">Crew & exercise</th>${actions?'<th rowspan="2">Actions</th>':''}</tr>
  <tr><th>Registration</th><th>Type / SE-ME</th><th>Departure</th><th>Arrival</th><th>Dual</th><th>PIC</th><th>Cross-country</th><th>Night</th><th>Actual</th><th>Simulated</th><th>Take-offs</th><th>Landings</th><th>Pilot in Command</th><th>Co-Pilot / Student</th><th>Instructional Exercise</th></tr>
- </thead><tbody>${arr.map((f,i)=>`<tr>${actions?`<td class="num-cell">${serialById.get(f.id)||'—'}</td>`:''}<td>${val(fmtDate(f.date))}<div class="subcell">${f.arrivalDate&&f.arrivalDate!==f.date?'Arr. '+val(fmtDate(f.arrivalDate)):''}</div></td><td><strong>${val(f.registration)}</strong></td><td>${val(f.aircraftType)}<div class="subcell">${val(f.engineCategory||'SE')}</div></td><td>${val(f.from)}<div class="subcell">Off: ${val(f.offBlock)}</div></td><td>${val(f.to)}<div class="subcell">On: ${val(f.onBlock)}</div></td><td class="time-cell"><strong>${tm(f.duration)}</strong></td><td class="time-cell">${dual(f)}</td><td class="time-cell">${pic(f)}</td><td class="time-cell">${tm(f.xc)}</td><td class="time-cell">${tm(f.night)}</td><td class="time-cell">${tm(f.actualInstrument??f.instrument)}</td><td class="time-cell">${tm(f.simulatedInstrument)}</td><td class="num-cell">${val(f.takeoffs??0)}</td><td class="num-cell">${val(f.landings??0)}</td><td>${val(f.pilotInCommand||f.instructor)}</td><td>${val(f.coPilotStudent||f.copilotStudent||f.studentPilot||f.studentName)}</td><td class="exercise-cell">${val(f.instructionalExercises||f.remarks)}</td>${actions?`<td class="action-cell"><button data-edit="${safe(f.id)}">Edit</button><button class="danger" data-delete="${safe(f.id)}">Delete</button></td>`:''}</tr>`).join('')}</tbody></table></div>`
+ </thead><tbody>${rows}${totals}</tbody></table></div>`
+}
+function flightHasCategory(f,category){
+ const positive=k=>(Number(f[k])||0)>0;
+ if(category==='pic')return ['pic','localPic','nightPic','crossCountryPic'].some(positive);
+ if(category==='dual')return ['dual','dayDual','nightDual','crossCountryDual'].some(positive);
+ if(category==='xc')return ['xc','crossCountryDual','crossCountryPic'].some(positive);
+ if(category==='night')return ['night','nightPic','nightDual'].some(positive);
+ if(category==='actual')return positive('actualInstrument')||positive('instrument');
+ if(category==='simulated')return positive('simulatedInstrument');
+ return true;
 }
 function renderFlights(){
- let q=$('#searchFlights').value.toLowerCase(),year=$('#yearFilter').value;
+ let q=$('#searchFlights').value.toLowerCase(),year=$('#yearFilter').value,category=$('#flightCategoryFilter')?.value||'';
  let years=[...new Set(flights.map(f=>(f.date||'').slice(0,4)).filter(Boolean))].sort().reverse();let select=$('#yearFilter'),old=select.value;select.innerHTML='<option value="">All years</option>'+years.map(y=>`<option>${safe(y)}</option>`).join('');select.value=years.includes(old)?old:'';
- let arr=[...flights].filter(f=>(!year||(f.date||'').startsWith(year))&&[f.date,f.registration,f.aircraftType,f.from,f.to,f.instructor,f.pilotInCommand,f.coPilotStudent,f.copilotStudent,f.instructionalExercises,f.remarks].join(' ').toLowerCase().includes(q)).sort((a,b)=>$('#dateSort').value==='oldest'?(a.date||'').localeCompare(b.date||''):(b.date||'').localeCompare(a.date||''));
- $('#flightTable').innerHTML=arr.length?tableHTML(arr,true):'<div class="empty">No matching flights. Add a flight or import your Excel logbook.</div>';
+ let arr=[...flights].filter(f=>(!year||(f.date||'').startsWith(year))&&flightHasCategory(f,category)&&[f.date,f.registration,f.aircraftType,f.from,f.to,f.instructor,f.pilotInCommand,f.coPilotStudent,f.copilotStudent,f.instructionalExercises,f.remarks].join(' ').toLowerCase().includes(q)).sort((a,b)=>$('#dateSort').value==='oldest'?(a.date||'').localeCompare(b.date||''):(b.date||'').localeCompare(a.date||''));
+ $('#flightTable').innerHTML=arr.length?tableHTML(arr,true):'<div class="empty">No matching flights for the selected filters.</div>';
  $$('[data-edit]').forEach(b=>b.onclick=()=>openFlight(b.dataset.edit));$$('[data-delete]').forEach(b=>b.onclick=()=>deleteFlight(b.dataset.delete));
 }
-$('#searchFlights').addEventListener('input',renderFlights);$('#yearFilter').addEventListener('change',renderFlights);$('#dateSort').addEventListener('change',renderFlights);$('#clearFilters').onclick=()=>{$('#searchFlights').value='';$('#yearFilter').value='';$('#dateSort').value='newest';renderFlights()};
+$('#searchFlights').addEventListener('input',renderFlights);$('#yearFilter').addEventListener('change',renderFlights);$('#dateSort').addEventListener('change',renderFlights);$('#flightCategoryFilter').addEventListener('change',renderFlights);$('#clearFilters').onclick=()=>{$('#searchFlights').value='';$('#yearFilter').value='';$('#dateSort').value='newest';$('#flightCategoryFilter').value='';renderFlights()};
 function field(label,name,value='',type='text',opts=null,span=''){let input=opts?`<select name="${name}">${opts.map(o=>`<option ${String(value)===String(o[0])?'selected':''} value="${safe(o[0])}">${safe(o[1])}</option>`).join('')}</select>`:`<input name="${name}" type="${type}" value="${safe(value)}" ${type==='number'?'min="0" step="1"':''}>`;return `<div class="field ${span}"><label>${label}</label>${input}</div>`}
 function openFlight(id=null){
  editId=id;let f=flights.find(x=>x.id===id)||{date:new Date().toISOString().slice(0,10),arrivalDate:'',registration:'',aircraftType:'',engineCategory:'SE',from:'',to:'',offBlock:'',onBlock:'',duration:0,dual:0,pic:0,localPic:0,nightPic:0,xc:0,crossCountryDual:0,crossCountryPic:0,dayDual:0,nightDual:0,night:0,instrument:0,simulatedInstrument:0,emergencySortie:false,instructor:'',pilotInCommand:'',coPilotStudent:'',takeoffs:0,landings:0,remarks:''};
@@ -657,6 +846,23 @@ $('#fileInput').addEventListener('change',async e=>{let file=e.target.files[0];i
 $('#deleteAll').onclick=async()=>{if(confirm('Delete ALL flight records saved in this browser? Export a backup first if needed.')&&confirm('Final confirmation: permanently delete all local flight entries?')){await clearDB();await refresh();toast('All local entries deleted.')}};
 if('serviceWorker'in navigator&&location.protocol!=='file:'){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('#installBtn').classList.remove('hidden')});$('#installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('#installBtn').classList.add('hidden')}else toast('Use the browser menu and choose Install app / Add to Home screen.')};
+
+(()=>{const root=$('#calculatorRoot'),main=$('#calcMain'),secondary=$('#calcSecondary'),error=$('#calcError'),conversion=$('#calcConversion');let expression='',mode='general',unit='',timeBuffer='',timeParts=[],timeGroups=[],pendingOperator=null,timeResult=null,justEvaluated=false,calcHistory=[];const unitMs={hour:3600000,min:60000,sec:1000,ms:1},unitLabel={hour:'hour',min:'min',sec:'sec',ms:'milli sec'};const fmt=n=>Number.isFinite(n)?String(Number(n.toFixed(8))):'Invalid';
+function totalTime(){if(!timeGroups.length)return 0;let total=timeGroups[0].ms;for(let i=1;i<timeGroups.length;i++)total=timeGroups[i].op==='-'?total-timeGroups[i].ms:total+timeGroups[i].ms;return total}
+function show(){if(mode==='time'){if(timeResult!==null){main.textContent=autoTime(timeResult);secondary.textContent='';main.classList.remove('calc-result-pop');void main.offsetWidth;main.classList.add('calc-result-pop');return}main.classList.remove('calc-result-pop');let line=timeParts.join(' ');if(timeBuffer!=='')line+=(line?' ':'')+timeBuffer;main.textContent=line||'0';let total=timeGroups.length?totalTime():0;secondary.textContent=timeGroups.length?autoTime(total):''}else{main.classList.remove('calc-result-pop');main.textContent=expression||'0';secondary.textContent=''}}
+function autoTime(ms){if(!Number.isFinite(ms))return 'Invalid';let sign=ms<0?'-':'';let w=Math.abs(Math.round(ms)),h=Math.floor(w/3600000);w%=3600000;let m=Math.floor(w/60000);w%=60000;let s=Math.floor(w/1000),mm=w%1000;let p=[];if(h)p.push(h+' hour'+(h===1?'':'s'));if(m)p.push(m+' min');if(s)p.push(s+' sec');if(mm)p.push(mm+' ms');return sign+(p.join(' ')||'0 ms')}
+function evaluate(expr){let t=expr.match(/(?:\d+\.?\d*|\.\d+)|[()+\-*/]/g)||[];if(t.join('')!==expr.replace(/\s/g,''))throw Error();let i=0;function factor(){let x=t[i++];if(x==='('){let v=term();if(t[i++]!==')')throw Error();return v}if(x==='-')return-factor();if(x==='+')return factor();if(x===undefined||!/^(\d+\.?\d*|\.\d+)$/.test(x))throw Error();return Number(x)}function term(){let v=factor();while(t[i]==='*'||t[i]==='/'){let op=t[i++],n=factor();v=op==='*'?v*n:v/n}return v}let v=term();while(t[i]==='+'||t[i]==='-'){let op=t[i++],n=term();v=op==='+'?v+n:v-n}if(i!==t.length||!Number.isFinite(v))throw Error();return v}
+function reset(){expression='';mode='general';unit='';timeBuffer='';timeParts=[];timeGroups=[];pendingOperator=null;timeResult=null;justEvaluated=false;error.textContent='';conversion.classList.add('hidden');conversion.innerHTML='';$$('[data-unit]').forEach(b=>b.classList.remove('selected'));$('[data-calc="history"]')?.classList.remove('history-active');show()}
+function invalid(message='Invalid input: enter a number followed by a time unit.'){error.textContent=message;secondary.textContent=''}
+function recordHistory(input,result){calcHistory.unshift({input,result,at:new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})});calcHistory=calcHistory.slice(0,10)}
+function renderHistory(){if(!calcHistory.length){conversion.innerHTML='<div class="conversion-row"><span>No calculations yet</span><strong>—</strong></div>'}else{conversion.innerHTML='<div style="font-weight:800;margin-bottom:8px;color:#18365f">Recent calculations</div>'+calcHistory.map((item,i)=>`<div class="conversion-row"><span><strong>${i+1}.</strong> ${item.input}<small style="display:block;color:#718096">${item.at}</small></span><strong>${item.result}</strong></div>`).join('')}conversion.classList.remove('hidden');$('[data-calc="history"]').classList.add('history-active')}
+
+function close(){root.classList.add('hidden');root.setAttribute('aria-hidden','true')}
+$('#openCalculator').addEventListener('click',()=>{reset();root.classList.remove('hidden');root.setAttribute('aria-hidden','false')});$('#closeCalculator').addEventListener('click',close);root.addEventListener('click',e=>{if(e.target===root)close()});
+root.querySelectorAll('[data-key]').forEach(b=>b.addEventListener('click',()=>{let k=b.dataset.key;error.textContent='';conversion.classList.add('hidden');if(mode==='time'){if(timeResult!==null){timeParts=[];timeGroups=[];timeBuffer='';pendingOperator=null;timeResult=null}if(k==='+'||k==='-'){if(timeBuffer!==''||!timeGroups.length||pendingOperator){invalid('Choose a time unit before adding or subtracting.');return}pendingOperator=k;timeParts.push(k);show();return}if(!/[0-9.]/.test(k)||k.length!==1){invalid('Use time units for time calculations.');return}if(k==='.'&&timeBuffer.includes('.'))return;timeBuffer=(timeBuffer==='0'&&k!=='.')?k:timeBuffer+k;show();return}if(justEvaluated&&!'+-*/'.includes(k))expression='';expression+=k;justEvaluated=false;show()}));
+root.querySelectorAll('[data-unit]').forEach(b=>b.addEventListener('click',()=>{error.textContent='';conversion.classList.add('hidden');const chosen=b.dataset.unit;if(mode==='time'&&timeResult!==null){timeParts=[];timeGroups=[];timeBuffer='';pendingOperator=null;timeResult=null}if(mode==='general'){if(/[+*/()]|.-/.test(expression)){invalid('Clear the normal calculation before entering time values.');return}timeBuffer=expression.trim()===''?'0':expression;mode='time';expression='';}if(timeBuffer===''){invalid('Enter a number before choosing the time unit.');return}let value=Number(timeBuffer);if(!Number.isFinite(value)){invalid();return}let op=pendingOperator||'+';let ms=value*unitMs[chosen];if(!timeGroups.length||pendingOperator){timeGroups.push({op,ms})}else{timeGroups[timeGroups.length-1].ms+=ms}timeParts.push(value+' '+unitLabel[chosen]);timeBuffer='';pendingOperator=null;unit=chosen;justEvaluated=false;$$('[data-unit]').forEach(x=>x.classList.toggle('selected',x===b));show()}));
+root.querySelectorAll('[data-calc]').forEach(b=>b.addEventListener('click',()=>{let a=b.dataset.calc;error.textContent='';if(a==='clear'){reset();return}if(a==='back'){if(mode==='time'){if(timeBuffer!==''){timeBuffer=timeBuffer.slice(0,-1)}else if(pendingOperator){pendingOperator=null;timeParts.pop()}else if(timeParts.length){timeParts.pop();timeGroups.pop()}}else expression=expression.slice(0,-1);show();return}if(a==='history'){renderHistory();return}if(a==='percent'){if(mode==='time'){if(timeBuffer!=='')timeBuffer=String(Number(timeBuffer)/100);else invalid('Enter a number before pressing percent.')}else{try{expression=fmt(evaluate(expression)/100)}catch{invalid('Invalid calculation.')}}show();return}if(a==='equals'){if(mode==='time'){if(timeBuffer!==''||pendingOperator){invalid('Choose a time unit for the current number first.');return}let result=totalTime();if(result<0){invalid('The result cannot be a negative time.');return}let original=timeParts.join(' ');recordHistory(original,autoTime(result));timeResult=result;justEvaluated=true;show();return}try{let original=expression;let answer=fmt(evaluate(expression));recordHistory(original,answer);expression=answer;justEvaluated=true;show()}catch{invalid('Invalid calculation.')}return}if(a==='convert'){if(mode!=='time'||!timeGroups.length){error.textContent='Enter a time value first.';return}if(timeBuffer!==''||pendingOperator){error.textContent='Choose a time unit for the current number first.';return}let ms=totalTime(),rows=[['Hours',fmt(ms/3600000)],['Minutes',fmt(ms/60000)],['Seconds',fmt(ms/1000)],['Milliseconds',fmt(ms)]];conversion.innerHTML=rows.map(([k,v])=>`<div class="conversion-row"><span>${k}</span><strong>${v}</strong></div>`).join('');conversion.classList.remove('hidden')}}));show()})();
+
 (async()=>{try{db=await openDB();await refresh()}catch(e){console.error('Flight Logbook database startup failed:',e);alert('Flight Logbook could not load its local database or records. Your saved data has not been intentionally deleted. Close other Flight Logbook tabs/apps, reopen this page, and if the problem continues send this error: '+(e&&e.message?e.message:String(e)))}})();
 </script>
 </body></html>
