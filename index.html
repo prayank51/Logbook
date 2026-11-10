@@ -432,18 +432,181 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:1
 .calc-keypad button[data-calc="history"] svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .calc-keypad button[data-calc="history"].history-active{background:#e3efff;border-color:#8eb7ec}
 
+
+/* Documents filter matches the raised, icon-led flight-entry dropdown */
+.documents-toolbar{display:grid;grid-template-columns:minmax(0,1fr) minmax(190px,240px);gap:10px;align-items:center}
+.documents-toolbar #searchDocuments{min-width:0;width:100%;min-height:48px;padding:12px 16px;border:1px solid #cbdcf1;border-radius:14px;background:linear-gradient(180deg,#fff,#f7faff);box-shadow:0 2px 0 #e0eaf7,0 4px 10px rgba(31,76,135,.06)}
+.document-filter-control{width:100%;min-width:0}
+.document-filter-control select{font-size:14px}
+@media(max-width:600px){.documents-toolbar{grid-template-columns:1fr;gap:10px}.document-filter-control{width:100%}}
+
+/* Subtle raised 3D depth across dashboard metric and information cards */
+#dashboard .stat,
+#dashboard .recent-flight,
+#dashboard .section-card,
+#dashboard #statusStats .stat,
+#dashboard #recencyCards .stat,
+#dashboard #hoursSummary .stat{
+ border:1px solid #d5e2f2;
+ background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+ box-shadow:0 3px 0 #e1eaf6,0 7px 16px rgba(33,72,126,.075),inset 0 1px 0 rgba(255,255,255,.95);
+ transition:transform .16s ease,box-shadow .16s ease;
+}
+#dashboard .career-panel,
+#dashboard .recent-panel,
+#dashboard .summary-panel,
+#dashboard .activity-panel,
+#dashboard .recency-panel,
+#dashboard .status-panel,
+#dashboard #fdtlPanel,
+#dashboard>section:not(.career-panel){
+ border:1px solid #d8e4f3;
+ background:linear-gradient(145deg,rgba(255,255,255,.99),rgba(244,248,255,.98));
+ box-shadow:0 4px 0 #e1eaf6,0 10px 24px rgba(34,73,129,.075),inset 0 1px 0 rgba(255,255,255,.95);
+}
+#dashboard .stat:active,#dashboard .recent-flight:active{transform:translateY(1px);box-shadow:0 1px 0 #e1eaf6,0 3px 8px rgba(33,72,126,.06),inset 0 1px 0 #fff}
+
+
+/* Documents Add button: same raised primary action styling as Flight Entries */
+.document-add-3d{
+ display:inline-flex!important;align-items:center;justify-content:center;gap:9px;
+ min-height:54px;padding:11px 20px!important;border-radius:15px!important;
+ color:#fff!important;border:1px solid #1764c5!important;
+ background:linear-gradient(180deg,#2580e8 0%,#1262c8 100%)!important;
+ box-shadow:0 4px 0 #0e4fa8,0 7px 14px rgba(28,76,139,.18),inset 0 1px 0 rgba(255,255,255,.28)!important;
+ font-size:15px;font-weight:800;transition:transform .12s ease,box-shadow .12s ease;
+}
+.document-add-3d .action-icon{width:21px;height:21px;flex:0 0 21px}
+.document-add-3d:active{transform:translateY(2px);box-shadow:0 1px 0 #0e4fa8,0 2px 5px rgba(28,76,139,.1)!important}
+
+/* Raised calendar year selectors shared by Yearly Totals and Monthly Totals */
+.report-year-control{display:inline-flex;vertical-align:middle;min-width:150px;max-width:220px}
+.report-year-control select{font-size:14px}
+.report-year-control .filter-icon svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+
+/* 3D card treatment throughout Reports, including summary, yearly and monthly cards */
+#reports .panel,
+#reports .section-card,
+#reports .stat,
+#reports .report-card,
+#reports .summary-card,
+#reports .year-card,
+#reports .month-card,
+#reports .grid>div,
+#reports .grid .card{
+ border:1px solid #d5e2f2!important;
+ background:linear-gradient(180deg,#ffffff 0%,#f7faff 100%)!important;
+ box-shadow:0 3px 0 #e1eaf6,0 8px 18px rgba(33,72,126,.075),inset 0 1px 0 rgba(255,255,255,.96)!important;
+ border-radius:16px;
+}
+#reports .panel{
+ box-shadow:0 4px 0 #e1eaf6,0 10px 24px rgba(34,73,129,.075),inset 0 1px 0 rgba(255,255,255,.96)!important;
+}
+@media(max-width:600px){
+ .document-add-3d{min-height:48px;padding:9px 15px!important}
+ .report-year-control{width:100%;max-width:none}
+}
+
+
+/* Dashboard welcome header and profile */
+.app-top{position:relative;display:flex;align-items:center;justify-content:space-between;padding:5px 4px 14px;background:transparent;border:0;box-shadow:none;margin-bottom:2px;min-height:64px}
+.app-top .brand{gap:13px}.app-top .brand h1{font-size:25px;color:#10234d;font-weight:900;letter-spacing:-.045em}
+.app-logo,.dashboard-brand-logo{display:grid;place-items:center;color:#fff;background:linear-gradient(145deg,#3694ff 0%,#176bd4 55%,#104caa 100%);border:1px solid #5ba6ff;border-radius:18px;box-shadow:inset 0 2px 3px #ffffff70,inset 0 -4px 7px #063d9238,0 7px 15px #155bb52b;text-shadow:0 2px 3px #063d9255}
+.app-logo{width:52px;height:52px;font-size:27px}
+.top-menu-wrap{position:relative;margin-left:auto}
+.top-menu-btn{width:48px;height:48px;padding:0;border-radius:17px;font-size:28px;line-height:1;background:linear-gradient(145deg,#fff,#e8f1ff);border:1px solid #d5e3f5;box-shadow:inset 0 1px 2px #fff,0 5px 12px #1b4f9222;color:#244d83}
+.top-menu{position:absolute;right:0;top:55px;z-index:20;width:220px;padding:7px;border:1px solid #d7e4f5;border-radius:17px;background:rgba(255,255,255,.98);box-shadow:0 14px 32px #1b3d6b30}
+.top-menu button{display:flex;align-items:center;gap:12px;width:100%;border:0;border-radius:11px;background:transparent;text-align:left;padding:12px;color:#182c50;font-weight:750}
+.top-menu button+button{border-top:1px solid #edf1f7}.top-menu button:active{background:#edf4ff}.top-menu button span{width:24px;text-align:center;font-size:19px;color:#2469bd}
+.dashboard-brand-row{grid-column:1/-1;display:flex;align-items:center;gap:12px;margin:0 0 -2px;padding:0 3px}
+.dashboard-brand-row h1{font-size:24px;line-height:1.2;margin:0;color:#10234d;font-weight:900;letter-spacing:-.045em}
+.dashboard-brand-logo{width:48px;height:48px;border-radius:16px;font-size:25px;flex:none}
+.welcome-banner{grid-column:1/-1;position:relative;min-height:176px;display:flex;align-items:center;overflow:hidden;border-radius:24px;border:1px solid #b9d0ef;background:linear-gradient(120deg,#143c70 0%,#4779a9 52%,#d0e2f8 100%);box-shadow:inset 0 2px 3px #ffffff55,0 9px 22px #234c8428}
+.welcome-banner:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(9,31,64,.82),rgba(12,42,79,.50) 54%,rgba(10,33,64,.05))}
+.welcome-copy{position:relative;z-index:1;padding:23px 25px;color:white;text-shadow:0 2px 8px #10233e66;max-width:75%}
+.welcome-small{font-size:17px;font-weight:700;line-height:1.35}.welcome-name{font-size:29px;font-weight:900;line-height:1.2;margin:5px 0 11px;overflow-wrap:anywhere}
+.welcome-designation{display:inline-flex;align-items:center;min-height:32px;padding:5px 13px;border-radius:999px;background:rgba(226,239,255,.24);border:1px solid rgba(255,255,255,.28);color:#fff;font-size:13px;font-weight:800;backdrop-filter:blur(7px)}
+.profile-cover-editor{margin:8px 0 20px;padding:13px;border:1px solid #dce7f5;border-radius:18px;background:linear-gradient(145deg,#f9fbff,#edf4ff)}
+.profile-cover-preview{height:160px;border-radius:14px;background:linear-gradient(120deg,#173c6d,#6d91b5,#d8e7f7);background-position:center;background-size:cover;display:flex;align-items:center;justify-content:center;color:#fff;text-shadow:0 1px 4px #0008;font-weight:700;overflow:hidden;margin-bottom:12px}
+.profile-cover-preview.has-image span{display:none}
+.profile-fields{margin-top:12px}
+#profile .panel{max-width:900px;margin:0 auto}
+#profile .section-head{margin-bottom:14px}
+@media(max-width:800px){
+ .app-top{padding:4px 2px 12px;min-height:58px}
+ .app-top .brand h1{font-size:23px}
+ #dashboard{grid-template-columns:minmax(0,1fr)}
+ .dashboard-brand-row h1{font-size:23px}
+ .welcome-banner{min-height:165px}
+ .welcome-copy{padding:20px;max-width:82%}
+ .welcome-name{font-size:26px}
+}
+
+
+/* v18 fixes: single title, square brand mark, reliable overflow menu */
+.app-top{position:relative;z-index:100;overflow:visible}
+.app-top .app-logo{width:52px!important;height:52px!important;min-width:52px;min-height:52px;aspect-ratio:1/1;border-radius:17px;flex:0 0 52px}
+.top-menu-wrap{z-index:101}
+#topMenu{z-index:1000;pointer-events:auto}
+#topMenu.hidden{display:none!important}
+#topMenu:not(.hidden){display:block!important}
+#topMenu button{position:relative;z-index:1001;cursor:pointer;pointer-events:auto}
+#topMenuBtn{position:relative;z-index:1002;cursor:pointer;pointer-events:auto;touch-action:manipulation}
+
+
+/* v19: native expandable overflow menu */
+.top-menu-wrap{position:relative;margin-left:auto;z-index:1001;display:block}
+.top-menu-wrap>summary{list-style:none;display:grid;place-items:center;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.top-menu-wrap>summary::-webkit-details-marker{display:none}
+.top-menu-wrap[open]>.top-menu{display:block!important}
+.top-menu-wrap:not([open])>.top-menu{display:none!important}
+.top-menu{position:absolute;right:0;top:calc(100% + 9px);z-index:10000;width:230px;padding:7px;border:1px solid #d7e4f5;border-radius:17px;background:#fff;box-shadow:0 14px 32px #1b3d6b30}
+.top-menu button{display:flex;align-items:center;gap:12px;width:100%;border:0;border-radius:11px;background:transparent;text-align:left;padding:13px;color:#182c50;font-weight:750;cursor:pointer;touch-action:manipulation}
+.top-menu button+button{border-top:1px solid #edf1f7}
+
+
+/* v21 profile reliability: visible label activation and dashboard sync */
+.cover-picker-label{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;min-height:48px;padding:12px 18px;border-radius:14px;font-weight:800}
+.cover-native-picker{position:relative;overflow:hidden;isolation:isolate}\n.cover-native-picker #coverFileInput{appearance:none!important;-webkit-appearance:none!important;display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;opacity:0!important;z-index:5!important;cursor:pointer!important;margin:0!important;padding:0!important}
+#profile .profile-cover-editor{position:relative}
+
+
+/* v26: make the file chooser cover the whole styled button */
+.cover-native-picker{position:relative!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;min-height:52px!important;cursor:pointer!important}
+.cover-native-picker #coverFileInput{position:absolute!important;inset:0!important;display:block!important;width:100%!important;height:100%!important;opacity:0!important;z-index:20!important;cursor:pointer!important;font-size:100px!important;margin:0!important;padding:0!important}
+
+
+/* v27: modal must sit above app header and bottom navigation */
+#modalRoot{position:relative;z-index:5000}
+#modalRoot>.modalback{position:fixed!important;inset:0!important;z-index:5001!important;align-items:flex-start!important;overflow-y:auto!important;padding:calc(env(safe-area-inset-top,0px) + 24px) 12px calc(env(safe-area-inset-bottom,0px) + 90px)!important}
+#modalRoot .modal{position:relative!important;margin:0 auto!important;width:min(650px,100%)!important;max-height:none!important;overflow:visible!important}
+.restore-json-picker{position:relative;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(145deg,#fff,#edf4ff);box-shadow:inset 0 1px 2px #fff,0 4px 10px #1b4f9218;color:var(--ink);font-weight:750;cursor:pointer;overflow:hidden}
+.restore-json-picker input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:100px}
+
 </style>
 </head>
 <body>
 <div class="wrap">
-<header class="top">
- <div class="brand"><div class="logo">✈</div><div><h1>Flight Logbook</h1><p>Private, local-first flight records · Works offline</p></div></div>
- <div class="actions"><button id="installBtn" class="hidden">Install app</button><button id="importExcel" class="primary">Import Excel / CSV</button><button id="openSettingsTop" type="button">Settings &amp; help</button><input id="fileInput" type="file" accept=".xlsx,.xls,.csv,.json" class="hidden"></div>
+<header class="top app-top">
+ <div class="brand"><div class="logo app-logo" aria-hidden="true">✈</div><h1>Flight Logbook</h1></div>
+ <details class="top-menu-wrap" id="topMenuDetails">
+  <summary class="top-menu-btn" aria-label="More options" title="More options">⋮</summary>
+  <div id="topMenu" class="top-menu">
+   <button type="button" data-top-action="profile"><span>♙</span>Profile</button>
+   <button type="button" data-top-action="import"><span>⇧</span>Import Excel / CSV</button>
+   <button type="button" data-top-action="settings"><span>⚙</span>Settings &amp; help</button>
+  </div>
+ </details>
+ <button id="installBtn" class="hidden">Install app</button>
+ <input id="fileInput" type="file" accept=".xlsx,.xls,.csv,.json" class="hidden">
 </header>
 <nav class="tabs">
  <button class="tab active" data-tab="dashboard">Dashboard</button><button class="tab" data-tab="flights">Flight entries</button><button class="tab" data-tab="reports">Reports</button><button class="tab" data-tab="documents">Documents</button>
 </nav>
 <main id="dashboard" class="view">
+ <section class="welcome-banner" id="welcomeBanner">
+  <div class="welcome-copy"><div class="welcome-small">Welcome back,</div><div class="welcome-name" id="welcomeName">Pilot</div><div class="welcome-designation" id="welcomeDesignation">Student Pilot</div></div>
+ </section>
  <section class="panel career-panel">
   <div class="career-head"><div><div class="eyebrow">Flight Logbook · Dashboard</div><h2 class="career-title">Career overview</h2></div><div class="hero-icon" aria-hidden="true">✈</div></div>
   <div id="careerStats">
@@ -519,25 +682,53 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:1
 </main>
 <main id="reports" class="view hidden">
  <section class="panel"><h2>Logbook summary</h2><p class="muted small">Calculated from your saved entries. Category totals can overlap; do not add category totals together.</p><div class="grid" id="reportStats"></div></section>
- <section class="panel"><div class="section-head"><h2>Yearly totals</h2><select id="yearlyReportYear" aria-label="Select year for yearly totals"></select></div><div id="yearlyTable" class="report-stat-grid"></div></section>
+ <section class="panel"><div class="section-head"><h2>Yearly totals</h2><label class="filter-control report-year-control"><span class="filter-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7.5 3v4M16.5 3v4M4 9.5h16"/></svg></span><select id="yearlyReportYear" aria-label="Select year for yearly totals"></select><span class="filter-chevron">⌄</span></label></div><div id="yearlyTable" class="report-stat-grid"></div></section>
  <section class="panel"><h2>Aircraft totals</h2><div id="aircraftTable"></div></section>
- <section class="panel"><div class="section-head"><h2>Monthly totals</h2><select id="monthlyReportYear" aria-label="Select year for monthly totals"></select></div><div id="monthTable"></div></section>
+ <section class="panel"><div class="section-head"><h2>Monthly totals</h2><label class="filter-control report-year-control"><span class="filter-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7.5 3v4M16.5 3v4M4 9.5h16"/></svg></span><select id="monthlyReportYear" aria-label="Select year for monthly totals"></select><span class="filter-chevron">⌄</span></label></div><div id="monthTable"></div></section>
  <section class="panel"><button onclick="window.print()">Print / Save as PDF</button></section>
 </main>
 <main id="documents" class="view hidden">
  <section class="panel">
-  <div class="section-head"><div><h2>Documents</h2><div class="muted small">Track licence, medical, ID and other document validity dates.</div></div><button class="primary" id="addDocument" type="button">＋ Add</button></div>
-  <div class="toolbar" style="margin-top:12px"><input id="searchDocuments" placeholder="Search document name or number…"><select id="documentFilter"><option value="all">All documents</option><option value="expired">Expired</option><option value="soon">Expiring within 30 days</option><option value="valid">Valid</option><option value="na">No validity (NA)</option></select></div>
+  <div class="section-head"><div><h2>Documents</h2><div class="muted small">Track licence, medical, ID and other document validity dates.</div></div><button class="primary flight-action-3d document-add-3d" id="addDocument" type="button"><svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>Add</span></button></div>
+  <div class="toolbar documents-toolbar" style="margin-top:12px">
+   <input id="searchDocuments" placeholder="Search document name or number…">
+   <label class="filter-control document-filter-control" aria-label="Filter documents">
+    <span class="filter-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3.75h8l4 4v12.5H6z"/><path d="M14 3.75v4h4M9 12h6M9 15.5h6"/></svg></span>
+    <select id="documentFilter" aria-label="Filter documents"><option value="all">All documents</option><option value="expired">Expired</option><option value="soon">Expiring within 30 days</option><option value="valid">Valid</option><option value="na">No validity (NA)</option></select>
+    <span class="filter-chevron" aria-hidden="true">⌄</span>
+   </label>
+  </div>
   <div class="grid" id="documentSummary" style="margin-top:12px"></div>
   <div id="documentTable" style="margin-top:12px"></div>
  </section>
 </main>
 <main id="settings" class="view hidden">
- <section class="panel"><h2>Data & privacy</h2><p>Flight and document records are saved in this browser on this device. This app does not send records to a server. Use <b>Backup</b> regularly and keep the backup file somewhere safe.</p><div class="toolbar"><button id="exportBackup2">Download JSON backup</button><button id="restore2">Restore JSON backup</button><button class="danger" id="deleteAll">Delete all local flights</button></div></section>
+ <section class="panel"><h2>Data & privacy</h2><p>Flight and document records are saved in this browser on this device. This app does not send records to a server. Use <b>Backup</b> regularly and keep the backup file somewhere safe.</p><div class="toolbar"><button id="exportBackup2">Download JSON backup</button><label class="restore-json-picker" for="restoreFileInput">Restore JSON backup<input id="restoreFileInput" type="file" accept=".json,application/json"></label><button class="danger" id="deleteAll">Delete all local flights</button></div></section>
  <section class="panel"><h2>Excel import format</h2><p>Import an <b>.xlsx</b> workbook or <b>.csv</b> file. The app reads the first worksheet and tries to match common column names. The first row should contain headers. After importing, inspect the entries and totals.</p><p>Recognised headings include: Date, Aircraft / Registration, Type, From / Departure, To / Arrival, Total Time / Duration, Dual, PIC, Local PIC, Night PIC, Cross Country / XC, Cross Country Dual/PIC, Day Dual, Night Dual, Night, Instrument / IF, Emergency Sortie, Pilot in Command, Co-Pilot or Student, Take-offs, Landings, Instructional Exercise.</p><p class="notice">If your existing Excel file uses unusual headings or stores flight time in Excel time format, import a copy first and verify the results. Import adds records; it does not automatically delete existing records.</p></section>
  <section class="panel"><h2>Time entry guide</h2><p>Enter duration as <b>1:25</b> for 1 hour 25 minutes, or as decimal hours such as <b>1.4</b> only if that is what your source file uses. For flight entries, use hours and minutes (HH:MM). Category times are not automatically assumed to equal total flight time.</p><p class="notice">This is a personal tracking aid, not an official DGCA logbook, endorsement, or substitute for your flying school's records. Check applicable DGCA requirements and your instructor's records before relying on any totals.</p></section>
  <section class="panel"><h2>Install on Android / laptop</h2><ol><li>Upload the included app files to a static HTTPS host (for example, your own GitHub Pages site) or run from localhost. Opening index.html directly is fine for a quick test, but install/offline caching requires a secure origin.</li><li>Open the hosted app once while online. On Android Chrome, use the browser menu → <b>Install app</b> or <b>Add to Home screen</b>. On desktop Chrome/Edge, use the install icon in the address bar or browser menu.</li><li>After the app has loaded once, reopen it from the installed icon. The app shell works offline; records stay in that browser profile.</li><li>For use on multiple devices, restore a JSON backup separately on each device. Data does not sync automatically.</li></ol></section>
 </main>
+<main id="profile" class="view hidden">
+ <section class="panel profile-panel">
+  <div class="section-head"><div><div class="eyebrow">PERSONALISE YOUR LOGBOOK</div><h2>Profile</h2></div><button type="button" id="profileBack">← Back</button></div>
+  <div class="profile-cover-editor">
+   <div class="profile-cover-preview" id="profileCoverPreview"><span>No cover image selected</span></div>
+   <div class="toolbar"><label class="primary cover-picker-label cover-native-picker">＋ Add / Change cover image<input id="coverFileInput" type="file" accept="image/*" aria-label="Choose cover image"></label><button type="button" id="removeCoverBtn">Remove image</button></div>
+   <p class="muted small">Choose a wide photo. You can crop and position it to fit the Dashboard welcome card.</p>
+  </div>
+  <div class="formgrid profile-fields">
+   <div class="field span2"><label for="profileName">Name *</label><input id="profileName" maxlength="60" placeholder="Your name"></div>
+   <div class="field span2"><label for="profileDesignation">Designation *</label><input id="profileDesignation" maxlength="50" placeholder="e.g. Student Pilot"></div>
+   <div class="field span2"><label for="profileLicence">Licence / Student ID (optional)</label><input id="profileLicence" maxlength="60" placeholder="e.g. CPL trainee"></div>
+   <div class="field span2"><label for="profileSchool">Flying school / Organisation (optional)</label><input id="profileSchool" maxlength="80" placeholder="Flying school name"></div>
+   <div class="field span2"><label for="profileBase">Base / Home aerodrome (optional)</label><input id="profileBase" maxlength="80" placeholder="e.g. VAPO"></div>
+   <div class="field span2"><label for="profileContact">Contact number (optional)</label><input id="profileContact" maxlength="30" placeholder="Phone number"></div>
+   <div class="field span4"><label for="profileBio">About me (optional)</label><textarea id="profileBio" maxlength="240" placeholder="A short note about your aviation journey"></textarea></div>
+  </div>
+  <div class="toolbar" style="margin-top:16px"><button type="button" class="primary" id="saveProfile">Save profile</button><span class="muted small" id="profileSaveStatus">Profile is saved on this device.</span></div>
+ </section>
+</main>
+
 <div class="footer">Flight Logbook · Offline-first · Your data stays on this device</div>
 </div>
 
@@ -596,15 +787,21 @@ function openDB(){return new Promise((resolve,reject)=>{
  r.onerror=()=>reject(r.error||new Error('Unknown IndexedDB open error'));
  r.onblocked=()=>reject(new Error('Database upgrade is blocked by another open Flight Logbook tab. Close other tabs or the installed app and retry.'));
 })}
-function allDocumentsDB(){return new Promise((res,rej)=>{let r=db.transaction(DOC_STORE).objectStore(DOC_STORE).getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>rej(r.error)})}
-function saveDocumentDB(d){return new Promise((res,rej)=>{let r=db.transaction(DOC_STORE,'readwrite').objectStore(DOC_STORE).put(d);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
-function deleteDocumentDB(id){return new Promise((res,rej)=>{let r=db.transaction(DOC_STORE,'readwrite').objectStore(DOC_STORE).delete(id);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+let dbPromise=null;
+async function getDB(){
+ if(db)return db;
+ if(!dbPromise)dbPromise=openDB().then(d=>{db=d;return d}).catch(e=>{dbPromise=null;throw e});
+ return dbPromise;
+}
+async function allDocumentsDB(){const d=await getDB();return new Promise((res,rej)=>{try{let r=d.transaction(DOC_STORE).objectStore(DOC_STORE).getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>rej(r.error)}catch(e){rej(e)}})}
+async function saveDocumentDB(doc){const d=await getDB();return new Promise((res,rej)=>{try{const tx=d.transaction(DOC_STORE,'readwrite');tx.objectStore(DOC_STORE).put(doc);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error||new Error('Document database transaction failed.'));tx.onabort=()=>rej(tx.error||new Error('Document save was aborted.'))}catch(e){rej(e)}})}
+async function deleteDocumentDB(id){const d=await getDB();return new Promise((res,rej)=>{try{let r=d.transaction(DOC_STORE,'readwrite').objectStore(DOC_STORE).delete(id);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)}catch(e){rej(e)}})}
 function documentDaysLeft(d){if(d.noValidity||!d.validUpto||String(d.validUpto).toUpperCase()==='NA')return 'NA';let x=new Date(d.validUpto+'T00:00:00');if(isNaN(x))return 'NA';let today=new Date();today.setHours(0,0,0,0);return Math.ceil((x.getTime()-today.getTime())/86400000)}
 function documentStatus(d){let n=documentDaysLeft(d);if(n==='NA')return {label:'NA',kind:'na'};if(n<0)return {label:'Expired',kind:'expired'};if(n<=30)return {label:n===0?'Expires today':`Expires in ${n} day${n===1?'':'s'}`,kind:'soon'};return {label:'Valid',kind:'valid'}}
-function allDB(){return new Promise((res,rej)=>{let r=db.transaction(STORE).objectStore(STORE).getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>rej(r.error)})}
-function saveDB(f){return new Promise((res,rej)=>{let r=db.transaction(STORE,'readwrite').objectStore(STORE).put(f);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
-function delDB(id){return new Promise((res,rej)=>{let r=db.transaction(STORE,'readwrite').objectStore(STORE).delete(id);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
-function clearDB(){return new Promise((res,rej)=>{let r=db.transaction(STORE,'readwrite').objectStore(STORE).clear();r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+async function allDB(){const d=await getDB();return new Promise((res,rej)=>{try{let r=d.transaction(STORE).objectStore(STORE).getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>rej(r.error)}catch(e){rej(e)}})}
+async function saveDB(f){const d=await getDB();return new Promise((res,rej)=>{try{let r=d.transaction(STORE,'readwrite').objectStore(STORE).put(f);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)}catch(e){rej(e)}})}
+async function delDB(id){const d=await getDB();return new Promise((res,rej)=>{try{let r=d.transaction(STORE,'readwrite').objectStore(STORE).delete(id);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)}catch(e){rej(e)}})}
+async function clearDB(){const d=await getDB();return new Promise((res,rej)=>{try{let r=d.transaction(STORE,'readwrite').objectStore(STORE).clear();r.onsuccess=()=>res();r.onerror=()=>rej(r.error)}catch(e){rej(e)}})}
 function toast(msg){$('#toast').textContent=msg;$('#toast').classList.remove('hidden');setTimeout(()=>$('#toast').classList.add('hidden'),3000)}
 function sum(key,arr=flights){return arr.reduce((a,f)=>a+(Number(f[key])||0),0)}
 function totalMinutes(f){return Number(f.duration)||0}
@@ -658,10 +855,33 @@ function renderDashboard(){
  $('#monthlyBars').innerHTML=top.length?top.map(([m,v])=>{let [yy,mm]=m.split('-').map(Number),label=new Date(yy,mm-1,1).toLocaleString('en',{month:'short'});return `<div class="month-col"><div class="month-value">${timeStr(v)}</div><div class="month-track"><div class="month-bar" style="height:${Math.max(3,v/max*100)}%"></div></div><div class="month-label">${safe(label)}</div></div>`}).join(''):'<div class="empty">Monthly totals will appear here after flights are added.</div>';
  const avg=top.length?Math.round(top.reduce((a,x)=>a+x[1],0)/top.length):0;$('#monthlyAverage').textContent=timeStr(avg);$('#periodTotal').textContent=timeStr(top.reduce((a,x)=>a+x[1],0));
 }
+function flightClockMinutes(f){
+ const raw=f.offBlock||f.offblock||f.takeoffTime||f.takeOffTime||f.departureTime||'';
+ const m=String(raw).trim().match(/^(\d{1,2}):(\d{2})(?::\d{2})?$/);
+ return m?Number(m[1])*60+Number(m[2]):-1;
+}
+function flightDateKey(f){
+ const raw=String(f.date||'').trim();
+ if(/^\d{4}-\d{2}-\d{2}/.test(raw))return raw.slice(0,10);
+ const parsed=Date.parse(raw);
+ return Number.isNaN(parsed)?raw: new Date(parsed).toISOString().slice(0,10);
+}
+function compareFlightsChronological(a,b){
+ const da=flightDateKey(a),db=flightDateKey(b);
+ const byDate=da.localeCompare(db);
+ if(byDate)return byDate;
+ const ta=flightClockMinutes(a),tb=flightClockMinutes(b);
+ // If both entries have off-block times, use them as the same-day ordering key.
+ if(ta>=0&&tb>=0&&ta!==tb)return ta-tb;
+ // Entries without a usable time are kept after timed entries for that date.
+ if(ta>=0&&tb<0)return -1;
+ if(ta<0&&tb>=0)return 1;
+ return ((Number(a.serialNumber)||0)-(Number(b.serialNumber)||0)) || String(a.id).localeCompare(String(b.id));
+}
 function tableHTML(arr,actions=true){
  const val=x=>safe(x===undefined||x===null||x===''?'—':String(x));
  const tm=k=>timeStr(+k||0);
- const chronological=[...flights].sort((a,b)=>(a.date||'').localeCompare(b.date||'') || ((Number(a.serialNumber)||0)-(Number(b.serialNumber)||0)) || String(a.id).localeCompare(String(b.id)));
+ const chronological=[...flights].sort(compareFlightsChronological);
  const serialById=new Map(chronological.map((f,i)=>[f.id,i+1]));
  const total=k=>timeStr(arr.reduce((n,f)=>n+(Number(f[k])||0),0));
  const actual=f=>Number(f.actualInstrument??f.instrument)||0;
@@ -689,7 +909,7 @@ function flightHasCategory(f,category){
 function renderFlights(){
  let q=$('#searchFlights').value.toLowerCase(),year=$('#yearFilter').value,category=$('#flightCategoryFilter')?.value||'';
  let years=[...new Set(flights.map(f=>(f.date||'').slice(0,4)).filter(Boolean))].sort().reverse();let select=$('#yearFilter'),old=select.value;select.innerHTML='<option value="">All years</option>'+years.map(y=>`<option>${safe(y)}</option>`).join('');select.value=years.includes(old)?old:'';
- let arr=[...flights].filter(f=>(!year||(f.date||'').startsWith(year))&&flightHasCategory(f,category)&&[f.date,f.registration,f.aircraftType,f.from,f.to,f.instructor,f.pilotInCommand,f.coPilotStudent,f.copilotStudent,f.instructionalExercises,f.remarks].join(' ').toLowerCase().includes(q)).sort((a,b)=>$('#dateSort').value==='oldest'?(a.date||'').localeCompare(b.date||''):(b.date||'').localeCompare(a.date||''));
+ let arr=[...flights].filter(f=>(!year||(f.date||'').startsWith(year))&&flightHasCategory(f,category)&&[f.date,f.registration,f.aircraftType,f.from,f.to,f.instructor,f.pilotInCommand,f.coPilotStudent,f.copilotStudent,f.instructionalExercises,f.remarks].join(' ').toLowerCase().includes(q)).sort((a,b)=>$('#dateSort').value==='oldest'?compareFlightsChronological(a,b):compareFlightsChronological(b,a));
  $('#flightTable').innerHTML=arr.length?tableHTML(arr,true):'<div class="empty">No matching flights for the selected filters.</div>';
  $$('[data-edit]').forEach(b=>b.onclick=()=>openFlight(b.dataset.edit));$$('[data-delete]').forEach(b=>b.onclick=()=>deleteFlight(b.dataset.delete));
 }
@@ -741,9 +961,11 @@ function renderDocuments(){
  let arr=documents.filter(d=>`${d.name||''} ${d.number||''}`.toLowerCase().includes(q));
  arr=arr.filter(d=>{let s=documentStatus(d);return filter==='all'||(filter==='na'&&s.kind==='na')||(filter==='expired'&&s.kind==='expired')||(filter==='soon'&&s.kind==='soon')||(filter==='valid'&&s.kind==='valid')});
  arr.sort((a,b)=>{let x=documentDaysLeft(a),y=documentDaysLeft(b);if(x==='NA')return y==='NA'?String(a.name).localeCompare(String(b.name)):1;if(y==='NA')return -1;return x-y});
- $('#documentTable').innerHTML=arr.length?`<div class="tablewrap"><table style="min-width:760px"><thead><tr><th>Document name</th><th>Number</th><th>Validity from</th><th>Valid upto</th><th>Days left</th><th>Status</th><th>Actions</th></tr></thead><tbody>${arr.map(d=>{let n=documentDaysLeft(d),s=documentStatus(d),day=n==='NA'?'NA':n<0?`Expired ${Math.abs(n)} day${Math.abs(n)===1?'':'s'} ago`:String(n),style=s.kind==='expired'?'background:#fde8e7;color:#b42318':s.kind==='soon'?'background:#fff1d6;color:#8a5700':s.kind==='valid'?'background:#e8f6ee;color:#16794b':'';return `<tr><td><b>${safe(d.name||'—')}</b></td><td>${safe(d.number||'—')}</td><td>${safe(d.validFrom&&d.validFrom!=='NA'?fmtDate(d.validFrom):'—')}</td><td>${safe(d.validUpto&&d.validUpto!=='NA'?fmtDate(d.validUpto):'—')}</td><td><b>${safe(day)}</b></td><td><span class="pill" style="${style}">${safe(s.label)}</span></td><td><button data-doc-edit="${safe(d.id)}">Edit</button> <button class="danger" data-doc-delete="${safe(d.id)}">Delete</button></td></tr>`}).join('')}</tbody></table></div>`:'<div class="empty">No documents found. Press ＋ Add to add your first document.</div>';
+ $('#documentTable').innerHTML=arr.length?`<div class="tablewrap"><table style="min-width:760px"><thead><tr><th>Document name</th><th>Number</th><th>Validity from</th><th>Valid upto</th><th>Days left</th><th>Status</th><th>Attachment</th><th>Actions</th></tr></thead><tbody>${arr.map(d=>{let n=documentDaysLeft(d),s=documentStatus(d),day=n==='NA'?'NA':n<0?`Expired ${Math.abs(n)} day${Math.abs(n)===1?'':'s'} ago`:String(n),style=s.kind==='expired'?'background:#fde8e7;color:#b42318':s.kind==='soon'?'background:#fff1d6;color:#8a5700':s.kind==='valid'?'background:#e8f6ee;color:#16794b':'';return `<tr><td><b>${safe(d.name||'—')}</b></td><td>${safe(d.number||'—')}</td><td>${safe(d.validFrom&&d.validFrom!=='NA'?fmtDate(d.validFrom):'—')}</td><td>${safe(d.validUpto&&d.validUpto!=='NA'?fmtDate(d.validUpto):'—')}</td><td><b>${safe(day)}</b></td><td><span class="pill" style="${style}">${safe(s.label)}</span></td><td>${d.attachment?`<span class="small">${safe(d.attachment.name||'Attached file')}</span><br><button type="button" data-doc-view="${safe(d.id)}">View</button> <button type="button" data-doc-download="${safe(d.id)}">Download</button>`:'<span class="muted">—</span>'}</td><td><button data-doc-edit="${safe(d.id)}">Edit</button> <button class="danger" data-doc-delete="${safe(d.id)}">Delete</button></td></tr>`}).join('')}</tbody></table></div>`:'<div class="empty">No documents found. Press ＋ Add to add your first document.</div>';
  $$('[data-doc-edit]').forEach(b=>b.onclick=()=>openDocument(b.dataset.docEdit));
  $$('[data-doc-delete]').forEach(b=>b.onclick=()=>deleteDocument(b.dataset.docDelete));
+ $$('[data-doc-view]').forEach(b=>b.onclick=()=>openDocumentAttachment(b.dataset.docView,false));
+ $$('[data-doc-download]').forEach(b=>b.onclick=()=>openDocumentAttachment(b.dataset.docDownload,true));
  const count=k=>documents.filter(d=>documentStatus(d).kind===k).length;
  $('#documentSummary').innerHTML=statCard('Total documents',documents.length)+statCard('Expired',count('expired'))+statCard('Expiring within 30 days',count('soon'))+statCard('Valid',count('valid'))+statCard('No validity / NA',count('na'));
 }
@@ -755,13 +977,38 @@ function openDocument(id=null){
  ${field('Valid Upto','validUpto',d.validUpto&&d.validUpto!=='NA'?d.validUpto:'','date')}
  <div class="field span2"><label>Days Left</label><input id="docDaysLeft" value="${safe(documentDaysLeft(d))}" readonly><div class="muted small">Calculated automatically. If validity does not apply, select NA.</div></div>
  <div class="field span2"><label>Validity option</label><select name="noValidity" id="docNoValidity"><option value="no" ${!d.noValidity?'selected':''}>Has validity dates</option><option value="yes" ${d.noValidity||d.validUpto==='NA'?'selected':''}>No validity (NA)</option></select></div>
+ <div class="field span2"><label>Attach file (PDF, image or any file · max 10 MB)</label><input id="docAttachment" type="file"><div class="muted small">${d.attachment?`Current file: ${safe(d.attachment.name||'Attached file')} (${(Number(d.attachment.size||0)/1048576).toFixed(2)} MB)`:'No file attached.'}</div>${d.attachment?'<label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input id="removeDocAttachment" type="checkbox" style="width:auto"> Remove current attachment</label>':''}</div>
  </div><div class="toolbar" style="margin-top:14px"><button class="primary" type="submit">Save document</button><button type="button" id="cancelDoc">Cancel</button></div></form></div></div>`;
  const from=$('#documentForm [name="validFrom"]'),upto=$('#documentForm [name="validUpto"]'),na=$('#docNoValidity');
  function updateDays(){if(na.value==='yes'){from.disabled=upto.disabled=true;from.value=upto.value='';$('#docDaysLeft').value='NA'}else{from.disabled=upto.disabled=false;$('#docDaysLeft').value=upto.value?documentDaysLeft({validUpto:upto.value}):'NA'}}
  na.onchange=updateDays;upto.onchange=updateDays;updateDays();
  $('#closeDocModal').onclick=$('#cancelDoc').onclick=()=>$('#modalRoot').innerHTML='';
- $('#documentForm').onsubmit=async e=>{e.preventDefault();let fd=new FormData(e.target),name=String(fd.get('name')||'').trim(),noValidity=fd.get('noValidity')==='yes';if(!name){toast('Enter a document name.');return}let doc={id:id||uid(),name,number:String(fd.get('number')||'').trim(),validFrom:noValidity?'NA':String(fd.get('validFrom')||''),validUpto:noValidity?'NA':String(fd.get('validUpto')||''),noValidity,updatedAt:new Date().toISOString()};if(!noValidity&&doc.validFrom&&doc.validUpto&&doc.validFrom>doc.validUpto){toast('Valid Upto must be on or after Validity From.');return}await saveDocumentDB(doc);$('#modalRoot').innerHTML='';await refresh();switchTab('documents');toast('Document saved on this device.')};
+ $('#documentForm').onsubmit=async e=>{
+  e.preventDefault();
+  const submit=e.submitter||e.target.querySelector('button[type="submit"]');
+  if(submit){submit.disabled=true;submit.textContent='Saving…'}
+  try{
+   const fd=new FormData(e.target),name=String(fd.get('name')||'').trim(),noValidity=fd.get('noValidity')==='yes';
+   if(!name)throw new Error('Enter a document name.');
+   const doc={...(documents.find(x=>x.id===id)||{}),id:id||uid(),name,number:String(fd.get('number')||'').trim(),validFrom:noValidity?'NA':String(fd.get('validFrom')||''),validUpto:noValidity?'NA':String(fd.get('validUpto')||''),noValidity,updatedAt:new Date().toISOString()};
+   if(!noValidity&&doc.validFrom&&doc.validUpto&&doc.validFrom>doc.validUpto)throw new Error('Valid Upto must be on or after Validity From.');
+   const attachmentInput=$('#docAttachment'),newFile=attachmentInput?.files?.[0],removeAttachment=$('#removeDocAttachment')?.checked;
+   if(newFile&&newFile.size>10*1024*1024)throw new Error('File is larger than 10 MB. Choose a smaller file.');
+   if(removeAttachment)delete doc.attachment;
+   if(newFile)doc.attachment={name:newFile.name,type:newFile.type||'application/octet-stream',size:newFile.size,blob:newFile};
+   await saveDocumentDB(doc);
+   await refresh();
+   $('#modalRoot').innerHTML='';
+   switchTab('documents');
+   toast(newFile?'Document and attachment saved on this device.':'Document saved on this device.');
+  }catch(err){
+   console.error('Document save failed:',err);
+   toast('Could not save document: '+(err?.message||String(err)));
+   if(submit){submit.disabled=false;submit.textContent='Save document'}
+  }
+ };
 }
+async function openDocumentAttachment(id,downloadFile=false){const d=documents.find(x=>x.id===id),a=d?.attachment;if(!a)return toast('No attachment found.');let blob=a.blob;if(!(blob instanceof Blob)){toast('Attachment data is unavailable.');return}const url=URL.createObjectURL(blob);if(downloadFile){const link=document.createElement('a');link.href=url;link.download=a.name||'document';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000)}else{const win=window.open(url,'_blank');if(!win){const link=document.createElement('a');link.href=url;link.download=a.name||'document';link.click()}setTimeout(()=>URL.revokeObjectURL(url),60000)}}
 async function deleteDocument(id){let d=documents.find(x=>x.id===id);if(d&&confirm(`Delete document "${d.name}"?`)){await deleteDocumentDB(id);await refresh();toast('Document deleted.')}}
 if($('#addDocument')) $('#addDocument').onclick=()=>openDocument();
 $('#searchDocuments').addEventListener('input',renderDocuments);$('#documentFilter').addEventListener('change',renderDocuments);
@@ -785,7 +1032,8 @@ function renderReports(){
  const yearlyMetrics=[['Year',yearSel.value||'—'],['Flights',yearlyFlights.length],['Total',h('duration',yearlyFlights)],['Dual',h('dual',yearlyFlights)],['PIC',h('pic',yearlyFlights)],['Cross Country',h('xc',yearlyFlights)],['Night',h('night',yearlyFlights)],['Instrument',timeStr(sum('instrument',yearlyFlights)+sum('simulatedInstrument',yearlyFlights))]];
  $('#yearlyTable').innerHTML=yearlyMetrics.map(([label,value])=>statCard(label,value)).join('');
  let ac={};flights.forEach(f=>{let k=f.registration||'Unspecified';(ac[k]??=[]).push(f)});
- $('#aircraftTable').innerHTML=simpleTable(['Registration','Aircraft type','Flights','Total time','Dual','PIC'],Object.entries(ac).map(([k,a])=>[safe(k),safe(a[0].aircraftType||'—'),a.length,h('duration',a),h('dual',a),h('pic',a)]));
+ const aircraftRows=Object.entries(ac).map(([k,a])=>({registration:k,aircraftType:a[0].aircraftType||'—',flights:a.length,total:a.reduce((n,f)=>n+(Number(f.duration)||0),0),dual:a.reduce((n,f)=>n+(Number(f.dual)||0),0),pic:a.reduce((n,f)=>n+(Number(f.pic)||0),0)})).sort((a,b)=>b.total-a.total);
+ $('#aircraftTable').innerHTML=simpleTable(['Registration','Aircraft type','Flights','Total time','Dual','PIC'],aircraftRows.map(a=>[safe(a.registration),safe(a.aircraftType),a.flights,timeStr(a.total),timeStr(a.dual),timeStr(a.pic)]));
  const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
  const monthlyFlights=flights.filter(f=>(f.date||'').slice(0,4)===monthSel.value);
  const monthlyRows=monthNames.map((name,index)=>{
@@ -810,9 +1058,24 @@ function renderReports(){
 $('#yearlyReportYear').addEventListener('change',renderReports);
 $('#monthlyReportYear').addEventListener('change',renderReports);
 
-function download(name,content,type){let blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-async function backup(){documents=await allDocumentsDB();download('flight-logbook-backup-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({format:'flight-logbook-backup-v2',exportedAt:new Date().toISOString(),flights,documents},null,2),'application/json')}
-$('#exportBackup2').onclick=backup;$('#restore2').onclick=()=>{let i=$('#fileInput');i.accept='.json';i.dataset.mode='backup';i.click()};$('#openSettingsTop').onclick=()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));$('#settings').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});};
+function download(name,content,type){const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.style.display='none';document.body.appendChild(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(url)},60000);return true}
+async function blobToBase64(blob){const bytes=new Uint8Array(await blob.arrayBuffer());let binary='';const chunk=0x8000;for(let i=0;i<bytes.length;i+=chunk)binary+=String.fromCharCode(...bytes.subarray(i,i+chunk));return btoa(binary)}
+function base64ToBlob(data,type){const binary=atob(data),bytes=new Uint8Array(binary.length);for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);return new Blob([bytes],{type:type||'application/octet-stream'})}
+async function backup(){try{flights=await allDB();documents=await allDocumentsDB();const backupDocs=[];for(const d of documents){const copy={...d};if(d.attachment?.blob instanceof Blob){copy.attachment={name:d.attachment.name||'attachment',type:d.attachment.type||d.attachment.blob.type||'application/octet-stream',size:d.attachment.size??d.attachment.blob.size,dataBase64:await blobToBase64(d.attachment.blob)}}backupDocs.push(copy)}const json=JSON.stringify({format:'flight-logbook-backup-v3-with-attachments',exportedAt:new Date().toISOString(),flights,documents:backupDocs},null,2);download('flight-logbook-backup-'+new Date().toISOString().slice(0,10)+'.json',json,'application/json');toast('JSON backup prepared. Check your browser downloads.')}catch(err){console.error('Backup failed:',err);alert('JSON backup failed: '+(err?.message||String(err)))}}
+$('#exportBackup2').onclick=backup;
+$('#restoreFileInput').addEventListener('change',async e=>{
+ const file=e.target.files&&e.target.files[0];if(!file)return;
+ try{
+  const data=JSON.parse(await file.text()),arr=Array.isArray(data)?data:data.flights;
+  if(!Array.isArray(arr))throw new Error('Backup JSON does not contain a flights array.');
+  const docs=Array.isArray(data.documents)?data.documents:[];
+  if(!confirm(`Restore ${arr.length} flight records and ${docs.length} documents? Existing entries with different IDs will remain.`))return;
+  for(const x of arr){const f={...x,id:x.id||uid()};for(const k of ['duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'])if(typeof f[k]==='string')f[k]=parseTime(f[k]);await saveDB(f)}
+  for(const x of docs){const restored={...x,id:x.id||uid()};if(restored.attachment?.dataBase64)restored.attachment={name:restored.attachment.name||'attachment',type:restored.attachment.type||'application/octet-stream',size:restored.attachment.size||0,blob:base64ToBlob(restored.attachment.dataBase64,restored.attachment.type)};await saveDocumentDB(restored)}
+  await refresh();toast(`Restored ${arr.length} flights and ${docs.length} documents.`);
+ }catch(err){console.error('Restore failed:',err);alert('Restore failed: '+(err?.message||String(err)))}
+ finally{e.target.value=''}
+});$('#openSettingsTop').onclick=()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));$('#settings').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});};
 $('#importExcel').onclick=()=>{let i=$('#fileInput');i.accept='.xlsx,.xls,.csv,.json';i.dataset.mode='import';i.click()};
 function csvEscape(x){let s=String(x??'');return /[,"\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
 function exportCSV(){let cols=['date','arrivalDate','registration','aircraftType','engineCategory','from','to','offBlock','onBlock','duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument','emergencySortie','instructor','takeoffs','landings','remarks'];let names=['Date of Flight','Arrival Date','Aircraft Registration','Aircraft Type','Engine Category','From','To','Off Block','On Block','Duration','Dual','PIC','Local PIC','Night PIC','Cross Country','Cross Country Dual','Day Dual','Night Dual','Night','Instrument','Simulated Instrument','Emergency Sortie','Instructor','Take-offs','Landings','Remarks'];let rows=[names,...flights.map(f=>cols.map(k=>['duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'].includes(k)?timeStr(f[k]):f[k]??''))];download('flight-logbook.csv','\ufeff'+rows.map(r=>r.map(csvEscape).join(',')).join('\r\n'),'text/csv;charset=utf-8')}
@@ -842,7 +1105,7 @@ async function readXlsx(arrayBuffer){
  let rows=[];for(let row of [...d.getElementsByTagName('row')]){let cells=[...row.children].filter(x=>x.localName==='c'),vals=[];for(let c of cells){let ref=c.getAttribute('r')||'',letters=(ref.match(/[A-Z]+/)||['A'])[0],col=0;for(let ch of letters)col=col*26+ch.charCodeAt(0)-64;col--;let v=c.getElementsByTagName('v')[0]?.textContent??'';if(c.getAttribute('t')==='s')v=shared[Number(v)]??'';else if(c.getAttribute('t')==='inlineStr')v=[...c.getElementsByTagName('t')].map(t=>t.textContent).join('');vals[col]=v}rows.push(vals)}
  return rows
 }
-$('#fileInput').addEventListener('change',async e=>{let file=e.target.files[0];if(!file)return;let mode=e.target.dataset.mode||'import';try{if(mode==='backup'||file.name.toLowerCase().endsWith('.json')){let data=JSON.parse(await file.text());let arr=Array.isArray(data)?data:data.flights;if(!Array.isArray(arr))throw Error('Backup JSON does not contain a flights array.');let docs=Array.isArray(data.documents)?data.documents:[];if(!confirm(`Import/restore ${arr.length} flight records and ${docs.length} documents? Existing entries with different IDs will remain.`))return;for(let x of arr){let f={...x,id:x.id||uid()};for(let k of ['duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'])if(typeof f[k]==='string')f[k]=parseTime(f[k]);await saveDB(f)}for(let x of docs)await saveDocumentDB({...x,id:x.id||uid()});await refresh();toast(`Restored ${arr.length} flights and ${docs.length} documents.`)}else{let rows;if(file.name.toLowerCase().endsWith('.csv'))rows=parseCSV(await file.text());else rows=await readXlsx(await file.arrayBuffer());let n=await importRows(rows);toast(`Imported ${n} flight rows. Please verify totals.`)}}catch(err){alert('Import failed: '+err.message)}finally{e.target.value='';e.target.dataset.mode='import'}});
+$('#fileInput').addEventListener('change',async e=>{let file=e.target.files[0];if(!file)return;let mode=e.target.dataset.mode||'import';try{if(mode==='backup'||file.name.toLowerCase().endsWith('.json')){let data=JSON.parse(await file.text());let arr=Array.isArray(data)?data:data.flights;if(!Array.isArray(arr))throw Error('Backup JSON does not contain a flights array.');let docs=Array.isArray(data.documents)?data.documents:[];if(!confirm(`Import/restore ${arr.length} flight records and ${docs.length} documents? Existing entries with different IDs will remain.`))return;for(let x of arr){let f={...x,id:x.id||uid()};for(let k of ['duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'])if(typeof f[k]==='string')f[k]=parseTime(f[k]);await saveDB(f)}for(let x of docs){let restored={...x,id:x.id||uid()};if(restored.attachment?.dataBase64){restored.attachment={name:restored.attachment.name||'attachment',type:restored.attachment.type||'application/octet-stream',size:restored.attachment.size||0,blob:base64ToBlob(restored.attachment.dataBase64,restored.attachment.type)}}await saveDocumentDB(restored)}await refresh();const attachmentCount=docs.filter(d=>d.attachment?.dataBase64||d.attachment?.blob).length;toast(`Restored ${arr.length} flights, ${docs.length} documents and ${attachmentCount} attachments.`)}else{let rows;if(file.name.toLowerCase().endsWith('.csv'))rows=parseCSV(await file.text());else rows=await readXlsx(await file.arrayBuffer());let n=await importRows(rows);toast(`Imported ${n} flight rows. Please verify totals.`)}}catch(err){alert('Import failed: '+err.message)}finally{e.target.value='';e.target.dataset.mode='import'}});
 $('#deleteAll').onclick=async()=>{if(confirm('Delete ALL flight records saved in this browser? Export a backup first if needed.')&&confirm('Final confirmation: permanently delete all local flight entries?')){await clearDB();await refresh();toast('All local entries deleted.')}};
 if('serviceWorker'in navigator&&location.protocol!=='file:'){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('#installBtn').classList.remove('hidden')});$('#installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('#installBtn').classList.add('hidden')}else toast('Use the browser menu and choose Install app / Add to Home screen.')};
@@ -863,6 +1126,233 @@ root.querySelectorAll('[data-key]').forEach(b=>b.addEventListener('click',()=>{l
 root.querySelectorAll('[data-unit]').forEach(b=>b.addEventListener('click',()=>{error.textContent='';conversion.classList.add('hidden');const chosen=b.dataset.unit;if(mode==='time'&&timeResult!==null){timeParts=[];timeGroups=[];timeBuffer='';pendingOperator=null;timeResult=null}if(mode==='general'){if(/[+*/()]|.-/.test(expression)){invalid('Clear the normal calculation before entering time values.');return}timeBuffer=expression.trim()===''?'0':expression;mode='time';expression='';}if(timeBuffer===''){invalid('Enter a number before choosing the time unit.');return}let value=Number(timeBuffer);if(!Number.isFinite(value)){invalid();return}let op=pendingOperator||'+';let ms=value*unitMs[chosen];if(!timeGroups.length||pendingOperator){timeGroups.push({op,ms})}else{timeGroups[timeGroups.length-1].ms+=ms}timeParts.push(value+' '+unitLabel[chosen]);timeBuffer='';pendingOperator=null;unit=chosen;justEvaluated=false;$$('[data-unit]').forEach(x=>x.classList.toggle('selected',x===b));show()}));
 root.querySelectorAll('[data-calc]').forEach(b=>b.addEventListener('click',()=>{let a=b.dataset.calc;error.textContent='';if(a==='clear'){reset();return}if(a==='back'){if(mode==='time'){if(timeBuffer!==''){timeBuffer=timeBuffer.slice(0,-1)}else if(pendingOperator){pendingOperator=null;timeParts.pop()}else if(timeParts.length){timeParts.pop();timeGroups.pop()}}else expression=expression.slice(0,-1);show();return}if(a==='history'){renderHistory();return}if(a==='percent'){if(mode==='time'){if(timeBuffer!=='')timeBuffer=String(Number(timeBuffer)/100);else invalid('Enter a number before pressing percent.')}else{try{expression=fmt(evaluate(expression)/100)}catch{invalid('Invalid calculation.')}}show();return}if(a==='equals'){if(mode==='time'){if(timeBuffer!==''||pendingOperator){invalid('Choose a time unit for the current number first.');return}let result=totalTime();if(result<0){invalid('The result cannot be a negative time.');return}let original=timeParts.join(' ');recordHistory(original,autoTime(result));timeResult=result;justEvaluated=true;show();return}try{let original=expression;let answer=fmt(evaluate(expression));recordHistory(original,answer);expression=answer;justEvaluated=true;show()}catch{invalid('Invalid calculation.')}return}if(a==='convert'){if(mode!=='time'||!timeGroups.length){error.textContent='Enter a time value first.';return}if(timeBuffer!==''||pendingOperator){error.textContent='Choose a time unit for the current number first.';return}let ms=totalTime(),rows=[['Hours',fmt(ms/3600000)],['Minutes',fmt(ms/60000)],['Seconds',fmt(ms/1000)],['Milliseconds',fmt(ms)]];conversion.innerHTML=rows.map(([k,v])=>`<div class="conversion-row"><span>${k}</span><strong>${v}</strong></div>`).join('');conversion.classList.remove('hidden')}}));show()})();
 
-(async()=>{try{db=await openDB();await refresh()}catch(e){console.error('Flight Logbook database startup failed:',e);alert('Flight Logbook could not load its local database or records. Your saved data has not been intentionally deleted. Close other Flight Logbook tabs/apps, reopen this page, and if the problem continues send this error: '+(e&&e.message?e.message:String(e)))}})();
+
+// Local profile and Dashboard welcome banner
+const PROFILE_KEY='pilot-flight-logbook-profile-v1';
+let profileData={name:'',designation:'',licence:'',school:'',base:'',contact:'',bio:'',cover:''};
+function readProfile(){try{const saved=JSON.parse(localStorage.getItem(PROFILE_KEY)||'{}');profileData={...profileData,...saved}}catch(e){console.warn('Could not read profile',e)}}
+function paintProfile(){
+ const banner=$('#welcomeBanner'),cover=$('#profileCoverPreview');
+ if(profileData.cover){banner.style.backgroundImage=`url("${profileData.cover}")`;banner.style.backgroundSize='cover';banner.style.backgroundPosition='center';cover.style.backgroundImage=`url("${profileData.cover}")`;cover.classList.add('has-image')}
+ else{banner.style.backgroundImage='';cover.style.backgroundImage='';cover.classList.remove('has-image')}
+ $('#welcomeName').textContent=profileData.name||'Pilot';
+ $('#welcomeDesignation').textContent=profileData.designation||'';
+ $('#welcomeDesignation').classList.toggle('hidden',!profileData.designation);
+}
+function showProfile(){
+ document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+ document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));
+ $('#profile').classList.remove('hidden');
+ const map={profileName:'name',profileDesignation:'designation',profileLicence:'licence',profileSchool:'school',profileBase:'base',profileContact:'contact',profileBio:'bio'};
+ Object.entries(map).forEach(([id,key])=>$('#'+id).value=profileData[key]||'');
+ paintProfile();window.scrollTo({top:0,behavior:'smooth'});
+}
+readProfile();paintProfile();
+// Menu actions are wired in a separate fallback script after the main app script.
+$('#profileBack').addEventListener('click',e=>{e.preventDefault();switchTab('dashboard')});
+$('#saveProfile').addEventListener('click',()=>{
+ const keys={name:'profileName',designation:'profileDesignation',licence:'profileLicence',school:'profileSchool',base:'profileBase',contact:'profileContact',bio:'profileBio'};
+ for(const [key,id] of Object.entries(keys))profileData[key]=$('#'+id).value.trim();
+ if(!profileData.name||!profileData.designation){$('#profileSaveStatus').textContent='Please enter your name and designation.';return}
+ try{localStorage.setItem(PROFILE_KEY,JSON.stringify(profileData));paintProfile();$('#profileSaveStatus').textContent='Profile saved on this device.'}
+ catch(e){$('#profileSaveStatus').textContent='Could not save profile. Try a smaller cover image.'}
+});
+// Native file input is layered over the cover button for reliable Android activation.
+$('#removeCoverBtn').addEventListener('click',()=>{profileData.cover='';paintProfile();try{localStorage.setItem(PROFILE_KEY,JSON.stringify(profileData))}catch(e){}});
+let cropSource=null,cropImage=null;
+// Cover image selection and crop are handled by the independent profile image module below.
+
+
+(async()=>{try{db=await getDB();await refresh()}catch(e){console.error('Flight Logbook database startup failed:',e);alert('Flight Logbook could not load its local database or records. Your saved data has not been intentionally deleted. Close other Flight Logbook tabs/apps, reopen this page, and if the problem continues send this error: '+(e&&e.message?e.message:String(e)))}})();
+</script>
+
+<script>
+(function(){
+ function closeMenu(){
+  var details=document.getElementById('topMenuDetails');
+  if(details) details.open=false;
+ }
+ function openView(id){
+  document.querySelectorAll('.view').forEach(function(v){v.classList.add('hidden')});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
+  var view=document.getElementById(id);
+  if(view)view.classList.remove('hidden');
+  window.scrollTo(0,0);
+ }
+ function handleAction(action){
+  closeMenu();
+  if(action==='profile'){
+   if(typeof window.showProfile==='function'){window.showProfile();return}
+   openView('profile');
+   return;
+  }
+  if(action==='settings'){openView('settings');return}
+  if(action==='import'){
+   var input=document.getElementById('fileInput');
+   if(input){
+    input.accept='.xlsx,.xls,.csv,.json';
+    input.dataset.mode='import';
+    input.click();
+   }
+  }
+ }
+ document.addEventListener('click',function(e){
+  var btn=e.target.closest('[data-top-action]');
+  if(!btn)return;
+  e.preventDefault();
+  e.stopPropagation();
+  handleAction(btn.getAttribute('data-top-action'));
+ },true);
+})();
+</script>
+
+<script>
+(function(){
+ const KEY='pilot-flight-logbook-profile-v1';
+ function getProfile(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
+ function putProfile(p){try{localStorage.setItem(KEY,JSON.stringify(p));return true}catch(e){return false}}
+ function paint(p){
+  const name=document.getElementById('welcomeName');
+  const designation=document.getElementById('welcomeDesignation');
+  const banner=document.getElementById('welcomeBanner');
+  const preview=document.getElementById('profileCoverPreview');
+  if(name)name.textContent=(p.name||'').trim()||'Pilot';
+  if(designation){designation.textContent=(p.designation||'').trim();designation.classList.toggle('hidden',!(p.designation||'').trim())}
+  if(p.cover){if(banner){banner.style.backgroundImage='url("'+p.cover+'")';banner.style.backgroundSize='cover';banner.style.backgroundPosition='center'}if(preview){preview.style.backgroundImage='url("'+p.cover+'")';preview.classList.add('has-image')}}
+  else{if(banner)banner.style.backgroundImage='';if(preview){preview.style.backgroundImage='';preview.classList.remove('has-image')}}
+ }
+ function syncFields(p){
+  const map={profileName:'name',profileDesignation:'designation',profileLicence:'licence',profileSchool:'school',profileBase:'base',profileContact:'contact',profileBio:'bio'};
+  Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el)el.value=p[map[id]]||''});
+ }
+ // Ensure menu opens the real Profile function, with stored values loaded into the form.
+ document.addEventListener('click',function(e){
+  const action=e.target.closest('[data-top-action]');
+  if(action&&action.getAttribute('data-top-action')==='profile'){
+   setTimeout(()=>syncFields(getProfile()),0);
+  }
+ },false);
+ // Capture the save action before any app handler and persist the profile independently.
+ document.addEventListener('click',function(e){
+  const btn=e.target.closest('#saveProfile');
+  if(!btn)return;
+  const map={name:'profileName',designation:'profileDesignation',licence:'profileLicence',school:'profileSchool',base:'profileBase',contact:'profileContact',bio:'profileBio'};
+  const p=getProfile();
+  Object.keys(map).forEach(key=>{const el=document.getElementById(map[key]);if(el)p[key]=el.value.trim()});
+  if(!p.name||!p.designation){
+   const status=document.getElementById('profileSaveStatus');if(status)status.textContent='Please enter your name and designation.';
+   return;
+  }
+  if(putProfile(p)){paint(p);const status=document.getElementById('profileSaveStatus');if(status)status.textContent='Profile saved on this device.'}
+  else{const status=document.getElementById('profileSaveStatus');if(status)status.textContent='Could not save profile. Please use a smaller cover image.'}
+ },true);
+ // Cover selection is handled by the crop dialog above; no automatic upload here.
+ const remove=document.getElementById('removeCoverBtn');
+ if(remove)remove.addEventListener('click',function(){
+  const p=getProfile();delete p.cover;putProfile(p);paint(p);
+  const status=document.getElementById('profileSaveStatus');if(status)status.textContent='Cover image removed.';
+ });
+ // Reapply stored profile when Dashboard is opened or the page is restored.
+ document.addEventListener('click',function(e){
+  if(e.target.closest('[data-tab="dashboard"]'))setTimeout(()=>paint(getProfile()),0);
+ });
+ window.addEventListener('pageshow',()=>paint(getProfile()));
+ paint(getProfile());
+})();
+</script>
+
+<script>
+(function(){
+ document.addEventListener('click',function(e){
+  const back=e.target.closest('#profileBack');
+  if(!back)return;
+  e.preventDefault();e.stopImmediatePropagation();
+  const profile=document.getElementById('profile'),dashboard=document.getElementById('dashboard');
+  if(profile)profile.classList.add('hidden');
+  if(dashboard)dashboard.classList.remove('hidden');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab==='dashboard'));
+  window.scrollTo(0,0);
+ },true);
+})();
+</script>
+
+<script>
+/* Independent Android-friendly cover image chooser and crop editor */
+(function(){
+ const input=document.getElementById('coverFileInput');
+ if(!input)return;
+ let selectedImage=null, zoomValue=1, xValue=50, yValue=50;
+ function getSaved(){try{return JSON.parse(localStorage.getItem('pilot-flight-logbook-profile-v1')||'{}')}catch(e){return {}}}
+ function showStatus(msg){const el=document.getElementById('profileSaveStatus');if(el)el.textContent=msg}
+ function applyCover(data){
+  const banner=document.getElementById('welcomeBanner');
+  const preview=document.getElementById('profileCoverPreview');
+  if(banner){banner.style.backgroundImage='url("'+data+'")';banner.style.backgroundSize='cover';banner.style.backgroundPosition='center'}
+  if(preview){preview.style.backgroundImage='url("'+data+'")';preview.classList.add('has-image')}
+ }
+ function openCrop(img){
+  selectedImage=img;zoomValue=1;xValue=50;yValue=50;
+  const old=document.getElementById('coverCropModal');if(old)old.remove();
+  const modal=document.createElement('div');modal.className='modalback';modal.id='coverCropModal';
+  modal.innerHTML=`<div class="modal" style="width:min(620px,100%);max-height:88vh;overflow:auto">
+   <div class="modalhead"><h2>Crop cover image</h2><button type="button" id="v26CropCancel">Cancel</button></div>
+   <p class="muted small">Fit your photo to the Dashboard banner. Drag the image or adjust zoom and position.</p>
+   <div id="v26CropFrame" style="width:100%;aspect-ratio:2.8/1;overflow:hidden;border-radius:14px;background:#dce8f7;touch-action:none">
+    <canvas id="v26CropCanvas" style="display:block;width:100%;height:100%"></canvas>
+   </div>
+   <div class="field" style="margin:12px 0"><label for="v26Zoom">Zoom</label><input id="v26Zoom" type="range" min="1" max="3" step=".01" value="1"></div>
+   <div class="field" style="margin:10px 0"><label for="v26X">Horizontal position</label><input id="v26X" type="range" min="0" max="100" value="50"></div>
+   <div class="field" style="margin:10px 0"><label for="v26Y">Vertical position</label><input id="v26Y" type="range" min="0" max="100" value="50"></div>
+   <div class="toolbar"><button type="button" class="primary" id="v26UseCrop">Use this crop</button></div>
+  </div>`;
+  document.body.appendChild(modal);
+  const canvas=document.getElementById('v26CropCanvas'),ctx=canvas.getContext('2d');
+  const W=1400,H=500;canvas.width=W;canvas.height=H;
+  const z=document.getElementById('v26Zoom'),sx=document.getElementById('v26X'),sy=document.getElementById('v26Y');
+  function draw(){
+   const scale=Math.max(W/img.width,H/img.height)*Number(z.value);
+   const dw=img.width*scale,dh=img.height*scale;
+   const dx=-(dw-W)*Number(sx.value)/100,dy=-(dh-H)*Number(sy.value)/100;
+   ctx.clearRect(0,0,W,H);ctx.fillStyle='#dce8f7';ctx.fillRect(0,0,W,H);
+   ctx.drawImage(img,dx,dy,dw,dh);
+  }
+  [z,sx,sy].forEach(el=>el.addEventListener('input',draw));draw();
+  const frame=document.getElementById('v26CropFrame');
+  let dragging=false,lastX=0,lastY=0;
+  frame.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;if(frame.setPointerCapture)frame.setPointerCapture(e.pointerId)});
+  frame.addEventListener('pointermove',e=>{
+   if(!dragging)return;
+   const rect=frame.getBoundingClientRect(),scale=Math.max(W/img.width,H/img.height)*Number(z.value);
+   const extraX=Math.max(1,img.width*scale-W),extraY=Math.max(1,img.height*scale-H);
+   sx.value=Math.max(0,Math.min(100,Number(sx.value)-(e.clientX-lastX)*W/rect.width/extraX*100));
+   sy.value=Math.max(0,Math.min(100,Number(sy.value)-(e.clientY-lastY)*H/rect.height/extraY*100));
+   lastX=e.clientX;lastY=e.clientY;draw();
+  });
+  ['pointerup','pointercancel'].forEach(ev=>frame.addEventListener(ev,()=>dragging=false));
+  document.getElementById('v26CropCancel').onclick=()=>modal.remove();
+  modal.addEventListener('click',e=>{if(e.target===modal)modal.remove()});
+  document.getElementById('v26UseCrop').onclick=()=>{
+   try{
+    const data=canvas.toDataURL('image/jpeg',.82);
+    const profile=getSaved();profile.cover=data;
+    localStorage.setItem('pilot-flight-logbook-profile-v1',JSON.stringify(profile));
+    try{if(typeof profileData!=='undefined')profileData.cover=data}catch(e){}
+    applyCover(data);modal.remove();
+    showStatus('Cover image cropped and saved. Tap Save profile after editing your details.');
+   }catch(err){showStatus('Could not save this image. Please try a smaller photo.')}
+  };
+ }
+ // Capture the actual file input change even if the app's main script has a problem.
+ input.addEventListener('change',function(){
+  const file=input.files&&input.files[0];if(!file)return;
+  showStatus('Loading selected photo…');
+  if(!file.type||!file.type.startsWith('image/')){showStatus('Please choose an image file.');return}
+  if(file.size>20*1024*1024){showStatus('Please choose an image smaller than 20 MB.');return}
+  const url=URL.createObjectURL(file),img=new Image();
+  img.onload=()=>{URL.revokeObjectURL(url);openCrop(img)};
+  img.onerror=()=>{URL.revokeObjectURL(url);showStatus('This photo could not be opened. Please try JPG or PNG.')};
+  img.src=url;
+ },false);
+})();
 </script>
 </body></html>
