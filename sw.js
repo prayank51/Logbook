@@ -1,6 +1,4 @@
-
-const CACHE = 'flight-logbook-v6';
-
+const CACHE = 'flight-logbook-v5';
 const FILES = [
   './',
   './index.html',
@@ -38,13 +36,12 @@ self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
 
   const url = new URL(event.request.url);
+
   if (url.origin !== self.location.origin) return;
 
-  const isMainPage =
-    url.pathname.endsWith('/Logbook/') ||
-    url.pathname.endsWith('/Logbook/index.html');
-
-  if (isMainPage) {
+  // Always check the network first for the main HTML page.
+  if (url.pathname.endsWith('/Logbook/') ||
+      url.pathname.endsWith('/Logbook/index.html')) {
     event.respondWith(
       fetch(event.request, { cache: 'no-cache' })
         .then(response => {
@@ -61,6 +58,7 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  // Other app files use the cache first for offline support.
   event.respondWith(
     caches.match(event.request)
       .then(cached => cached || fetch(event.request)
