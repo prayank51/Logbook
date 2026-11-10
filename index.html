@@ -583,6 +583,11 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:1
 .restore-json-picker{position:relative;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(145deg,#fff,#edf4ff);box-shadow:inset 0 1px 2px #fff,0 4px 10px #1b4f9218;color:var(--ink);font-weight:750;cursor:pointer;overflow:hidden}
 .restore-json-picker input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:100px}
 
+
+/* Safe recovery prompt when this browser copy has no flight records. */
+#emptyDataRecovery{box-shadow:0 4px 14px rgba(130,95,25,.08)}
+#emptyDataRecovery p{line-height:1.5}
+#emptyDataRecovery button{min-height:44px}
 </style>
 </head>
 <body>
@@ -603,6 +608,16 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:1
 <nav class="tabs">
  <button class="tab active" data-tab="dashboard">Dashboard</button><button class="tab" data-tab="flights">Flight entries</button><button class="tab" data-tab="reports">Reports</button><button class="tab" data-tab="documents">Documents</button>
 </nav>
+<section id="emptyDataRecovery" class="panel hidden" role="status" aria-live="polite" style="border:1px solid #e7c66f;background:linear-gradient(145deg,#fffdf5,#fff7df);margin:0 0 14px">
+ <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+  <div style="font-size:25px;line-height:1">⚠️</div>
+  <div style="flex:1;min-width:220px">
+   <h2 style="margin:0 0 6px;color:#76520c">No flight records found in this copy</h2>
+   <p style="margin:0 0 10px;color:#715b2d;font-size:13px">This browser storage is currently empty. Your records may still be in another copy of Flight Logbook or in a JSON backup. Choose your latest backup to restore it here. Existing records will be kept; matching IDs will be updated, not duplicated.</p>
+   <button type="button" class="primary" id="restoreFromEmptyState">Restore from JSON backup</button>
+  </div>
+ </div>
+</section>
 <main id="dashboard" class="view">
  <section class="welcome-banner" id="welcomeBanner">
   <div class="welcome-copy"><div class="welcome-small">Welcome back,</div><div class="welcome-name" id="welcomeName">Pilot</div><div class="welcome-designation" id="welcomeDesignation">Student Pilot</div></div>
@@ -955,7 +970,15 @@ function openFlight(id=null){
 }
 async function deleteFlight(id){if(!confirm('Delete this flight entry? This cannot be undone unless you have a backup.'))return;await delDB(id);await refresh();toast('Flight deleted.')}
 $('#addFlight').onclick=$('#addFlightDash').onclick=()=>openFlight();$('#printDash').onclick=()=>window.print();
-async function refresh(){flights=await allDB();documents=await allDocumentsDB();renderDashboard();renderFlights();if(!$('#reports').classList.contains('hidden'))renderReports();if(!$('#documents').classList.contains('hidden'))renderDocuments()}
+async function refresh(){
+ flights=await allDB();
+ documents=await allDocumentsDB();
+ const recovery=$('#emptyDataRecovery');
+ if(recovery)recovery.classList.toggle('hidden',flights.length>0);
+ renderDashboard();renderFlights();
+ if(!$('#reports').classList.contains('hidden'))renderReports();
+ if(!$('#documents').classList.contains('hidden'))renderDocuments();
+}
 function renderDocuments(){
  const q=($('#searchDocuments').value||'').toLowerCase().trim(),filter=$('#documentFilter').value;
  let arr=documents.filter(d=>`${d.name||''} ${d.number||''}`.toLowerCase().includes(q));
@@ -1106,6 +1129,13 @@ async function readXlsx(arrayBuffer){
  return rows
 }
 $('#fileInput').addEventListener('change',async e=>{let file=e.target.files[0];if(!file)return;let mode=e.target.dataset.mode||'import';try{if(mode==='backup'||file.name.toLowerCase().endsWith('.json')){let data=JSON.parse(await file.text());let arr=Array.isArray(data)?data:data.flights;if(!Array.isArray(arr))throw Error('Backup JSON does not contain a flights array.');let docs=Array.isArray(data.documents)?data.documents:[];if(!confirm(`Import/restore ${arr.length} flight records and ${docs.length} documents? Existing entries with different IDs will remain.`))return;for(let x of arr){let f={...x,id:x.id||uid()};for(let k of ['duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'])if(typeof f[k]==='string')f[k]=parseTime(f[k]);await saveDB(f)}for(let x of docs){let restored={...x,id:x.id||uid()};if(restored.attachment?.dataBase64){restored.attachment={name:restored.attachment.name||'attachment',type:restored.attachment.type||'application/octet-stream',size:restored.attachment.size||0,blob:base64ToBlob(restored.attachment.dataBase64,restored.attachment.type)}}await saveDocumentDB(restored)}await refresh();const attachmentCount=docs.filter(d=>d.attachment?.dataBase64||d.attachment?.blob).length;toast(`Restored ${arr.length} flights, ${docs.length} documents and ${attachmentCount} attachments.`)}else{let rows;if(file.name.toLowerCase().endsWith('.csv'))rows=parseCSV(await file.text());else rows=await readXlsx(await file.arrayBuffer());let n=await importRows(rows);toast(`Imported ${n} flight rows. Please verify totals.`)}}catch(err){alert('Import failed: '+err.message)}finally{e.target.value='';e.target.dataset.mode='import'}});
+$('#restoreFromEmptyState')?.addEventListener('click',()=>{
+ const input=$('#fileInput');
+ if(!input)return toast('Backup file selector is unavailable. Open Settings & help and use Restore backup.');
+ input.accept='.json';
+ input.dataset.mode='backup';
+ input.click();
+});
 $('#deleteAll').onclick=async()=>{if(confirm('Delete ALL flight records saved in this browser? Export a backup first if needed.')&&confirm('Final confirmation: permanently delete all local flight entries?')){await clearDB();await refresh();toast('All local entries deleted.')}};
 if('serviceWorker'in navigator&&location.protocol!=='file:'){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('#installBtn').classList.remove('hidden')});$('#installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('#installBtn').classList.add('hidden')}else toast('Use the browser menu and choose Install app / Add to Home screen.')};
