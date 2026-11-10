@@ -507,110 +507,18 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:1
  .report-year-control{width:100%;max-width:none}
 }
 
-
-/* Dashboard welcome header and profile */
-.app-top{position:relative;display:flex;align-items:center;justify-content:space-between;padding:5px 4px 14px;background:transparent;border:0;box-shadow:none;margin-bottom:2px;min-height:64px}
-.app-top .brand{gap:13px}.app-top .brand h1{font-size:25px;color:#10234d;font-weight:900;letter-spacing:-.045em}
-.app-logo,.dashboard-brand-logo{display:grid;place-items:center;color:#fff;background:linear-gradient(145deg,#3694ff 0%,#176bd4 55%,#104caa 100%);border:1px solid #5ba6ff;border-radius:18px;box-shadow:inset 0 2px 3px #ffffff70,inset 0 -4px 7px #063d9238,0 7px 15px #155bb52b;text-shadow:0 2px 3px #063d9255}
-.app-logo{width:52px;height:52px;font-size:27px}
-.top-menu-wrap{position:relative;margin-left:auto}
-.top-menu-btn{width:48px;height:48px;padding:0;border-radius:17px;font-size:28px;line-height:1;background:linear-gradient(145deg,#fff,#e8f1ff);border:1px solid #d5e3f5;box-shadow:inset 0 1px 2px #fff,0 5px 12px #1b4f9222;color:#244d83}
-.top-menu{position:absolute;right:0;top:55px;z-index:20;width:220px;padding:7px;border:1px solid #d7e4f5;border-radius:17px;background:rgba(255,255,255,.98);box-shadow:0 14px 32px #1b3d6b30}
-.top-menu button{display:flex;align-items:center;gap:12px;width:100%;border:0;border-radius:11px;background:transparent;text-align:left;padding:12px;color:#182c50;font-weight:750}
-.top-menu button+button{border-top:1px solid #edf1f7}.top-menu button:active{background:#edf4ff}.top-menu button span{width:24px;text-align:center;font-size:19px;color:#2469bd}
-.dashboard-brand-row{grid-column:1/-1;display:flex;align-items:center;gap:12px;margin:0 0 -2px;padding:0 3px}
-.dashboard-brand-row h1{font-size:24px;line-height:1.2;margin:0;color:#10234d;font-weight:900;letter-spacing:-.045em}
-.dashboard-brand-logo{width:48px;height:48px;border-radius:16px;font-size:25px;flex:none}
-.welcome-banner{grid-column:1/-1;position:relative;min-height:176px;display:flex;align-items:center;overflow:hidden;border-radius:24px;border:1px solid #b9d0ef;background:linear-gradient(120deg,#143c70 0%,#4779a9 52%,#d0e2f8 100%);box-shadow:inset 0 2px 3px #ffffff55,0 9px 22px #234c8428}
-.welcome-banner:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(9,31,64,.82),rgba(12,42,79,.50) 54%,rgba(10,33,64,.05))}
-.welcome-copy{position:relative;z-index:1;padding:23px 25px;color:white;text-shadow:0 2px 8px #10233e66;max-width:75%}
-.welcome-small{font-size:17px;font-weight:700;line-height:1.35}.welcome-name{font-size:29px;font-weight:900;line-height:1.2;margin:5px 0 11px;overflow-wrap:anywhere}
-.welcome-designation{display:inline-flex;align-items:center;min-height:32px;padding:5px 13px;border-radius:999px;background:rgba(226,239,255,.24);border:1px solid rgba(255,255,255,.28);color:#fff;font-size:13px;font-weight:800;backdrop-filter:blur(7px)}
-.profile-cover-editor{margin:8px 0 20px;padding:13px;border:1px solid #dce7f5;border-radius:18px;background:linear-gradient(145deg,#f9fbff,#edf4ff)}
-.profile-cover-preview{height:160px;border-radius:14px;background:linear-gradient(120deg,#173c6d,#6d91b5,#d8e7f7);background-position:center;background-size:cover;display:flex;align-items:center;justify-content:center;color:#fff;text-shadow:0 1px 4px #0008;font-weight:700;overflow:hidden;margin-bottom:12px}
-.profile-cover-preview.has-image span{display:none}
-.profile-fields{margin-top:12px}
-#profile .panel{max-width:900px;margin:0 auto}
-#profile .section-head{margin-bottom:14px}
-@media(max-width:800px){
- .app-top{padding:4px 2px 12px;min-height:58px}
- .app-top .brand h1{font-size:23px}
- #dashboard{grid-template-columns:minmax(0,1fr)}
- .dashboard-brand-row h1{font-size:23px}
- .welcome-banner{min-height:165px}
- .welcome-copy{padding:20px;max-width:82%}
- .welcome-name{font-size:26px}
-}
-
-
-/* v18 fixes: single title, square brand mark, reliable overflow menu */
-.app-top{position:relative;z-index:100;overflow:visible}
-.app-top .app-logo{width:52px!important;height:52px!important;min-width:52px;min-height:52px;aspect-ratio:1/1;border-radius:17px;flex:0 0 52px}
-.top-menu-wrap{z-index:101}
-#topMenu{z-index:1000;pointer-events:auto}
-#topMenu.hidden{display:none!important}
-#topMenu:not(.hidden){display:block!important}
-#topMenu button{position:relative;z-index:1001;cursor:pointer;pointer-events:auto}
-#topMenuBtn{position:relative;z-index:1002;cursor:pointer;pointer-events:auto;touch-action:manipulation}
-
-
-/* v19: native expandable overflow menu */
-.top-menu-wrap{position:relative;margin-left:auto;z-index:1001;display:block}
-.top-menu-wrap>summary{list-style:none;display:grid;place-items:center;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
-.top-menu-wrap>summary::-webkit-details-marker{display:none}
-.top-menu-wrap[open]>.top-menu{display:block!important}
-.top-menu-wrap:not([open])>.top-menu{display:none!important}
-.top-menu{position:absolute;right:0;top:calc(100% + 9px);z-index:10000;width:230px;padding:7px;border:1px solid #d7e4f5;border-radius:17px;background:#fff;box-shadow:0 14px 32px #1b3d6b30}
-.top-menu button{display:flex;align-items:center;gap:12px;width:100%;border:0;border-radius:11px;background:transparent;text-align:left;padding:13px;color:#182c50;font-weight:750;cursor:pointer;touch-action:manipulation}
-.top-menu button+button{border-top:1px solid #edf1f7}
-
-
-/* v21 profile reliability: visible label activation and dashboard sync */
-.cover-picker-label{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;min-height:48px;padding:12px 18px;border-radius:14px;font-weight:800}
-.cover-native-picker{position:relative;overflow:hidden;isolation:isolate}\n.cover-native-picker #coverFileInput{appearance:none!important;-webkit-appearance:none!important;display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;opacity:0!important;z-index:5!important;cursor:pointer!important;margin:0!important;padding:0!important}
-#profile .profile-cover-editor{position:relative}
-
-
-/* v26: make the file chooser cover the whole styled button */
-.cover-native-picker{position:relative!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;min-height:52px!important;cursor:pointer!important}
-.cover-native-picker #coverFileInput{position:absolute!important;inset:0!important;display:block!important;width:100%!important;height:100%!important;opacity:0!important;z-index:20!important;cursor:pointer!important;font-size:100px!important;margin:0!important;padding:0!important}
-
-
-/* v27: modal must sit above app header and bottom navigation */
-#modalRoot{position:relative;z-index:5000}
-#modalRoot>.modalback{position:fixed!important;inset:0!important;z-index:5001!important;align-items:flex-start!important;overflow-y:auto!important;padding:calc(env(safe-area-inset-top,0px) + 24px) 12px calc(env(safe-area-inset-bottom,0px) + 90px)!important}
-#modalRoot .modal{position:relative!important;margin:0 auto!important;width:min(650px,100%)!important;max-height:none!important;overflow:visible!important}
-.restore-json-picker{position:relative;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(145deg,#fff,#edf4ff);box-shadow:inset 0 1px 2px #fff,0 4px 10px #1b4f9218;color:var(--ink);font-weight:750;cursor:pointer;overflow:hidden}
-.restore-json-picker input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:100px}
-
 </style>
 </head>
 <body>
-<div id="dbDiagnostic" style="margin:10px auto;max-width:1180px;padding:12px 14px;border:1px solid #d6a84b;background:#fff9e9;color:#493b1b;border-radius:12px;font:13px/1.45 system-ui;overflow-wrap:anywhere">
-<strong>Storage diagnostic (temporary)</strong>
-<div id="dbDiagnosticStatus" style="margin-top:5px">Checking local database…</div>
-</div>
 <div class="wrap">
-<header class="top app-top">
- <div class="brand"><div class="logo app-logo" aria-hidden="true">✈</div><h1>Flight Logbook</h1></div>
- <details class="top-menu-wrap" id="topMenuDetails">
-  <summary class="top-menu-btn" aria-label="More options" title="More options">⋮</summary>
-  <div id="topMenu" class="top-menu">
-   <button type="button" data-top-action="profile"><span>♙</span>Profile</button>
-   <button type="button" data-top-action="import"><span>⇧</span>Import Excel / CSV</button>
-   <button type="button" data-top-action="settings"><span>⚙</span>Settings &amp; help</button>
-  </div>
- </details>
- <button id="installBtn" class="hidden">Install app</button>
- <input id="fileInput" type="file" accept=".xlsx,.xls,.csv,.json" class="hidden">
+<header class="top">
+ <div class="brand"><div class="logo">✈</div><div><h1>Flight Logbook</h1><p>Private, local-first flight records · Works offline</p></div></div>
+ <div class="actions"><button id="installBtn" class="hidden">Install app</button><button id="importExcel" class="primary">Import Excel / CSV</button><button id="openSettingsTop" type="button">Settings &amp; help</button><input id="fileInput" type="file" accept=".xlsx,.xls,.csv,.json" class="hidden"></div>
 </header>
 <nav class="tabs">
  <button class="tab active" data-tab="dashboard">Dashboard</button><button class="tab" data-tab="flights">Flight entries</button><button class="tab" data-tab="reports">Reports</button><button class="tab" data-tab="documents">Documents</button>
 </nav>
 <main id="dashboard" class="view">
- <section class="welcome-banner" id="welcomeBanner">
-  <div class="welcome-copy"><div class="welcome-small">Welcome back,</div><div class="welcome-name" id="welcomeName">Pilot</div><div class="welcome-designation" id="welcomeDesignation">Student Pilot</div></div>
- </section>
  <section class="panel career-panel">
   <div class="career-head"><div><div class="eyebrow">Flight Logbook · Dashboard</div><h2 class="career-title">Career overview</h2></div><div class="hero-icon" aria-hidden="true">✈</div></div>
   <div id="careerStats">
@@ -707,32 +615,11 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:1
  </section>
 </main>
 <main id="settings" class="view hidden">
- <section class="panel"><h2>Data & privacy</h2><p>Flight and document records are saved in this browser on this device. This app does not send records to a server. Use <b>Backup</b> regularly and keep the backup file somewhere safe.</p><div class="toolbar"><button id="exportBackup2">Download JSON backup</button><label class="restore-json-picker" for="restoreFileInput">Restore JSON backup<input id="restoreFileInput" type="file" accept=".json,application/json"></label><button class="danger" id="deleteAll">Delete all local flights</button></div></section>
+ <section class="panel"><h2>Data & privacy</h2><p>Flight and document records are saved in this browser on this device. This app does not send records to a server. Use <b>Backup</b> regularly and keep the backup file somewhere safe.</p><div class="toolbar"><button id="exportBackup2">Download JSON backup</button><button id="restore2">Restore JSON backup</button><button class="danger" id="deleteAll">Delete all local flights</button></div></section>
  <section class="panel"><h2>Excel import format</h2><p>Import an <b>.xlsx</b> workbook or <b>.csv</b> file. The app reads the first worksheet and tries to match common column names. The first row should contain headers. After importing, inspect the entries and totals.</p><p>Recognised headings include: Date, Aircraft / Registration, Type, From / Departure, To / Arrival, Total Time / Duration, Dual, PIC, Local PIC, Night PIC, Cross Country / XC, Cross Country Dual/PIC, Day Dual, Night Dual, Night, Instrument / IF, Emergency Sortie, Pilot in Command, Co-Pilot or Student, Take-offs, Landings, Instructional Exercise.</p><p class="notice">If your existing Excel file uses unusual headings or stores flight time in Excel time format, import a copy first and verify the results. Import adds records; it does not automatically delete existing records.</p></section>
  <section class="panel"><h2>Time entry guide</h2><p>Enter duration as <b>1:25</b> for 1 hour 25 minutes, or as decimal hours such as <b>1.4</b> only if that is what your source file uses. For flight entries, use hours and minutes (HH:MM). Category times are not automatically assumed to equal total flight time.</p><p class="notice">This is a personal tracking aid, not an official DGCA logbook, endorsement, or substitute for your flying school's records. Check applicable DGCA requirements and your instructor's records before relying on any totals.</p></section>
  <section class="panel"><h2>Install on Android / laptop</h2><ol><li>Upload the included app files to a static HTTPS host (for example, your own GitHub Pages site) or run from localhost. Opening index.html directly is fine for a quick test, but install/offline caching requires a secure origin.</li><li>Open the hosted app once while online. On Android Chrome, use the browser menu → <b>Install app</b> or <b>Add to Home screen</b>. On desktop Chrome/Edge, use the install icon in the address bar or browser menu.</li><li>After the app has loaded once, reopen it from the installed icon. The app shell works offline; records stay in that browser profile.</li><li>For use on multiple devices, restore a JSON backup separately on each device. Data does not sync automatically.</li></ol></section>
 </main>
-<main id="profile" class="view hidden">
- <section class="panel profile-panel">
-  <div class="section-head"><div><div class="eyebrow">PERSONALISE YOUR LOGBOOK</div><h2>Profile</h2></div><button type="button" id="profileBack">← Back</button></div>
-  <div class="profile-cover-editor">
-   <div class="profile-cover-preview" id="profileCoverPreview"><span>No cover image selected</span></div>
-   <div class="toolbar"><label class="primary cover-picker-label cover-native-picker">＋ Add / Change cover image<input id="coverFileInput" type="file" accept="image/*" aria-label="Choose cover image"></label><button type="button" id="removeCoverBtn">Remove image</button></div>
-   <p class="muted small">Choose a wide photo. You can crop and position it to fit the Dashboard welcome card.</p>
-  </div>
-  <div class="formgrid profile-fields">
-   <div class="field span2"><label for="profileName">Name *</label><input id="profileName" maxlength="60" placeholder="Your name"></div>
-   <div class="field span2"><label for="profileDesignation">Designation *</label><input id="profileDesignation" maxlength="50" placeholder="e.g. Student Pilot"></div>
-   <div class="field span2"><label for="profileLicence">Licence / Student ID (optional)</label><input id="profileLicence" maxlength="60" placeholder="e.g. CPL trainee"></div>
-   <div class="field span2"><label for="profileSchool">Flying school / Organisation (optional)</label><input id="profileSchool" maxlength="80" placeholder="Flying school name"></div>
-   <div class="field span2"><label for="profileBase">Base / Home aerodrome (optional)</label><input id="profileBase" maxlength="80" placeholder="e.g. VAPO"></div>
-   <div class="field span2"><label for="profileContact">Contact number (optional)</label><input id="profileContact" maxlength="30" placeholder="Phone number"></div>
-   <div class="field span4"><label for="profileBio">About me (optional)</label><textarea id="profileBio" maxlength="240" placeholder="A short note about your aviation journey"></textarea></div>
-  </div>
-  <div class="toolbar" style="margin-top:16px"><button type="button" class="primary" id="saveProfile">Save profile</button><span class="muted small" id="profileSaveStatus">Profile is saved on this device.</span></div>
- </section>
-</main>
-
 <div class="footer">Flight Logbook · Offline-first · Your data stays on this device</div>
 </div>
 
@@ -753,16 +640,7 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:1
 <div id="modalRoot"></div><div id="toast" class="toast hidden" role="status"></div>
 <script>
 const DB_NAME='pilot-flight-logbook', DB_VERSION=3, STORE='flights', DOC_STORE='documents';
-function updateDbDiagnostic(status, count){
- const el=document.getElementById('dbDiagnosticStatus');if(!el)return;
- const d=db;
- const stores=d?Array.from(d.objectStoreNames).join(', '):'(database not opened)';
- const countText=Number.isFinite(count)?String(count):'not read';
- el.textContent=`Status: ${status} | Origin: ${location.origin} | Page: ${location.pathname} | Database: ${DB_NAME} | Requested version: ${DB_VERSION} | Opened version: ${d?d.version:'—'} | Stores: ${stores} | Flight records read: ${countText}`;
-}
-
 let db, flights=[], documents=[], editId=null, deferredPrompt=null;
-window.addEventListener('DOMContentLoaded',()=>updateDbDiagnostic('Page loaded; opening database…',NaN),{once:true});
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const fields=['date','arrivalDate','registration','aircraftType','engineCategory','from','to','offBlock','onBlock','duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument','emergencySortie','instructor','pilotInCommand','coPilotStudent','takeoffs','landings','remarks'];
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
@@ -800,21 +678,15 @@ function openDB(){return new Promise((resolve,reject)=>{
  r.onerror=()=>reject(r.error||new Error('Unknown IndexedDB open error'));
  r.onblocked=()=>reject(new Error('Database upgrade is blocked by another open Flight Logbook tab. Close other tabs or the installed app and retry.'));
 })}
-let dbPromise=null;
-async function getDB(){
- if(db)return db;
- if(!dbPromise)dbPromise=openDB().then(d=>{db=d;return d}).catch(e=>{dbPromise=null;throw e});
- return dbPromise;
-}
-async function allDocumentsDB(){const d=await getDB();return new Promise((res,rej)=>{try{let r=d.transaction(DOC_STORE).objectStore(DOC_STORE).getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>rej(r.error)}catch(e){rej(e)}})}
-async function saveDocumentDB(doc){const d=await getDB();return new Promise((res,rej)=>{try{const tx=d.transaction(DOC_STORE,'readwrite');tx.objectStore(DOC_STORE).put(doc);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error||new Error('Document database transaction failed.'));tx.onabort=()=>rej(tx.error||new Error('Document save was aborted.'))}catch(e){rej(e)}})}
-async function deleteDocumentDB(id){const d=await getDB();return new Promise((res,rej)=>{try{let r=d.transaction(DOC_STORE,'readwrite').objectStore(DOC_STORE).delete(id);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)}catch(e){rej(e)}})}
+function allDocumentsDB(){return new Promise((res,rej)=>{let r=db.transaction(DOC_STORE).objectStore(DOC_STORE).getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>rej(r.error)})}
+function saveDocumentDB(d){return new Promise((res,rej)=>{let r=db.transaction(DOC_STORE,'readwrite').objectStore(DOC_STORE).put(d);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+function deleteDocumentDB(id){return new Promise((res,rej)=>{let r=db.transaction(DOC_STORE,'readwrite').objectStore(DOC_STORE).delete(id);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
 function documentDaysLeft(d){if(d.noValidity||!d.validUpto||String(d.validUpto).toUpperCase()==='NA')return 'NA';let x=new Date(d.validUpto+'T00:00:00');if(isNaN(x))return 'NA';let today=new Date();today.setHours(0,0,0,0);return Math.ceil((x.getTime()-today.getTime())/86400000)}
 function documentStatus(d){let n=documentDaysLeft(d);if(n==='NA')return {label:'NA',kind:'na'};if(n<0)return {label:'Expired',kind:'expired'};if(n<=30)return {label:n===0?'Expires today':`Expires in ${n} day${n===1?'':'s'}`,kind:'soon'};return {label:'Valid',kind:'valid'}}
-async function allDB(){const d=await getDB();return new Promise((res,rej)=>{try{let r=d.transaction(STORE).objectStore(STORE).getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>rej(r.error)}catch(e){rej(e)}})}
-async function saveDB(f){const d=await getDB();return new Promise((res,rej)=>{try{let r=d.transaction(STORE,'readwrite').objectStore(STORE).put(f);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)}catch(e){rej(e)}})}
-async function delDB(id){const d=await getDB();return new Promise((res,rej)=>{try{let r=d.transaction(STORE,'readwrite').objectStore(STORE).delete(id);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)}catch(e){rej(e)}})}
-async function clearDB(){const d=await getDB();return new Promise((res,rej)=>{try{let r=d.transaction(STORE,'readwrite').objectStore(STORE).clear();r.onsuccess=()=>res();r.onerror=()=>rej(r.error)}catch(e){rej(e)}})}
+function allDB(){return new Promise((res,rej)=>{let r=db.transaction(STORE).objectStore(STORE).getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>rej(r.error)})}
+function saveDB(f){return new Promise((res,rej)=>{let r=db.transaction(STORE,'readwrite').objectStore(STORE).put(f);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+function delDB(id){return new Promise((res,rej)=>{let r=db.transaction(STORE,'readwrite').objectStore(STORE).delete(id);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+function clearDB(){return new Promise((res,rej)=>{let r=db.transaction(STORE,'readwrite').objectStore(STORE).clear();r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
 function toast(msg){$('#toast').textContent=msg;$('#toast').classList.remove('hidden');setTimeout(()=>$('#toast').classList.add('hidden'),3000)}
 function sum(key,arr=flights){return arr.reduce((a,f)=>a+(Number(f[key])||0),0)}
 function totalMinutes(f){return Number(f.duration)||0}
@@ -968,7 +840,7 @@ function openFlight(id=null){
 }
 async function deleteFlight(id){if(!confirm('Delete this flight entry? This cannot be undone unless you have a backup.'))return;await delDB(id);await refresh();toast('Flight deleted.')}
 $('#addFlight').onclick=$('#addFlightDash').onclick=()=>openFlight();$('#printDash').onclick=()=>window.print();
-async function refresh(){flights=await allDB();updateDbDiagnostic("Database read completed",flights.length);documents=await allDocumentsDB();renderDashboard();renderFlights();if(!$('#reports').classList.contains('hidden'))renderReports();if(!$('#documents').classList.contains('hidden'))renderDocuments()}
+async function refresh(){flights=await allDB();documents=await allDocumentsDB();renderDashboard();renderFlights();if(!$('#reports').classList.contains('hidden'))renderReports();if(!$('#documents').classList.contains('hidden'))renderDocuments()}
 function renderDocuments(){
  const q=($('#searchDocuments').value||'').toLowerCase().trim(),filter=$('#documentFilter').value;
  let arr=documents.filter(d=>`${d.name||''} ${d.number||''}`.toLowerCase().includes(q));
@@ -996,30 +868,7 @@ function openDocument(id=null){
  function updateDays(){if(na.value==='yes'){from.disabled=upto.disabled=true;from.value=upto.value='';$('#docDaysLeft').value='NA'}else{from.disabled=upto.disabled=false;$('#docDaysLeft').value=upto.value?documentDaysLeft({validUpto:upto.value}):'NA'}}
  na.onchange=updateDays;upto.onchange=updateDays;updateDays();
  $('#closeDocModal').onclick=$('#cancelDoc').onclick=()=>$('#modalRoot').innerHTML='';
- $('#documentForm').onsubmit=async e=>{
-  e.preventDefault();
-  const submit=e.submitter||e.target.querySelector('button[type="submit"]');
-  if(submit){submit.disabled=true;submit.textContent='Saving…'}
-  try{
-   const fd=new FormData(e.target),name=String(fd.get('name')||'').trim(),noValidity=fd.get('noValidity')==='yes';
-   if(!name)throw new Error('Enter a document name.');
-   const doc={...(documents.find(x=>x.id===id)||{}),id:id||uid(),name,number:String(fd.get('number')||'').trim(),validFrom:noValidity?'NA':String(fd.get('validFrom')||''),validUpto:noValidity?'NA':String(fd.get('validUpto')||''),noValidity,updatedAt:new Date().toISOString()};
-   if(!noValidity&&doc.validFrom&&doc.validUpto&&doc.validFrom>doc.validUpto)throw new Error('Valid Upto must be on or after Validity From.');
-   const attachmentInput=$('#docAttachment'),newFile=attachmentInput?.files?.[0],removeAttachment=$('#removeDocAttachment')?.checked;
-   if(newFile&&newFile.size>10*1024*1024)throw new Error('File is larger than 10 MB. Choose a smaller file.');
-   if(removeAttachment)delete doc.attachment;
-   if(newFile)doc.attachment={name:newFile.name,type:newFile.type||'application/octet-stream',size:newFile.size,blob:newFile};
-   await saveDocumentDB(doc);
-   await refresh();
-   $('#modalRoot').innerHTML='';
-   switchTab('documents');
-   toast(newFile?'Document and attachment saved on this device.':'Document saved on this device.');
-  }catch(err){
-   console.error('Document save failed:',err);
-   toast('Could not save document: '+(err?.message||String(err)));
-   if(submit){submit.disabled=false;submit.textContent='Save document'}
-  }
- };
+ $('#documentForm').onsubmit=async e=>{e.preventDefault();let fd=new FormData(e.target),name=String(fd.get('name')||'').trim(),noValidity=fd.get('noValidity')==='yes';if(!name){toast('Enter a document name.');return}let doc={...(documents.find(x=>x.id===id)||{}),id:id||uid(),name,number:String(fd.get('number')||'').trim(),validFrom:noValidity?'NA':String(fd.get('validFrom')||''),validUpto:noValidity?'NA':String(fd.get('validUpto')||''),noValidity,updatedAt:new Date().toISOString()};if(!noValidity&&doc.validFrom&&doc.validUpto&&doc.validFrom>doc.validUpto){toast('Valid Upto must be on or after Validity From.');return}const attachmentInput=$('#docAttachment'),newFile=attachmentInput?.files?.[0],removeAttachment=$('#removeDocAttachment')?.checked;if(newFile&&newFile.size>10*1024*1024){toast('File is larger than 10 MB. Choose a smaller file.');return}if(removeAttachment)delete doc.attachment;if(newFile)doc.attachment={name:newFile.name,type:newFile.type||'application/octet-stream',size:newFile.size,blob:newFile};await saveDocumentDB(doc);$('#modalRoot').innerHTML='';await refresh();switchTab('documents');toast('Document saved on this device.')};
 }
 async function openDocumentAttachment(id,downloadFile=false){const d=documents.find(x=>x.id===id),a=d?.attachment;if(!a)return toast('No attachment found.');let blob=a.blob;if(!(blob instanceof Blob)){toast('Attachment data is unavailable.');return}const url=URL.createObjectURL(blob);if(downloadFile){const link=document.createElement('a');link.href=url;link.download=a.name||'document';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000)}else{const win=window.open(url,'_blank');if(!win){const link=document.createElement('a');link.href=url;link.download=a.name||'document';link.click()}setTimeout(()=>URL.revokeObjectURL(url),60000)}}
 async function deleteDocument(id){let d=documents.find(x=>x.id===id);if(d&&confirm(`Delete document "${d.name}"?`)){await deleteDocumentDB(id);await refresh();toast('Document deleted.')}}
@@ -1071,24 +920,11 @@ function renderReports(){
 $('#yearlyReportYear').addEventListener('change',renderReports);
 $('#monthlyReportYear').addEventListener('change',renderReports);
 
-function download(name,content,type){const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.style.display='none';document.body.appendChild(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(url)},60000);return true}
+function download(name,content,type){let blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 async function blobToBase64(blob){const bytes=new Uint8Array(await blob.arrayBuffer());let binary='';const chunk=0x8000;for(let i=0;i<bytes.length;i+=chunk)binary+=String.fromCharCode(...bytes.subarray(i,i+chunk));return btoa(binary)}
 function base64ToBlob(data,type){const binary=atob(data),bytes=new Uint8Array(binary.length);for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);return new Blob([bytes],{type:type||'application/octet-stream'})}
-async function backup(){try{flights=await allDB();documents=await allDocumentsDB();const backupDocs=[];for(const d of documents){const copy={...d};if(d.attachment?.blob instanceof Blob){copy.attachment={name:d.attachment.name||'attachment',type:d.attachment.type||d.attachment.blob.type||'application/octet-stream',size:d.attachment.size??d.attachment.blob.size,dataBase64:await blobToBase64(d.attachment.blob)}}backupDocs.push(copy)}const json=JSON.stringify({format:'flight-logbook-backup-v3-with-attachments',exportedAt:new Date().toISOString(),flights,documents:backupDocs},null,2);download('flight-logbook-backup-'+new Date().toISOString().slice(0,10)+'.json',json,'application/json');toast('JSON backup prepared. Check your browser downloads.')}catch(err){console.error('Backup failed:',err);alert('JSON backup failed: '+(err?.message||String(err)))}}
-$('#exportBackup2').onclick=backup;
-$('#restoreFileInput').addEventListener('change',async e=>{
- const file=e.target.files&&e.target.files[0];if(!file)return;
- try{
-  const data=JSON.parse(await file.text()),arr=Array.isArray(data)?data:data.flights;
-  if(!Array.isArray(arr))throw new Error('Backup JSON does not contain a flights array.');
-  const docs=Array.isArray(data.documents)?data.documents:[];
-  if(!confirm(`Restore ${arr.length} flight records and ${docs.length} documents? Existing entries with different IDs will remain.`))return;
-  for(const x of arr){const f={...x,id:x.id||uid()};for(const k of ['duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'])if(typeof f[k]==='string')f[k]=parseTime(f[k]);await saveDB(f)}
-  for(const x of docs){const restored={...x,id:x.id||uid()};if(restored.attachment?.dataBase64)restored.attachment={name:restored.attachment.name||'attachment',type:restored.attachment.type||'application/octet-stream',size:restored.attachment.size||0,blob:base64ToBlob(restored.attachment.dataBase64,restored.attachment.type)};await saveDocumentDB(restored)}
-  await refresh();toast(`Restored ${arr.length} flights and ${docs.length} documents.`);
- }catch(err){console.error('Restore failed:',err);alert('Restore failed: '+(err?.message||String(err)))}
- finally{e.target.value=''}
-});$('#openSettingsTop').onclick=()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));$('#settings').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});};
+async function backup(){documents=await allDocumentsDB();const backupDocs=[];for(const d of documents){const copy={...d};if(d.attachment?.blob instanceof Blob){copy.attachment={name:d.attachment.name||'attachment',type:d.attachment.type||d.attachment.blob.type||'application/octet-stream',size:d.attachment.size??d.attachment.blob.size,dataBase64:await blobToBase64(d.attachment.blob)}}backupDocs.push(copy)}download('flight-logbook-backup-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({format:'flight-logbook-backup-v3-with-attachments',exportedAt:new Date().toISOString(),flights,documents:backupDocs},null,2),'application/json')}
+$('#exportBackup2').onclick=backup;$('#restore2').onclick=()=>{let i=$('#fileInput');i.accept='.json';i.dataset.mode='backup';i.click()};$('#openSettingsTop').onclick=()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));$('#settings').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});};
 $('#importExcel').onclick=()=>{let i=$('#fileInput');i.accept='.xlsx,.xls,.csv,.json';i.dataset.mode='import';i.click()};
 function csvEscape(x){let s=String(x??'');return /[,"\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
 function exportCSV(){let cols=['date','arrivalDate','registration','aircraftType','engineCategory','from','to','offBlock','onBlock','duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument','emergencySortie','instructor','takeoffs','landings','remarks'];let names=['Date of Flight','Arrival Date','Aircraft Registration','Aircraft Type','Engine Category','From','To','Off Block','On Block','Duration','Dual','PIC','Local PIC','Night PIC','Cross Country','Cross Country Dual','Day Dual','Night Dual','Night','Instrument','Simulated Instrument','Emergency Sortie','Instructor','Take-offs','Landings','Remarks'];let rows=[names,...flights.map(f=>cols.map(k=>['duration','dual','pic','localPic','nightPic','xc','crossCountryDual','crossCountryPic','dayDual','nightDual','night','instrument','simulatedInstrument'].includes(k)?timeStr(f[k]):f[k]??''))];download('flight-logbook.csv','\ufeff'+rows.map(r=>r.map(csvEscape).join(',')).join('\r\n'),'text/csv;charset=utf-8')}
@@ -1139,233 +975,6 @@ root.querySelectorAll('[data-key]').forEach(b=>b.addEventListener('click',()=>{l
 root.querySelectorAll('[data-unit]').forEach(b=>b.addEventListener('click',()=>{error.textContent='';conversion.classList.add('hidden');const chosen=b.dataset.unit;if(mode==='time'&&timeResult!==null){timeParts=[];timeGroups=[];timeBuffer='';pendingOperator=null;timeResult=null}if(mode==='general'){if(/[+*/()]|.-/.test(expression)){invalid('Clear the normal calculation before entering time values.');return}timeBuffer=expression.trim()===''?'0':expression;mode='time';expression='';}if(timeBuffer===''){invalid('Enter a number before choosing the time unit.');return}let value=Number(timeBuffer);if(!Number.isFinite(value)){invalid();return}let op=pendingOperator||'+';let ms=value*unitMs[chosen];if(!timeGroups.length||pendingOperator){timeGroups.push({op,ms})}else{timeGroups[timeGroups.length-1].ms+=ms}timeParts.push(value+' '+unitLabel[chosen]);timeBuffer='';pendingOperator=null;unit=chosen;justEvaluated=false;$$('[data-unit]').forEach(x=>x.classList.toggle('selected',x===b));show()}));
 root.querySelectorAll('[data-calc]').forEach(b=>b.addEventListener('click',()=>{let a=b.dataset.calc;error.textContent='';if(a==='clear'){reset();return}if(a==='back'){if(mode==='time'){if(timeBuffer!==''){timeBuffer=timeBuffer.slice(0,-1)}else if(pendingOperator){pendingOperator=null;timeParts.pop()}else if(timeParts.length){timeParts.pop();timeGroups.pop()}}else expression=expression.slice(0,-1);show();return}if(a==='history'){renderHistory();return}if(a==='percent'){if(mode==='time'){if(timeBuffer!=='')timeBuffer=String(Number(timeBuffer)/100);else invalid('Enter a number before pressing percent.')}else{try{expression=fmt(evaluate(expression)/100)}catch{invalid('Invalid calculation.')}}show();return}if(a==='equals'){if(mode==='time'){if(timeBuffer!==''||pendingOperator){invalid('Choose a time unit for the current number first.');return}let result=totalTime();if(result<0){invalid('The result cannot be a negative time.');return}let original=timeParts.join(' ');recordHistory(original,autoTime(result));timeResult=result;justEvaluated=true;show();return}try{let original=expression;let answer=fmt(evaluate(expression));recordHistory(original,answer);expression=answer;justEvaluated=true;show()}catch{invalid('Invalid calculation.')}return}if(a==='convert'){if(mode!=='time'||!timeGroups.length){error.textContent='Enter a time value first.';return}if(timeBuffer!==''||pendingOperator){error.textContent='Choose a time unit for the current number first.';return}let ms=totalTime(),rows=[['Hours',fmt(ms/3600000)],['Minutes',fmt(ms/60000)],['Seconds',fmt(ms/1000)],['Milliseconds',fmt(ms)]];conversion.innerHTML=rows.map(([k,v])=>`<div class="conversion-row"><span>${k}</span><strong>${v}</strong></div>`).join('');conversion.classList.remove('hidden')}}));show()})();
 
-
-// Local profile and Dashboard welcome banner
-const PROFILE_KEY='pilot-flight-logbook-profile-v1';
-let profileData={name:'',designation:'',licence:'',school:'',base:'',contact:'',bio:'',cover:''};
-function readProfile(){try{const saved=JSON.parse(localStorage.getItem(PROFILE_KEY)||'{}');profileData={...profileData,...saved}}catch(e){console.warn('Could not read profile',e)}}
-function paintProfile(){
- const banner=$('#welcomeBanner'),cover=$('#profileCoverPreview');
- if(profileData.cover){banner.style.backgroundImage=`url("${profileData.cover}")`;banner.style.backgroundSize='cover';banner.style.backgroundPosition='center';cover.style.backgroundImage=`url("${profileData.cover}")`;cover.classList.add('has-image')}
- else{banner.style.backgroundImage='';cover.style.backgroundImage='';cover.classList.remove('has-image')}
- $('#welcomeName').textContent=profileData.name||'Pilot';
- $('#welcomeDesignation').textContent=profileData.designation||'';
- $('#welcomeDesignation').classList.toggle('hidden',!profileData.designation);
-}
-function showProfile(){
- document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
- document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));
- $('#profile').classList.remove('hidden');
- const map={profileName:'name',profileDesignation:'designation',profileLicence:'licence',profileSchool:'school',profileBase:'base',profileContact:'contact',profileBio:'bio'};
- Object.entries(map).forEach(([id,key])=>$('#'+id).value=profileData[key]||'');
- paintProfile();window.scrollTo({top:0,behavior:'smooth'});
-}
-readProfile();paintProfile();
-// Menu actions are wired in a separate fallback script after the main app script.
-$('#profileBack').addEventListener('click',e=>{e.preventDefault();switchTab('dashboard')});
-$('#saveProfile').addEventListener('click',()=>{
- const keys={name:'profileName',designation:'profileDesignation',licence:'profileLicence',school:'profileSchool',base:'profileBase',contact:'profileContact',bio:'profileBio'};
- for(const [key,id] of Object.entries(keys))profileData[key]=$('#'+id).value.trim();
- if(!profileData.name||!profileData.designation){$('#profileSaveStatus').textContent='Please enter your name and designation.';return}
- try{localStorage.setItem(PROFILE_KEY,JSON.stringify(profileData));paintProfile();$('#profileSaveStatus').textContent='Profile saved on this device.'}
- catch(e){$('#profileSaveStatus').textContent='Could not save profile. Try a smaller cover image.'}
-});
-// Native file input is layered over the cover button for reliable Android activation.
-$('#removeCoverBtn').addEventListener('click',()=>{profileData.cover='';paintProfile();try{localStorage.setItem(PROFILE_KEY,JSON.stringify(profileData))}catch(e){}});
-let cropSource=null,cropImage=null;
-// Cover image selection and crop are handled by the independent profile image module below.
-
-
-(async()=>{try{db=await getDB();await refresh()}catch(e){updateDbDiagnostic('STARTUP ERROR: '+(e&&e.message?e.message:String(e)),NaN);console.error('Flight Logbook database startup failed:',e);alert('Flight Logbook could not load its local database or records. Your saved data has not been intentionally deleted. Please share the Storage diagnostic shown at the top of the page. Error: '+(e&&e.message?e.message:String(e)))}})();
-</script>
-
-<script>
-(function(){
- function closeMenu(){
-  var details=document.getElementById('topMenuDetails');
-  if(details) details.open=false;
- }
- function openView(id){
-  document.querySelectorAll('.view').forEach(function(v){v.classList.add('hidden')});
-  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
-  var view=document.getElementById(id);
-  if(view)view.classList.remove('hidden');
-  window.scrollTo(0,0);
- }
- function handleAction(action){
-  closeMenu();
-  if(action==='profile'){
-   if(typeof window.showProfile==='function'){window.showProfile();return}
-   openView('profile');
-   return;
-  }
-  if(action==='settings'){openView('settings');return}
-  if(action==='import'){
-   var input=document.getElementById('fileInput');
-   if(input){
-    input.accept='.xlsx,.xls,.csv,.json';
-    input.dataset.mode='import';
-    input.click();
-   }
-  }
- }
- document.addEventListener('click',function(e){
-  var btn=e.target.closest('[data-top-action]');
-  if(!btn)return;
-  e.preventDefault();
-  e.stopPropagation();
-  handleAction(btn.getAttribute('data-top-action'));
- },true);
-})();
-</script>
-
-<script>
-(function(){
- const KEY='pilot-flight-logbook-profile-v1';
- function getProfile(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
- function putProfile(p){try{localStorage.setItem(KEY,JSON.stringify(p));return true}catch(e){return false}}
- function paint(p){
-  const name=document.getElementById('welcomeName');
-  const designation=document.getElementById('welcomeDesignation');
-  const banner=document.getElementById('welcomeBanner');
-  const preview=document.getElementById('profileCoverPreview');
-  if(name)name.textContent=(p.name||'').trim()||'Pilot';
-  if(designation){designation.textContent=(p.designation||'').trim();designation.classList.toggle('hidden',!(p.designation||'').trim())}
-  if(p.cover){if(banner){banner.style.backgroundImage='url("'+p.cover+'")';banner.style.backgroundSize='cover';banner.style.backgroundPosition='center'}if(preview){preview.style.backgroundImage='url("'+p.cover+'")';preview.classList.add('has-image')}}
-  else{if(banner)banner.style.backgroundImage='';if(preview){preview.style.backgroundImage='';preview.classList.remove('has-image')}}
- }
- function syncFields(p){
-  const map={profileName:'name',profileDesignation:'designation',profileLicence:'licence',profileSchool:'school',profileBase:'base',profileContact:'contact',profileBio:'bio'};
-  Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el)el.value=p[map[id]]||''});
- }
- // Ensure menu opens the real Profile function, with stored values loaded into the form.
- document.addEventListener('click',function(e){
-  const action=e.target.closest('[data-top-action]');
-  if(action&&action.getAttribute('data-top-action')==='profile'){
-   setTimeout(()=>syncFields(getProfile()),0);
-  }
- },false);
- // Capture the save action before any app handler and persist the profile independently.
- document.addEventListener('click',function(e){
-  const btn=e.target.closest('#saveProfile');
-  if(!btn)return;
-  const map={name:'profileName',designation:'profileDesignation',licence:'profileLicence',school:'profileSchool',base:'profileBase',contact:'profileContact',bio:'profileBio'};
-  const p=getProfile();
-  Object.keys(map).forEach(key=>{const el=document.getElementById(map[key]);if(el)p[key]=el.value.trim()});
-  if(!p.name||!p.designation){
-   const status=document.getElementById('profileSaveStatus');if(status)status.textContent='Please enter your name and designation.';
-   return;
-  }
-  if(putProfile(p)){paint(p);const status=document.getElementById('profileSaveStatus');if(status)status.textContent='Profile saved on this device.'}
-  else{const status=document.getElementById('profileSaveStatus');if(status)status.textContent='Could not save profile. Please use a smaller cover image.'}
- },true);
- // Cover selection is handled by the crop dialog above; no automatic upload here.
- const remove=document.getElementById('removeCoverBtn');
- if(remove)remove.addEventListener('click',function(){
-  const p=getProfile();delete p.cover;putProfile(p);paint(p);
-  const status=document.getElementById('profileSaveStatus');if(status)status.textContent='Cover image removed.';
- });
- // Reapply stored profile when Dashboard is opened or the page is restored.
- document.addEventListener('click',function(e){
-  if(e.target.closest('[data-tab="dashboard"]'))setTimeout(()=>paint(getProfile()),0);
- });
- window.addEventListener('pageshow',()=>paint(getProfile()));
- paint(getProfile());
-})();
-</script>
-
-<script>
-(function(){
- document.addEventListener('click',function(e){
-  const back=e.target.closest('#profileBack');
-  if(!back)return;
-  e.preventDefault();e.stopImmediatePropagation();
-  const profile=document.getElementById('profile'),dashboard=document.getElementById('dashboard');
-  if(profile)profile.classList.add('hidden');
-  if(dashboard)dashboard.classList.remove('hidden');
-  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab==='dashboard'));
-  window.scrollTo(0,0);
- },true);
-})();
-</script>
-
-<script>
-/* Independent Android-friendly cover image chooser and crop editor */
-(function(){
- const input=document.getElementById('coverFileInput');
- if(!input)return;
- let selectedImage=null, zoomValue=1, xValue=50, yValue=50;
- function getSaved(){try{return JSON.parse(localStorage.getItem('pilot-flight-logbook-profile-v1')||'{}')}catch(e){return {}}}
- function showStatus(msg){const el=document.getElementById('profileSaveStatus');if(el)el.textContent=msg}
- function applyCover(data){
-  const banner=document.getElementById('welcomeBanner');
-  const preview=document.getElementById('profileCoverPreview');
-  if(banner){banner.style.backgroundImage='url("'+data+'")';banner.style.backgroundSize='cover';banner.style.backgroundPosition='center'}
-  if(preview){preview.style.backgroundImage='url("'+data+'")';preview.classList.add('has-image')}
- }
- function openCrop(img){
-  selectedImage=img;zoomValue=1;xValue=50;yValue=50;
-  const old=document.getElementById('coverCropModal');if(old)old.remove();
-  const modal=document.createElement('div');modal.className='modalback';modal.id='coverCropModal';
-  modal.innerHTML=`<div class="modal" style="width:min(620px,100%);max-height:88vh;overflow:auto">
-   <div class="modalhead"><h2>Crop cover image</h2><button type="button" id="v26CropCancel">Cancel</button></div>
-   <p class="muted small">Fit your photo to the Dashboard banner. Drag the image or adjust zoom and position.</p>
-   <div id="v26CropFrame" style="width:100%;aspect-ratio:2.8/1;overflow:hidden;border-radius:14px;background:#dce8f7;touch-action:none">
-    <canvas id="v26CropCanvas" style="display:block;width:100%;height:100%"></canvas>
-   </div>
-   <div class="field" style="margin:12px 0"><label for="v26Zoom">Zoom</label><input id="v26Zoom" type="range" min="1" max="3" step=".01" value="1"></div>
-   <div class="field" style="margin:10px 0"><label for="v26X">Horizontal position</label><input id="v26X" type="range" min="0" max="100" value="50"></div>
-   <div class="field" style="margin:10px 0"><label for="v26Y">Vertical position</label><input id="v26Y" type="range" min="0" max="100" value="50"></div>
-   <div class="toolbar"><button type="button" class="primary" id="v26UseCrop">Use this crop</button></div>
-  </div>`;
-  document.body.appendChild(modal);
-  const canvas=document.getElementById('v26CropCanvas'),ctx=canvas.getContext('2d');
-  const W=1400,H=500;canvas.width=W;canvas.height=H;
-  const z=document.getElementById('v26Zoom'),sx=document.getElementById('v26X'),sy=document.getElementById('v26Y');
-  function draw(){
-   const scale=Math.max(W/img.width,H/img.height)*Number(z.value);
-   const dw=img.width*scale,dh=img.height*scale;
-   const dx=-(dw-W)*Number(sx.value)/100,dy=-(dh-H)*Number(sy.value)/100;
-   ctx.clearRect(0,0,W,H);ctx.fillStyle='#dce8f7';ctx.fillRect(0,0,W,H);
-   ctx.drawImage(img,dx,dy,dw,dh);
-  }
-  [z,sx,sy].forEach(el=>el.addEventListener('input',draw));draw();
-  const frame=document.getElementById('v26CropFrame');
-  let dragging=false,lastX=0,lastY=0;
-  frame.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;if(frame.setPointerCapture)frame.setPointerCapture(e.pointerId)});
-  frame.addEventListener('pointermove',e=>{
-   if(!dragging)return;
-   const rect=frame.getBoundingClientRect(),scale=Math.max(W/img.width,H/img.height)*Number(z.value);
-   const extraX=Math.max(1,img.width*scale-W),extraY=Math.max(1,img.height*scale-H);
-   sx.value=Math.max(0,Math.min(100,Number(sx.value)-(e.clientX-lastX)*W/rect.width/extraX*100));
-   sy.value=Math.max(0,Math.min(100,Number(sy.value)-(e.clientY-lastY)*H/rect.height/extraY*100));
-   lastX=e.clientX;lastY=e.clientY;draw();
-  });
-  ['pointerup','pointercancel'].forEach(ev=>frame.addEventListener(ev,()=>dragging=false));
-  document.getElementById('v26CropCancel').onclick=()=>modal.remove();
-  modal.addEventListener('click',e=>{if(e.target===modal)modal.remove()});
-  document.getElementById('v26UseCrop').onclick=()=>{
-   try{
-    const data=canvas.toDataURL('image/jpeg',.82);
-    const profile=getSaved();profile.cover=data;
-    localStorage.setItem('pilot-flight-logbook-profile-v1',JSON.stringify(profile));
-    try{if(typeof profileData!=='undefined')profileData.cover=data}catch(e){}
-    applyCover(data);modal.remove();
-    showStatus('Cover image cropped and saved. Tap Save profile after editing your details.');
-   }catch(err){showStatus('Could not save this image. Please try a smaller photo.')}
-  };
- }
- // Capture the actual file input change even if the app's main script has a problem.
- input.addEventListener('change',function(){
-  const file=input.files&&input.files[0];if(!file)return;
-  showStatus('Loading selected photo…');
-  if(!file.type||!file.type.startsWith('image/')){showStatus('Please choose an image file.');return}
-  if(file.size>20*1024*1024){showStatus('Please choose an image smaller than 20 MB.');return}
-  const url=URL.createObjectURL(file),img=new Image();
-  img.onload=()=>{URL.revokeObjectURL(url);openCrop(img)};
-  img.onerror=()=>{URL.revokeObjectURL(url);showStatus('This photo could not be opened. Please try JPG or PNG.')};
-  img.src=url;
- },false);
-})();
+(async()=>{try{db=await openDB();await refresh()}catch(e){console.error('Flight Logbook database startup failed:',e);alert('Flight Logbook could not load its local database or records. Your saved data has not been intentionally deleted. Close other Flight Logbook tabs/apps, reopen this page, and if the problem continues send this error: '+(e&&e.message?e.message:String(e)))}})();
 </script>
 </body></html>
